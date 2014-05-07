@@ -1,0 +1,18 @@
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title
+      Bus for Sale, Buses for Sale, Sell a Bus, Bus Dealer, Bus Listings | #{h yield(:title)}
+    = stylesheet_link_tag    "devise_login"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    %meta{:content => "Buses for sale, Bus for sale, used buses, sell a bus, bus listings, shuttle buses, school buses for sale, vans for sale, paratransit buses sale, limo buses for sale, city transit buses, preowned buses, custom coaches, bus conversions, eagle coaches, bus sales, bus broker, bus parts, MCI, entertainer buses, MCI buses, GM buses, coach sales, bus broker, DINA, EAGLE bus, GMC, MCI, Neoplan, Setra, LAG, Van Hool, School Buses", :name => "keywords"}/
+    %meta{:content => "Largest listing of Buses for sale, List a Bus for Sale, Shuttle Buses for Sale, Transit Buses for Sale, Paratransit Buses For Sale, Prevost Buses, Limo Buses, School Buses, Vans, Mini Buses, Tour buses, GMC, ABC, Setra, VanHool, School Buses, Bluebird, Midsize, Shuttle, and Transits for Sale. Tour bus sales, mini bus sales, used buses", :name => "description"}/
+    = render :partial => "shared/google_analytics"
+
+  %body
+    #login_panel
+      = image_tag "shop-buses-logo-trans.png",:alt => "Shop Buses Logo", :height => "79", :width => "270" , :id => "login_logo"
+
+      = yield
+

@@ -1,0 +1,137 @@
+<!-- bus name and price starts-->
+<div id="detail_titlearea" xmlns="http://www.w3.org/1999/html">
+  <div class="detail_headings">
+    <div class="compare_heading_left">
+      <h1>Post Your Vehicle </h1>
+
+    </div>
+  </div>
+</div>
+<!-- bus name and price ends-->
+<div id="detail_content">
+  <!-- inventory details start -->
+  <div id="compare_specs_area">
+
+    <!-- Vehicle specs start-->
+    <div id="post_vehicle_panel" class="post_vehicle_form">
+      <%= form_for @bus, :url => add_new_vehicle_path, :html => {:multipart => true} do |f| %>
+          <% if flash[:notice].present? %>
+              <p class="success"><%= flash[:notice] %></p>
+          <% end %>
+          <%- if flash[:alert].present? %>
+              <p class="error"><%= flash[:alert] %></p>
+          <% end %>
+          <%- @bus.errors.full_messages.each do |msg| %>
+              <span class="error-vehicle"><%= msg %></span>
+          <% end %>
+          <p>Please fill out the form below and submit your vehicle.</p></br>
+          <p class="style1">* Required fields.</p>
+
+          <p><br/>
+            <span class="dealer_form_title">Vehicle Information</span><br/>
+            Bus Type * <br/>
+
+
+            <%= f.collection_select :bus_type_id, BusType.find(:all), :id, :name %>
+            <br/><br/>
+            Year * <br/>
+            <%= f.select :year, (DateTime.now.year - 30)..(DateTime.now.year), {:include_blank => "Select Year"} %>
+            <br/><br/>
+            Price * <br/>
+            <%= f.text_field :sale_price %>
+            <br/><br/>
+            Body Make * <br/>
+            <%= f.collection_select :body_make_id, BodyMake.find(:all), :id, :name %>
+            <br/><br/>
+            Body Model * <br/>
+            <%= f.text_field :body_model %>
+            <br/><br/>
+            Chasis Make * <br/>
+            <%= f.collection_select :chasis_make_id, ChasisMake.find(:all), :id, :name %>
+            <br/><br/>
+            Chasis Body * <br/>
+            <%= f.text_field :chasis_model %>
+            <br/><br/>
+            Mileage(in kms) * <br/>
+            <%= f.text_field :mileage %>
+            <br/><br/>
+            Passengers * <br/>
+            <%= f.text_field :passengers %>
+            <br/><br/>
+            Exterior Color * <br/>
+            <%= f.text_field :exterior_color %>
+            <br/><br/>
+            Interior Color * <br/>
+            <%= f.text_field :interior_color %>
+            <br/><br/>
+            Wheelchair Capacity * <br/>
+            <%= f.text_field :wheelchair_capacity %>
+            <br/><br/>
+            Vehicle Length (in ft)<br/>
+            <%= f.text_field :vehicle_length %>
+            <br/><br/>
+            Engine<br/>
+            <%= f.text_field :engine %>
+            <br/><br/>
+            Country *<br/>
+            <%= f.select :location, ["USA", "Canada"], {:include_blank => "Country (any)"}, :id => "country" %>
+            <br/>
+            <br/>
+            <br/>
+            State/Province *<br/>
+            <select name="state" id="state_empty" tabindex="2">
+
+            </select>
+            <%= f.select :state_id, State.where("country_id = ? ", Country.find_by_name("United States").id).collect { |c| [c.name, c.id] }, {:include_blank => "State (any)"}, :id => "state_usa", :tabindex => "2", :class => "state", :style => "display: none" %>
+            <%= f.select :state_id, State.where("country_id = ? ", Country.find_by_name("Canada").id).collect { |c| [c.name, c.id] }, {:include_blank => "State (any)"}, :id => "state_canada", :tabindex => "2", :class => "state", :style => "display: none" %>
+            <br/><br/><br/>
+            Vehicle Description <br/>
+            <%= f.text_area :vehicle_description, :rows => 10, :cols => 40 %>
+            <br/><br/><br/>
+            <span class="orange_text">Attach Main Image (5MB max size)</span> *<br/>
+            <%= hidden_field_tag "image_count", 0 %>
+            <%= f.fields_for :images do |builder| %>
+                <input type="hidden" name="MAX_FILE_SIZE" value="500"/>
+
+                <div class="upload_field" id="image-upload"><%= builder.file_field :image %></div>
+            <% end %>
+            <a class="attach_image_link" onclick="attach_another_image()" href="javascript:">Attach Another Image</a>
+            <br/><br/><br/>
+            <br/>
+            <span class="dealer_form_title">Contact Information</span><br/>
+            <%= f.fields_for :seller do |sf| %>
+                Company Name <br/>
+                <%= sf.text_field :name %>
+                <br/><br/>
+                Name <br/>
+                <%= sf.text_field :phone %>
+                <br/>
+                <br/>
+
+                Email <br/>
+                <%= sf.text_field :email %><br/><br/>
+
+                Zip/Postal Code <br/>
+                <%= sf.text_field :postal_code %><br/></br/>
+                Comments <br/>
+                <%= sf.text_area :comments, :rows => 10, :cols => 40 %>
+                <br/>
+                <br/>
+                <br/>
+            <% end %>
+
+            <%= f.submit "Submit", :id => "contactSubmitBtn", :class => "admin_login_btn" %>
+      <% end %>
+
+    </div>
+    <!-- vehicle specs end -->
+  </div>
+</div>
+<!-- listing content ends-->
+<div class="clearfooter"></div>
+<!-- wrapper ends-->
+
+<!-- footer start -->
+
+
+<!-- footer end -->

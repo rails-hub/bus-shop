@@ -1,0 +1,12 @@
+<%= image_tag('mainLogo.png')%>
+
+<p>Welcome <%= @resource.email %>!</p>
+
+<p>You can confirm your account through the link below:</p>
+
+<% if @resource.kind_of?(User) %>
+	<p><%= link_to 'Confirm my account', user_confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<% else %>
+	<p><%= link_to 'Confirm my account', dealer_confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<% end %>
+

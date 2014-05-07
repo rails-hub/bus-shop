@@ -1,0 +1,5 @@
+#ads_panel
+  - unless Add.where("status = #{true}").blank?
+    - Add.where(:status => true).order("priority ASC").select{|a|a.end && a.end > Time.now}.each do |f|
+      %div{:id => "ad_priority#{f.priority}"}
+        = link_to (image_tag f.image.url) ,f.url , :target => '_blank'

@@ -1,0 +1,49 @@
+<% content_for :title, "Contact Us" %>
+<!-- page start -->
+<script type="text/javascript" src="/assets/contact.js"></script>
+<div class="pageContainer" id="contactContainer">
+  <div class="pageContent">
+    <div class="contactWrap"> <img src="assets/contactIcon.png" alt="" class="contactIcon"/>
+      <div class="contactDetails">
+        <h4 class="contactDetailPhone">1-800-456-8899</h4>
+        
+        <h6 class="contactDetailEmail"><a href="mailto:inquire@system2buses.com">inquire@system2buses.com </a> </h6>
+       </div>
+      <div class="boxLargeTop"></div>
+      <div class="contactBox">
+        <div class="contactFormContainer">
+          <div class="contactTitle">
+            <h2 class="customTitle2">Contact Us</h2>
+            <h3 class="customTitle3">For All Your Bus Needs</h3>
+          </div>
+          <!-- custom form messages start -->
+          <span class="error" id="nameError">Please enter your name !</span> <span class="error" id="emailError">Please enter your email address !</span> <span class="error" id="emailError2">Please enter a valid email address !</span><span class="error" id="phoneError">Please enter your phone number !</span> <span class="error" id="messageError">Please enter your message !</span>
+          <div class="contactSuccessMessage"> <img src="assets/ok.png" alt=""/>
+            <h4>Thank you for contacting us.</h4>
+          </div>
+          <!-- custom form messages end -->
+          <!-- contact form start -->
+          <div class="contactForm" id="contactForm">
+              <fieldset>
+              	<%= form_for @contact, :url => { :action => "create" } do |f| %>
+				  <%= f.label :name, "Name(required)" %>
+				  <%= f.text_field :name, :class => "text-input", :id => "contactName" %>
+				  <%= f.label :name, "Email(required)" %>
+				  <%= email_field("contact", "email", :class => "text-input", :id => "contactEmail") %>
+				  <%= f.label :name, "Phone(required)" %>
+				  <%= f.text_field :phone, :class => "text-input", :id => "contactName" %>
+				  <%= f.label :name, "Comments" %>
+				  <%= f.text_area :comments, :size => "60x12", :class => "text-input", :id => "contactMessage" %>
+				  <p><%= f.submit "", :class => "contactButton", :id => "contactSubmitBtn" %></p>
+				<% end %>
+              </fieldset>
+          </div>
+          <!-- contact form end -->
+        </div>
+      </div>
+      <div class="boxLargeBottom"></div>
+    </div>
+    <!-- wrap end -->
+  </div>
+</div>
+<!-- page end -->

@@ -1,0 +1,36 @@
+<script>
+	jQuery(document).ready(function($) {
+ 	 $('a[rel*=facebox]').facebox();
+	});
+	function submit_form(form){
+		var input=form+"_name";
+		var value=$('.popup #'+input).val();
+		if(value!=""){
+			$('.popup #new_'+form).submit();
+			$('.popup .content').html('<h2>Added Successfully</h2>');
+		}
+		else{
+			alert("Field cannot be blank!");
+		}
+	}
+</script>
+	<div id="add_new_bus_type" style="display:none;">
+		<%= form_for(@bus_type, :url => admin_bus_type_path, :remote => true, :method => "PUT") do |f| %>
+			<%= f.label :bus_type_id, "Bus Type:" %><%= f.text_field :name, :class => "big bus_type_name" %>
+			<input type="reset" value="Submit" name="commit" class="button" onclick="return submit_form('bus_type');" />
+		<% end %>
+	</div>	
+	
+	<div id="add_new_chasis_make_type" style="display:none;">
+		<%= form_for(@chasis_make, :url => admin_chasis_makes_path, :remote => true, :method => "PUT") do |f| %>
+			<%= f.label :name, "Chasis Make:" %><%= f.text_field :name, :class => "big" %>
+			<input type="reset" value="Submit" name="commit" class="button" onclick="return submit_form('chasis_make');" />
+		<% end %>
+	</div>	
+	
+	<div id="add_new_body_make_type" style="display:none;">
+		<%= form_for(@body_make, :url => admin_body_makes_path, :remote => true, :method => "POST") do |f| %>
+			<%= f.label :name, "Body Make:" %><%= f.text_field :name, :class => "big" %>
+			<input type="reset" value="Submit" name="commit" class="button" onclick="return submit_form('body_make');" />
+		<% end %>
+	</div>	

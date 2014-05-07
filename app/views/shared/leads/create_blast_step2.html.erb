@@ -1,0 +1,42 @@
+<% content_for :title, "Create message" %>
+
+<div id="content">
+
+	<%= render :partial => 'shared/leads/menu_icons_step2'   %>
+	<div class="contentBox">
+            <div class="contentTable">
+                <table width="100%">
+                	<thead>
+                    <tr class="tableTop"> 
+                    	<th align="left" class="actions_col unsortable header"><h1>Email Message</h1></th>
+                    </tr>
+                    <tr align="left"> 
+                    	<td style="text-align:left;background:#fce7ca;color:#4e5250">
+                    		<%= form_for :blast, :url => admin_leads_blast_last_step_path, :method => "POST", :html => {:id => "blast_form"} do %>
+							  <table id="email_blast_form">
+							  	<tr>
+							  		<td>
+							  			<%= label_tag(:subject, "Subject") %>
+							  		</td>
+							  		<td style="text-align:left">
+							  			<%= text_field_tag(:subject) %>
+							  		</td>
+							  	</tr>
+							  	<tr style="background:#FCE7CA">
+							  		<td>
+							  			<%= label_tag(:message, "Message") %>
+							  		</td>
+							  		<td>
+							  			<%= text_area_tag :message, "", :size => "80x6" %>
+							  			<%= hidden_field_tag :stocks, @stocks_ar %>
+							  			<%= hidden_field_tag :leads, @leads_ar %>
+							  		</td>
+							  	</tr>
+							  </table>
+							  <% end %>
+                    	</td>
+                    
+                    </tr>
+                </table>
+        </div>
+</div>

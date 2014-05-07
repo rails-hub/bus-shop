@@ -1,0 +1,2 @@
+ Legend:     <a class="tooltip" href="#"><span class="span-tooltip">online</span><img src="/assets/admin/icons/green_ad.jpg" alt="Bluecircle"></a>= <%= Add.where(:status => true).count %>
+         <a class="tooltip" href="#"><span class="span-tooltip">offline</span><img src="/assets/admin/icons/grey_ad.jpg" alt="Blackcircle"> </a>=<%= Add.count - Add.where(:status => true).count %>

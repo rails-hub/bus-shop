@@ -1,0 +1,17 @@
+<% if @search_array.present? %>
+	<strong> | Filters Applied:
+	<% @search_array.each do |key| %>
+    	<% if key[0] == "bus_type_id" and key[1].present? %>
+			<%= key[0].titleize %>: <%= BusType.find(key[1]).name %> |
+		<% elsif key[0] == "chasis_make_id" and key[1].present? %>
+			<%= key[0].titleize %>: <%= ChasisMake.find(key[1]).name %> |
+          <% elsif (key[0] == "state_empty_admin" or key[0] == "state_canada_admin" or key[0] == "state_usa_admin") and key[1].present? %>
+              State: <%= State.find_by_id(key[1]).name %> |
+		<% elsif key[1].present? %>	
+			<%= key[0].titleize %>: <%= key[1].titleize %> |
+		<% end %>
+	<% end %>
+	</strong>
+<% else %>
+	None
+<% end %>

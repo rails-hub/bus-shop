@@ -1,0 +1,153 @@
+	  <div class="contentMenu">
+            <div class="clear"></div>
+            <a href="">
+            	<div class="contentCaption">
+	            	<% if params[:action] == "create_blast" or params[:action] == "search" %>
+	        	    	<%= image_tag "/assets/admin/icons/busIcon.png", :alt => "Inventory Listings"  %>Select Inventory
+	        	    <% end %>
+	        	    <% if params[:action] == "blast_step3" %>
+	        	    	<%= image_tag "/assets/admin/create_message.png", :alt => "Create Message"  %>Create Message
+	        	    <% end %>
+	        	    <% if params[:action] == "blast_last_step" %>
+	        	    	<%= image_tag "/assets/admin/review-and-send.png", :alt => "Review and Send"  %>Review and Send
+	        	    <% end %>
+            	</div>
+            </a>
+            <div class="menuIcons">
+            	<script>
+            	function refresh_stocks(){
+    						var data = $('div.bus_selector').not($('div.bus_selector_hidden')).map(function () {
+    							return "'"+this.id+"'";
+    						}).get();
+    						$('#stocks').val("["+data+"]");
+    					}
+    					function copy_emails(){
+    						$("#leads").val($("#emails").val());
+    					}
+    					function remove_stock(link){
+    						$(link).parent().parent().parent().removeClass('bus_selector');
+    						$(link).parent().parent().parent().addClass('bus_selector_hidden');
+    						$("span#stock_counts").text($("span#stock_counts").text()-1);
+    						$("span#number_inventory").text($("span#number_inventory").text()-1);
+    						refresh_stocks();
+    					}
+				
+    					function add_stock_option_click(option){
+    					  var data = "'"+option.id+"'";
+    					  var selected = $.ajax({
+                  url: '<%= admin_leads_add_stock_path(:leads =>"#{params[:leads] if params[:leads]}" ) %>'+"&stocks=["+data+"]"
+                }).done(function() {
+                  $("a#"+option.id).parent().parent().addClass("selected");
+                  $("a#"+option.id).attr("onclick", "remove_stock_option_click(this)");
+                  $("span#number_inventory").text(selected.responseText);
+                });
+    					}
+    					
+    					function remove_stock_option_click(option){
+    					  var data = "'"+option.id+"'";
+    					  var selected = $.ajax({
+                  url: "<%= admin_leads_remove_stock_session_path %>?stocks=["+data+"]"
+                }).done(function() {
+                  $("a#"+option.id).parent().parent().removeClass("selected");
+                  $("a#"+option.id).parent().parent().parent().removeClass("selected");
+                  $("a#"+option.id).attr("onclick", "add_stock_option_click(this)");
+                  $("span#number_inventory").text(selected.responseText);
+                });
+    					}
+    					
+    					function select_all(){
+              	    var $table = $("#select_all").parent().parent().parent().parent();
+              	    if ($("#select_all").attr('checked') == "checked") {
+              	        $table.find(":checkbox").attr('checked', true);
+                        var data = $('input:checkbox:checked.bus_check_box').map(function () {
+                  				return "'"+this.value+"'";
+                  			}).get();
+                  		  var selected = $.ajax({ 	
+                          url: "<%= admin_leads_add_stock_path+'?leads='+params[:leads] if params[:leads] %>&stocks=["+data+"]"
+                        }).done(function() {
+                          $("span#number_inventory").text(selected.responseText);
+                        });
+              	        $table.find(".bus_row").addClass("selected");
+              	        $table.find(".bus_row :checkbox").attr("onclick", "remove_stock_option_click(this)");
+              	        $table.find(".bus_row :checkbox").parent().attr("onclick", "remove_stock_option_click(this)");
+              	    } else {
+              	        $table.find(":checkbox").attr('checked', false);
+              	        var data = $('input:checkbox.bus_check_box').map(function () {
+                  				return "'"+this.value+"'";
+                  			}).get();
+                  		  var selected = $.ajax({
+                          url: "<%= admin_leads_remove_stock_session_path %>"+"?stocks=["+data+"]"
+                        }).done(function() {
+                          $("span#number_inventory").text(selected.responseText);
+                        });
+                  	    $table.find(".bus_row :checkbox").attr("onclick", "add_stock_option_click(this)");
+                  	    $table.find(".bus_row :checkbox").parent().attr("onclick", "add_stock_option_click(this)");
+              	        $table.find("tr.bus_row").removeClass("selected");
+              	        $table.find(".bus_row").removeClass("selected");
+              	    }
+    					}
+				
+    				/*	function add_stock(){
+    					    select_all();
+                	var data = $('input:checkbox:checked.bus_check_box').map(function () {
+            				return "'"+this.value+"'";
+            			}).get();
+            		  $.ajax({ 	
+                    url: "<%= admin_leads_blast_step3_path+'?leads='+params[:leads] if params[:leads] %>&stocks=["+data+"]",
+                  }).done(function() {
+                    $("tr.selected td a.option_added").replaceWith("added");
+                  });
+    					}*/
+    					
+				
+    					function submit_step3(){
+    						$('#blast_form').submit();
+    					}
+				
+    					function submit_step4(){
+    						copy_emails();
+    						refresh_stocks();
+    						$("#blast_form").submit();
+    					}
+				      	function submit_step2(){
+      						var data = $('input:checkbox:checked.bus_check_box').map(function () {
+      							return "'"+this.value+"'";
+      						}).get();
+      						if($("#number_inventory").text() == "0"){
+    						    alert("You must select something to proceed");
+    						    return false;
+    						  }
+      						<% if session[:leads] %>
+      						  location.href = "<%= admin_leads_blast_step3_path+'?leads='+@leads_ar %>&stocks=["+data+"]";
+        						<% else %>
+        							location.href = "<%= admin_leads_blast_step3_path %>"+ "?stocks=["+data+"]";
+      						<% end %>
+      					}
+					
+      					
+				</script>
+				
+            <div class="menuIcon">
+            		<%= link_to image_tag("/assets/admin/icons/cancel.png", :alt => "Cancel"), admin_leads_path+"?clear_session=true" %><br/>Cancel
+            </div> 
+            <div>
+            	    
+            			<div class="contentCaption" style="background-color:#EEE;text-align:center">
+	            		  <span style="color:black;font-size:0.8em;">Leads: </span><span><%= (@leads)?(@leads.count):"0" %> Selected</span><br />
+	            		  <span style="color:black;font-size:0.8em;">Inventory: </span><span id="number_inventory"><%= session[:stocks].count %></span><span>  Selected</span>
+	            	  	</div>
+            
+            	  <div>
+            	  	<a href="#"><%= image_tag("/assets/admin/icons/submit_inventory.png", :alt => "Submit", :style => "padding-left:10px", :onclick => "submit_step2()") if params[:action] == "create_blast" || params[:action] == "search" %></a>
+            	  	<a href="#"><%= image_tag("/assets/admin/icons/submit_message.png", :alt => "Submit", :style => "padding-left:10px", :onclick => "submit_step3()") if params[:action] == "blast_step3" %></a>
+            	  	<a href="#"><%= image_tag("/assets/admin/send_email_blast.png", :alt => "Submit", :style => "padding-left:10px", :onclick => "submit_step4()") if params[:action] == "blast_last_step" %></a>
+            	  </div>
+            </div> 
+                <div class="clear"></div>
+            <div class="clear"></div>
+		</div>
+		<div class="contentMenu">
+			<%= image_tag("/assets/admin/step2.png", :alt => "Step2", :style => "padding-left:10px") if params[:action] == "create_blast" || params[:action] == "search" %>
+			<%= image_tag("/assets/admin/step3.png", :alt => "Step3", :style => "padding-left:10px") if params[:action] == "blast_step3" %>
+			<%= image_tag("/assets/admin/step4.png", :alt => "Step3", :style => "padding-left:10px") if params[:action] == "blast_last_step" %>
+		</div>

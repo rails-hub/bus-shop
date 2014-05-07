@@ -1,0 +1,73 @@
+<%= hidden_field_tag 'count_value', @compare_list.count %>
+<script>
+    function submit_add_to_compare(id, obj_e) {
+        count_v = $('#count_value').val();
+        if ($(obj_e).is(':checked')) {
+            if (parseInt(count_v) + 1 >= 6) {
+                alert("You may select up to 6 items to compare at one time");
+                $(obj_e).attr('checked', false);
+            } else {
+                alert("You have successfully added the bus.");
+                $.ajax({
+                    url: '<%= add_to_compare_path %>?bus_type_id=<%=params[:bus_type_id] %>&id=' + id,
+                    type: 'get',
+                    dataType: 'html',
+                    processData: false,
+                    success: function (data) {
+                        $('#compare-added-buses').html(data);
+                        count = parseInt(count_v) + 1;
+                        $('#count_value').val(count);
+                    }
+                });
+            }
+        }
+        else {
+            count_v = $('#count_value').val();
+            if (parseInt(count_v) - 1 >= 6) {
+                alert("You may select up to 6 items to compare at one time");
+                $(obj_e).attr('checked', false);
+            } else {
+                alert("You have successfully removed the bus from compare list.");
+                $.ajax({
+                    url: '<%= remove_from_compare_path %>?bus_type_id=<%=params[:bus_type_id] %>&id=' + id,
+                    type: 'get',
+                    dataType: 'html',
+                    processData: false,
+                    success: function (data) {
+                        $('#compare-added-buses').html(data);
+                        count = parseInt(count_v) - 1;
+                        $('#count_value').val(count);
+                    }
+                });
+            }
+        }
+
+    }
+    function submit_remove_from_compare(id, obj_e) {
+        count_v = $('#count_value').val();
+        if (parseInt(count_v) - 1 >= 6) {
+            alert("You may select up to 6 items to compare at one time");
+            $(obj_e).attr('checked', false);
+        } else {
+            alert("You have successfully removed the bus from compare list.")
+            $.ajax({
+                url: '<%= remove_from_compare_path %>?bus_type_id=<%=params[:bus_type_id] %>&id=' + id,
+                type: 'get',
+                dataType: 'html',
+                processData: false,
+                success: function (data) {
+                    $('#compare-added-buses').html(data);
+                    $('#chk_' + id).attr('checked', false);
+                    count = parseInt(count_v) - 1;
+                    $('#count_value').val(count);
+                }
+            });
+        }
+    }
+    function slideDown() {
+        $("#compare_toolbar").toggle();
+    }
+</script>
+<div id='compare-added-buses'>
+  <%= render :partial => 'shared/compare_added_buses' %>
+</div>

@@ -1,0 +1,36 @@
+<script id="template-upload" type="text/x-jquery-tmpl">
+    <div class="uploadedImage template-upload{{if error}} ui-state-error{{/if}}">
+    		<div class="preview"></div>
+    		{{if error}}
+            <div class="error" >Error:
+                {{if error === 'custom_failure'}}Custom Error Message
+                {{else}}${error}
+                {{/if}}
+            </div>
+        {{else}}
+            <div class="start" style="float: right; margin: 3px;"><button>Start</button></div>
+        {{/if}}
+        		<div class="cancel" style="float: right; margin: 3px;"><button>Cancel</button></div>
+    	</div>
+</script>
+
+<script id="template-download" type="text/x-jquery-tmpl">
+	<div class="uploadedImage template-download{{if error}} ui-state-error{{/if}}">
+	{{if error}}
+		{{if error === 1}}
+			File exceeds upload_max_filesize (php.ini directive)
+        {{else}}
+        		${error}
+        {{/if}}
+	{{else}}
+		{{if thumbnail_url}}
+			<div class="preview">
+				<a href="${url}" target="_blank"><img src="${thumbnail_url}" width="118" height="84"></a>
+			</div>	
+		{{/if}}
+	{{/if}}
+		<a class="delete">
+			<button data-type="${delete_type}" data-url="${delete_url}">Delete</button>
+		</a>
+	</div>	
+</script>

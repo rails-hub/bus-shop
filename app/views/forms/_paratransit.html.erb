@@ -1,0 +1,46 @@
+    <!-- sidebar right start -->
+    <div class="sidebar" style="float: right;">
+        <div class="sidebarRightTopBg"></div>
+        <div class="sidebarRightContent">
+			<%= form_tag("/listings/search?slug=paratransit") do %>
+				<label for="passengers">Passenger Seats</label> <br/>
+				<select id="passengers" name="search[passengers]" class="selectLong">
+					<option value="">All</option>
+					<option value="0-10">10 and under</option>
+					<option value="11-20">11-20</option>
+					<option value="21-30">21-30</option>
+					<option value="31-100000">31+</option>
+				</select>
+				<label for="price_range">Price Range</label>	<br/>
+				<select id="price_range" name="search[price_range]" class="selectLong">
+					<option value="">View All</option>
+					<option value="0-20000">Under $20,000</option>
+					<option value="20000-40000">$20,000 - $40,000</option>
+					<option value="40000-60000">$40,000 - $60,000</option>
+					<option value="60000-80000">$60,000 - $80,000</option>
+					<option value="80000-1000000000">$80,000+</option>
+				</select>
+				
+				<label for="year">Year Range</label> <br/>
+				<%= select("search", "start_year", (1990..DateTime.now.year).to_a.reverse, {:include_blank => "Start Year"}, :class=> "selectShort" ) %> -
+				<%= select("search", "end_year", (1990..DateTime.now.year).to_a.reverse, {:include_blank => "End Year"},  :class=> "selectShort" )%>
+				
+				<label for="fuel_type">Fuel Type</label><br/>
+				<%= select("search", "fuel_type", ["Gas", "Diesel"], {:include_blank => "All"}, :class => "selectLong") %>
+				
+				<label for="wheelchair_capacity">Wheelchair Capacity</label> <br/>
+				<select id="wheelchair_capacity" name="search[wheelchair_capacity]" class="selectLong">
+					<option value="">View All</option>
+					<option value="1-2">1-2</option>
+					<option value="3-4">3-4</option>
+					<option value="4-1000000">4+</option>
+				</select>
+				
+				<%= hidden_field_tag "bus_type_id", @bus_type.id %><br/>
+				<%= image_submit_tag("/assets/searchBtn.png", :style=>"margin-left: 15px; margin-top: 10px") %>
+			<% end %>
+           
+        </div>
+        <div class="sidebarRightBottomBg"></div>
+    </div>
+    <!-- sidebar right end -->

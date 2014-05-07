@@ -1,0 +1,50 @@
+<!-- page start -->
+<div class="pageContainer" id="contactContainer">
+  <div class="pageContent">
+    <div class="contactWrap">
+     
+      <div class="boxLargeTop"></div>
+      <div class="contactBox">
+        <div class="contactFormContainer">
+          <div class="contactTitle">
+            <h2 class="customTitle2">Forgot your password??</h2>
+            <h3 class="customTitle3">System v2 Buses</h3>
+          </div>
+
+          <!-- custom form messages start -->
+				<%= render :partial => "shared/devise_errors" %>
+
+          
+          <!-- custom form messages end -->
+          <!-- contact form start -->
+          <div class="contactForm" id="contactForm">
+
+			<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+			 	<fieldset>
+			 		<br/>
+				<%= devise_error_messages! %>
+  				<%= f.hidden_field :reset_password_token %>
+  				
+			    <%= f.label :password, "New password" %>
+  				<%= f.password_field :password, :class => "text-input", :id => "contactName" %>
+			  
+			  	<%= f.label :password_confirmation, "Confirm new password" %>
+  				<%= f.password_field :password_confirmation, :class => "text-input", :id => "contactName" %>
+			  <!-- <% if devise_mapping.rememberable? -%>
+			    <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+			  <% end -%> -->
+			  <%= f.submit "", :class=> "contactButton", :id => "contactSubmitBtn" %>
+			<% end %>
+
+
+          </div>
+          <!-- contact form end -->
+        </div>
+      </div>
+      <div class="boxLargeBottom"></div>
+
+    </div>
+    <!-- wrap end -->
+  </div>
+</div>
+<!-- page end -->

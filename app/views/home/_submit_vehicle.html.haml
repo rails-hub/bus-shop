@@ -1,0 +1,163 @@
+#listing_content
+  #listing_area
+    #listing_results
+      %h2
+        %span.large_greytext
+          Submit A Vehicle
+    - if flash[:notice].present?
+      %span.success= flash[:notice]
+    - if flash[:alert].present?
+      %span.error= flash[:alert]
+  .clearfix
+  .add-veh-area
+    = form_for @bus, :url => add_new_vehicle_path, :html => {:multipart => true} do |f|
+      - @bus.errors.full_messages.each do |msg|
+        %span.error= msg
+      / Bus Type Id
+      .submitVehicle
+        = f.label :bus_type_id, "Bus Type:"
+      .selectSubmit
+        = f.collection_select :bus_type_id, BusType.find(:all), :id, :name
+      %br/
+      / Chasis Make Id
+      .submitVehicle
+        = f.label :chasis_make_id, "Chasis Make:"
+      .selectSubmit
+        = f.collection_select :chasis_make_id, ChasisMake.find(:all), :id, :name
+      %br/
+      / Year
+      .submitVehicle
+        = f.label :year, "Year:"
+      .selectSubmit
+        = f.select :year, (DateTime.now.year - 30)..(DateTime.now.year), {:include_blank => "Select Year"}
+      %br/
+      / Chasis Model
+      .submitVehicle
+        = f.label :chasis_model, "Chasis Model:"
+      .selectSubmit
+        = f.text_field :chasis_model
+      %br/
+      / Body Make ID
+      .submitVehicle
+        = f.label :body_make_id, "Body Make:"
+      .selectSubmit
+        = f.collection_select :body_make_id, BodyMake.find(:all), :id, :name
+      %br/
+      / Body Model
+      .submitVehicle
+        = f.label :body_model, "Body Model:"
+      .selectSubmit
+        = f.text_field :body_model
+      %br/
+      / Mileage
+      .submitVehicle
+        = f.label :mileage, "Mileage:"
+      .selectSubmit
+        = f.text_field :mileage
+        (in kms)
+      %br/
+      / Passengers
+      .submitVehicle
+        = f.label :passengers, "Passengers:"
+      .selectSubmit
+        = f.text_field :passengers
+      %br/
+      / Color
+      .submitVehicle
+        = f.label :exterior_color, "Exterior Color:"
+      .selectSubmit
+        = f.text_field :exterior_color
+      %br/
+      / Color
+      .submitVehicle
+        = f.label :interior_color, "Interior Color:"
+      .selectSubmit
+        = f.text_field :interior_color
+      %br/
+      / Wheelchair Capacity
+      .submitVehicle
+        = f.label :wheelchair_capacity, "Wheelchair Capacity:"
+      .selectSubmit
+        = f.text_field :wheelchair_capacity
+      %br/
+      / Sale Price
+      .submitVehicle
+        = f.label :sale_price, "Sale Price:"
+      .selectSubmit
+        = f.text_field :sale_price
+      %br/
+      / Sale Price
+      .submitVehicle
+        = f.label :vehicle_length, "Vehicle Length:"
+      .selectSubmit
+        = f.text_field :vehicle_length
+        (in ft.)
+      %br/
+      / Location
+      .submitVehicle
+        = f.label :location, "Location:"
+      .selectSubmit
+        = f.select :location, ["USA", "Canada"] , { :include_blank => "Country (any)" } , :id => "country"
+      .clearfix
+      %br/
+      .submitVehicle
+        = f.label :location, "State:"
+      .selectSubmit
+        %select.state#state_empty{:name => "state", :tabindex => "2"}
+        = f.select :state_id , State.where("country_id = ? ",Country.find_by_name("United States").id).collect {|c| [ c.name, c.id ] } , { :include_blank => "State (any)" } , :id => "state_usa" , :tabindex => "2" , :class => "state" , :style => "display: none"
+        = f.select :state_id , State.where("country_id = ? ",Country.find_by_name("Canada").id).collect {|c| [ c.name, c.id ] } , { :include_blank => "State (any)" } , :id => "state_canada" , :tabindex => "2"  , :class => "state" , :style => "display: none"
+      .clearfix
+      %br/
+      / Location
+      .submitVehicle
+        = f.label :engine, "Engine:"
+      .selectSubmit
+        = f.text_field :engine
+      %br/
+      / Description
+      .submitVehicle
+        Description:
+      .selectSubmit
+        = f.text_area :vehicle_description, :rows => 10, :cols => 40
+      %br/
+      %br/
+      = f.fields_for :images do |builder|
+        .submitVehicle
+          = builder.label :image, "Add Photo"
+        .selectSubmit
+          = builder.file_field :image
+        %br/
+      .submitVehicleContent
+        %h3.customTitle1 Add Contact Information
+        = f.fields_for :seller do |sf|
+          / Contact Name
+          .submitVehicle
+            = sf.label :name, "Name:"
+          .selectSubmit
+            = sf.text_field :name
+          %br/
+          / Contact Phone
+          .submitVehicle
+            = sf.label :phone, "Phone:"
+          .selectSubmit
+            = sf.text_field :phone
+          %br/
+          / Contact Email
+          .submitVehicle
+            = sf.label :email, "Email:"
+          .selectSubmit
+            = sf.text_field :email
+          %br/
+          / Contact Postal Code
+          .submitVehicle
+            = sf.label :postal_code, "Postal Code:"
+          .selectSubmit
+            = sf.text_field :postal_code
+          %br/
+          / Contact Comments
+          .submitVehicle
+            = sf.label :comments, "Comments:"
+          .selectSubmit
+            = sf.text_area :comments, :rows => 10, :cols => 40
+          %br/
+        = f.submit "Submit", :id => "contactSubmitBtn"

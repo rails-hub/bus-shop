@@ -1,0 +1,39 @@
+<script>
+  function submit_delete(){
+    var data = $('input:checkbox:checked.bus_check_box').map(function () {
+      return "'"+this.value+"'";
+    }).get();
+    if(confirm("Are you sure you want to delete these items?")){
+      location.href = '<%= delete_dealers_path %>?ids=['+data+']';
+    }
+  }
+</script>
+
+<div class="contentMenu">
+  <div class="clear"></div>
+  <div class="contentCaption">Dealers Management</div>
+  <div class="menuIcons">
+
+    <div class="menuIcon">
+      <%if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.dealor_add)))%>
+        <%= link_to image_tag("/assets/admin/icons/addVehicle.png", :alt => "Add Dealer"), new_admin_dealer_path %><br/>Add<br/>Dealer
+      <%else%>
+        <a href="/assets/admin/denied.jpg" rel="facebox">
+          <%= image_tag("/assets/admin/icons/addVehicle.png") %><br/>Add<br/>Dealer
+        </a>
+      <%end%>
+    </div>
+    <%if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.ability_delete)))%>
+      <a href="#"><div class="menuIcon" onclick="submit_delete()"><img src="/assets/admin/icons/delete.png" alt="Delete"/><br/>Delete</div></a>
+    <%else%>
+      <div class="menuIcon">
+        <a href="/assets/admin/denied.jpg" rel="facebox">
+          <%= image_tag("/assets/admin/icons/delete.png") %><br/>delete<br/>Dealer
+        </a>
+      </div>
+    <%end%>
+    <div class="clear"></div>
+
+  </div>
+  <div class="clear"></div>
+</div>

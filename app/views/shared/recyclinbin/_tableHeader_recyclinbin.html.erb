@@ -1,0 +1,36 @@
+<script type="text/javascript">	
+	function get_selected_checkBoxes() {
+		var data = $('input:checkbox:checked.recycle_check_box').map(function () {
+	   		return this.value;
+		}).get();
+		return data;		
+	}
+
+	function submit_restore() {
+		var data = get_selected_checkBoxes();
+		if (data.length == 0) {
+			alert('No checkbox selected!');
+			return false;
+		} else if(confirm("Are you sure you want to restore these records?")){	
+			location.href = '<%= admin_recyclebins_restore_path %>?ids=['+data+']&bin=<%= params[:bin] %>';
+		}
+	}
+</script>
+
+<tr class="tableTop">
+	<td colspan="15">
+		<div class="tableTopHeader">
+			<span><%= binMenu %></span>
+			<script>$('.tableTopHeader span a').addClass('theadNoOfItems')</script>
+			<div class='restoreButtons'>
+				<a href="#" onclick="submit_restore()" >Restore</a>
+				<%= link_to 'Restore All', admin_recyclebins_restore_all_current_bin_path+"?bin=#{params[:bin]}", confirm: 'Are You Sure!' %>
+				<%= link_to 'Empty Folder', admin_recyclebins_empty_bin_path+"?bin=#{params[:bin]}", confirm: 'Are You Sure!' %>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+		<div class="headerDivider"></div>
+	</td>
+</tr>
+<tr><td style="position: absolute;"><input id="select1" name="select" type="checkbox"/></td></tr>

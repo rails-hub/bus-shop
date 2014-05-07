@@ -1,0 +1,41 @@
+<br/>
+<strong>
+	Hello <%= @lead.first_name %> <%= @lead.last_name %>,
+	<%= simple_format(@email[:message]) %>
+	
+	Your System 2 Buses Team
+</strong>
+<!-- 
+<strong><p style="color: #FC9A28;">Buses for Sale:</p></strong>
+<table>
+	<% @buses.each do |bus| %>
+	<tr><td colspan="2"><hr style="color: #CDCDCD; background-color: #CDCDCD;"></td></tr>
+	<tr>
+		<td style="padding-bottom: 5px;" align="center">
+			<%= link_to image_tag(bus.images.first.image_url(:thumb)), listing_url(bus.stock_id) %><br/>
+			<strong><p style="color: #CDCDCD;">Stock #<%= bus.stock_id %></p></strong>
+		</td>
+		<td style="padding-left: 20px; padding-bottom: 5px;" valign="top">
+			<strong>
+			<%= bus.year %> <%= bus.bus_type.name %><br/>
+			<%= bus.chasis_model %> - Chasis Model<br/>
+			<%= bus.passengers %> Passengers<br/>
+			Price: <%= number_to_currency(bus.price_on_site, :precision => 0) %><br/><br/>
+			
+			<%= link_to "View This Vehicle", listing_url(bus.stock_id), :style => "color: #FC9A28;" %>
+			</strong>
+		</td>
+	</tr>
+	<% end %>
+</table> -->
+
+<br/>
+<br/>
+
+<%= image_tag('mainLogo.png') %>
+<strong>
+	<p>Thank You, From The Webs Most Comprehensive Bus Inventory Site</p>
+	<p>System 2 Buses</p>
+	<p style="color: #FC9A28;">sales@system2buses.com</p>
+	<p style="color: #FC9A28;">http://system2buses.com</p>
+</strong>

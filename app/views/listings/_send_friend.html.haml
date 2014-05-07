@@ -1,0 +1,14 @@
+#dialog-form.dialog-form{:title => "Send to a Friend"}
+  %p.validateTips All form fields are required.
+  = form_for :friend , :url => send_friend_mail_listings_path, :method => :post , :html => { :id => 'form-mail' }  do |f|
+    %fieldset
+      = f.label :name , "Name:"
+      = f.text_field :name , :id => "name" , :class => ".text .ui-widget-content .ui-corner-all .fulle" , :size => 30
+      %br/
+      = f.label :email , "Email:"
+      = f.text_field :email , :id => "email" , :class => ".text .ui-widget-content .ui-corner-all" , :size => 30
+      %br/
+      = f.label :friends_email , "Friends Email:"
+      = f.text_field :friends_email , :id => "friends_email" , :class => ".text .ui-widget-content .ui-corner-all" , :size => 25
+      %br/
+      = f.hidden_field :friends_url , :value =>  "#{url_for(:only_path => false)}"

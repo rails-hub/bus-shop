@@ -1,0 +1,62 @@
+<div class="contentMenu">
+  <script>
+    function submit_delete(){
+      var data = $('input:checkbox:checked.lead_check_box').map(function () {
+        return "'"+this.value+"'";
+      }).get();
+					
+      if(confirm("Are you sure you want to delete these items?")){
+        location.href = '<%= delete_leads_path %>?ids=['+data+']';
+      }
+    }
+    function submit_multiple_pdf(){
+      var data = $('input:checkbox:checked.lead_check_box').map(function () {
+        return "'"+this.value+"'";
+      }).get();
+      location.href = '<%= admin_export_to_pdf_multiple_leads_path %>.pdf?ids=['+data+']';
+    }
+    function submit_multiple_excel(){
+      var data = $('input:checkbox:checked.lead_check_box').map(function () {
+        return "'"+this.value+"'";
+      }).get();
+      location.href = '<%= admin_export_to_xls_leads_path %>?ids=['+data+']';
+    }
+    function submit_email_blast(){
+      var data = $('input:checkbox:checked.lead_check_box').map(function () {
+        return "'"+this.value+"'";
+      }).get();
+	
+      if(data!=""){
+        location.href = '<%= admin_leads_create_blast_path %>?step=2&leads=['+data+']';
+      }
+      else{alert("You must select at least 1 inventory item to continue");}
+						
+    }
+  </script>
+  <div class="clear"></div>
+  <div class="contentCaption"><img src="/assets/admin/leadmanager.png" alt="Inventory Listings"/>Leads Manager</div>
+  <div class="menuIcons">
+    <%if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.lead_add)))%>
+      <a href="<%= new_admin_lead_path %>"><div class="menuIcon" ><%= image_tag("/assets/admin/icons/addVehicle.png", :alt => "Add Lead") %><br/>Add<br/>Lead</div></a>
+    <%else%>
+      <a href="/assets/admin/denied.jpg" rel="facebox" style="text-decoration: none;color: black;">
+        <div class="menuIcon" ><%= image_tag("/assets/admin/icons/addVehicle.png") %><br/>Add<br />Lead</div>
+      </a>
+    <%end%>
+    <a href="#" target="_blank"><div class="menuIcon" onclick="submit_multiple_pdf()"><%= image_tag("/assets/admin/icons/exportToPdf.png", :alt => "Export To PDF") %><br/>Export<br/>To PDF</div></a>
+    <a href="#" target="_blank"><div class="menuIcon" onclick="submit_multiple_excel()"><%= image_tag("/assets/admin/icons/exportToExcel.png", :alt => "Export to Excel") %><br/>Export<br/>To Excel</div></a>
+    <a href="#"><div class="menuIcon" onclick="submit_email_blast()" id="send_email_blast"><%= image_tag("/assets/admin/icons/email_blast.png", :alt => "Send Email Blast") %><br/>Send Email<br/>Blast</a></div></a>
+<a href="#"><div class="menuIcon" id="send_message"><%= image_tag("/assets/admin/icons/email_message.png", :alt => "Send Message") %><br/>Send<br/>Message</a></div></a>
+<%if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.ability_delete)))%>
+  <a href="#"><div class="menuIcon" onclick="submit_delete()"><img src="/assets/admin/icons/delete.png" alt="Delete"/><br/>Delete</div></a>
+<%else%>
+  <a href="/assets/admin/denied.jpg" rel="facebox" style="text-decoration: none;color: black;">
+    <%= image_tag("/assets/admin/icons/delete.png") %><br/>Delete
+  </a>
+<%end%>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+
+<%= render :partial => "shared/lead_message_form" %>

@@ -1,0 +1,44 @@
+#header_panel
+  #logo
+    = link_to (image_tag "shop-buses-logo.jpg",:alt => "Shop Buses Logo", :height => "91", :width => "241"),listings_path
+  / top sub nav
+  #top_subnav
+    %ul.subnav
+      %li
+        = link_to "About Us" , about_path
+      %li
+        = link_to "Services", services_path
+      %li
+        = link_to "Contact us" , contact_path
+    %a.post_vehicle_btn{:href => "#{ submit_vehicle_path }"} Post Your Vehicle
+    - if dealer_signed_in?
+      %div#dealor
+        %a.dealer_login_btn{:href => "#{edit_dealer_path(current_dealer)}"}#{current_dealer.email}
+        %a.dealer_login_btn{:href => "#{destroy_dealer_session_path}", :id => 'logout', :style =>"display:none;margin-left: 255px;margin-top: 30px;position: absolute;" }Logout
+    - else
+      %a.dealer_login_btn{:href => "#{dealer_session_path}"} Dealer Login
+  / top sub nav ends
+  #top_search
+    %form#searchbox{:action => listings_path}
+      = text_field_tag :search_field
+      %input#submit{:type => "submit", :value => "Search"}
+  #mainnav
+    #navbar
+      %ul
+        %li{ :class => "#{ 'shopall' if params[:slug].blank?  }" }
+          = link_to "<span>SHOP ALL</span>".html_safe , listings_path
+          - ['shuttle','paratransit','coach','school','limo','city','transit','specialty','van'].each do |a|
+            %li{ :class => "#{ 'shopall' if params[:slug] == a  }" }
+              %a{:href => listings_path+"/"+a}
+                %span
+                  = a.titleize
+
+
+:javascript
+  $(function(){
+      $("#dealor").hover(function(){
+          $("#logout").show();
+      },function(){
+          $("#logout").hide();
+      });
+  });

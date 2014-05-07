@@ -1,0 +1,107 @@
+= content_for :title, "Compare"
+.detail_headings
+  .compare_heading_left
+    %h1 Compare List
+.detail_heading_right
+  = link_to "Back to Inventory" , root_path , :class => "back_btn"
+  %a.print_btn{:href => "", :onclick => "window.print();return false;"} Print
+/ bus name and price ends
+#detail_content
+/ inventory details start
+#compare_specs_area
+  / Vehicle specs start
+  - @listing.each do |bus|
+    .compare_specs_panel
+      .compare_thumbnail
+        %a{:href => "/listings/#{bus.stock_id}"}
+          = image_tag bus.images.first.image_url(:thumb), :width => "125px", :height => "87px" if bus.images.first
+      %p.compare_price
+        $216,000
+        %span.currency
+          = bus.location == "USA" ? "USD" : "CDN"
+      .compare_item_title
+        %a{:href => "/listings/#{bus.stock_id}"}
+          = bus.year + " " + bus.body_make.name + " " + bus.body_model
+      .compare_vehicleInfo
+        %table.vehicleSpecs{:width => "304"}
+          %tr
+            %td.vehicleSpecsName{:width => "94"} Country:
+            %td{:width => "199"}
+              = bus.location
+          %tr
+            %td.vehicleSpecsName{:width => "94"} State/Prov:
+            %td{:width => "199"}
+              = bus.state.try(:name)
+
+          %tr
+            %td.vehicleSpecsName{:width => "94"} Year:
+            %td{:width => "199"}
+              = bus.year
+          %tr
+            %td.vehicleSpecsName Bus Type:
+            %td
+              = bus.bus_type.name
+          %tr
+            %td.vehicleSpecsName Chassis Make:
+            %td
+              = bus.chasis_make.name
+          %tr
+            %td.vehicleSpecsName Chassis Model:
+            %td
+              = bus.chasis_model
+          %tr
+            %td.vehicleSpecsName Body Make:
+            %td
+              = bus.body_make.name
+          %tr
+            %td.vehicleSpecsName Body Model:
+            %td
+              = bus.body_model
+          %tr
+            %td.vehicleSpecsName Engine:
+            %td
+              = bus.engine
+          %tr
+            %td.vehicleSpecsName Mileage:
+            %td
+              = (number_with_delimiter bus.mileage.to_i).to_s + (bus.location == "USA" ? " mi" : " kms")
+          %tr
+            %td.vehicleSpecsName Transmission:
+            %td
+              = bus.transmission
+          %tr
+            %td.vehicleSpecsName{:width => "94"} Country:
+            %td{:width => "199"}
+              = bus.location
+          %tr
+            %td.vehicleSpecsName Fuel Type:
+            %td
+              = bus.fuel_type
+          %tr
+            %td.vehicleSpecsName Passangers:
+            %td
+              = bus.passengers
+          %tr
+            %td.vehicleSpecsName Vehicle Length:
+            %td
+              = bus.vehicle_length
+          %tr
+            %td.vehicleSpecsName Exterior Color:
+            %td
+              = bus.exterior_color
+          %tr
+            %td.vehicleSpecsName Interior Color:
+            %td
+              = bus.interior_color
+          %tr
+            %td.vehicleSpecsName Luggage:
+            %td
+              = bus.luggage
+          %tr
+            %td.vehicleSpecsName Wheelchair Lift:
+            %td
+              = bus.wheelchair_lifts
+          %tr
+            %td.vehicleSpecsName Warranty:
+            %td
+              = bus.warranty

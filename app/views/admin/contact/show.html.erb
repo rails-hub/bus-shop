@@ -1,0 +1,23 @@
+<% content_for :title, "Show Contact" %>
+<style style="text/css">
+	.formBlock label{margin-top:0;}
+</style>
+<div id="contentNarrow">
+	<%= render :partial => 'shared/menu_icons_contact'   %>
+	<div class="contentBox">
+		<div class="contentHeader">            
+                <h1>Show Contact</h1> <!-- - Added On: 2/18/2011   |   Live for 18 Days
+                <span style="margin-left: 550px; color:#7a7a7a;">Hits to date:18</span> -->
+        </div>
+        <div class="formSection">
+        	<div class="formBlock">
+        		<p><label>Name</label><span  class="formField"><%= @contact.name %></span></p>
+        		<p><label>Email</label><span  class="formField"><%= @contact.email %></span></p>
+        		<p><label>Phone</label><span  class="formField"><%= @contact.phone %></span></p>
+        		<p><label>Comments</label><span  class="formField"><%= @contact.comments %></span></p>
+        	</div>
+        </div>
+	</div>
+
+</div>
+

@@ -1,0 +1,105 @@
+<% content_for :title, "Lead Manager" %>
+
+<div id="content">
+  <%= render :partial => 'shared/menu_icons_leads' %>
+
+  <div class="count_bar">
+		Leads Results - <%= Lead.all.count %>Total Leads
+    <%= render :partial => "shared/filters_applied"%>
+  </div>
+
+  <div class="contentBox">
+    <div class="contentTable">
+      <table width="100%">
+        <thead>
+          <tr class="tableTop">
+
+            <td colspan="15">
+              <div class="tableTopHeader">
+                <span style="float: right;"><a href="#"><img src="/assets/admin/icons/upDown.png" alt="Sort"/></a></span>
+                <%= render :partial => "shared/backend_filter_leads"%>
+                <div class="clear"></div>
+              </div>
+              <div class="headerDivider"></div>
+            </td>
+
+          </tr>
+          <% if @leads.count == 0 %>
+            <tr>
+              <td><h2>No records here... Add some by going to: <%= link_to "Add New Lead", new_admin_lead_path %></h2></td>
+            </tr>
+          <% else %>
+
+            <tr>
+              <td style="position: absolute;"><input id="select1" name="select" type="checkbox"/></td>
+            </tr>
+            <tr>
+              <th class="unsortable" style="border-left:1px solid #cdcdcd; width: 1%;"></th>
+              <th class="actions_col unsortable" width="120px"><a href="#">Actions</a></th>
+              <th><%= sortable "first_name" %></th>
+              <th><%= sortable "last_name" %></th>
+              <th><%= sortable "email" %></th>
+              <th><%= sortable "company" %></th>
+              <th><%= sortable "country" %></th>
+              <th><%= sortable "province" %></th>
+              <th><%= sortable "city" %></th>
+              <!--<th><%= sortable "stock_id" %></th>-->
+              <th><%= sortable "created_at" %></th>
+              <th><%= sortable "updated_at" %></th>
+            </tr>
+          </thead>
+          <% @leads.each do |lead| %>
+            <tr class="bus_row">
+              <td><input class="lead_check_box" name="select" type="checkbox" value="<%= lead.id %>" /></td>
+              <td class="actions">
+                <%if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.ability_delete)))%>
+                  <%= link_to image_tag("/assets/admin/icons/action4.png") + "<span>Delete</span>".html_safe, admin_lead_path(lead.id), :method => :delete, :confirm => "Are you sure you want to delete this lead details?", :class => "tooltip" %>
+                <%else%>
+                  <a href="/assets/admin/denied.jpg" rel="facebox">
+                    <%= image_tag("/assets/admin/icons/action4.png") %>
+                  </a>
+                <%end%>
+                <%= link_to image_tag("/assets/admin/icons/email_blast.png", :height => "20px") + "<span>Send Email Blast</span>".html_safe, admin_leads_create_blast_path+"?leads=['"+lead.id.to_s+"']", :class=> "tooltip" %>
+                <a href="#" class="send_message_inner tooltip"><%= image_tag("/assets/admin/icons/email_message.png", :alt => "Send Email", :height=>"20px") + "<span>Send Email</span>".html_safe%></a>
+                <%if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.ability_delete)))%>
+                  <%= link_to image_tag("/assets/admin/icons/action2.png") + "<span style='margin-left: -25px;'>Edit</span>".html_safe, edit_admin_lead_path(lead.id), :class => "tooltip" %>
+                <%else%>
+                  <a href="/assets/admin/denied.jpg" rel="facebox">
+                    <%= image_tag("/assets/admin/icons/action2.png") %>
+                  </a>
+                <%end%>
+              </td>
+              <td><%= lead.first_name %></td>
+              <td><%= lead.last_name %></td>
+              <td><%= lead.email %></td>
+              <td><%= lead.company %></td>
+              <td><%= lead.country %></td>
+              <td><%= lead.province %></td>
+              <td><%= lead.city %></td>
+              <!--<td><%= lead.bus.try(:stock_id) %></td>-->
+              <td><%= lead.created_at.to_app_date %></td>
+              <td><%= lead.updated_at.to_app_date %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+
+    </div>
+    <div class="pages">
+      <%= will_paginate @leads %>
+      <br/>
+      <form>
+        <label>Per Page</label>
+        <select id="displayPages" name="per_page">
+          <% (10..100).step(10).each do |num| %>
+            <option <%= selected_option?(num) %>><%= num %></option>
+          <% end %>
+        </select>
+        <input type="submit" value="GO" />
+      </form>
+    </div>
+
+    <div class="clear"></div>
+
+  </div>
+</div>

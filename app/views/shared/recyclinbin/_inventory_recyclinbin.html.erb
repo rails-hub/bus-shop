@@ -1,0 +1,50 @@
+<% if inventory.blank? %>
+	<tr><td><h2>Currently there are no items in Inventory bin</h2></td></tr>
+<% else %>
+
+<thead>
+  <%= render 'shared/recyclinbin/tableHeader_recyclinbin', sold ? {binMenu: @binMenu[1]}: {binMenu: @binMenu[0]} %>
+	<tr>
+		<th class="unsortable" style="border-left:1px solid #cdcdcd; width: 1%;"></th>
+		<th class="actions_col unsortable" width="8%"><a href="#">Actions</a></th>
+		<th><%= sortable "stock_id","Stock ID" %></th>
+		<th><%= sortable "status" %></th>
+		<th>Bus Type</th>
+		<th><%= sortable "year" %></th>
+		<th>Chasis Make</th>
+		<th><%= sortable "chasis_model" %></th>
+		<th><%= sortable "fuel_type" %></th>
+		<th><%= sortable "mileage","KMS" %></th>
+		<th><%= sortable "passengers","Seats" %></th>
+		<th><%= sortable 'created_at',"Added" %></th>
+		<th><%= sortable "price" %></th>
+		<th>Hits</th>
+		<th><%= sortable 'deleted_at',"Date Deleted" %></th>
+	</tr>
+</thead>
+<!-- Table row classes : gray, nothing, selected   -->
+<tbody>
+	<% inventory.each do |inv| %>  
+	<tr class="bus_row">
+		<td><input class="recycle_check_box" name="select" type="checkbox" value="<%= inv.id %>" data-stock-id="<%= inv.id %>"/></td>
+		<td>
+			<%= link_to image_tag("/assets/admin/icons/action1.png"), '#', :alt => "Vehicle Preview", :id => inv.stock_id, :'data-hover-image' => "<img src=#{inv.images.first.image_url(:thumb)} >", :class => "bus_camera"%>
+				<%= permanent_delete(inv,'inventory') %>
+		</td>
+		<td><%= inv.stock_id %></td>
+		<td><%= image_as_status(inv.status) %></td><%# HELPER METHOD recyclinbin  %>
+		<td><%= inv.bus_type.name%></td>
+		<td><%= inv.year %></td>
+		<td><%= inv.chasis_make.name %></td>
+		<td><%= inv.chasis_model %></td>
+		<td><%= inv.fuel_type %></td>
+		<td><%= inv.mileage %></td>
+		<td><%= inv.passengers %></td>
+		<td><%= print_date(inv.created_at) %></td>
+		<td><%= number_to_currency( inv.price ) %></td>
+		<td><%= inv.hits %></td>
+		<td><%= print_date(inv.deleted_at) %></td>
+	</tr>
+	<%end%>
+</tbody>
+<%end%>

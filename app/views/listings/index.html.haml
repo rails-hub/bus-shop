@@ -1,0 +1,78 @@
+= render :partial => "shared/new_design/advance_search"
+#listing_content
+  / inventory area start
+  #listing_area
+    #listing_results
+      %h2
+        %span.large_greytext
+          =@all.count.to_s + " - "
+          Buses for Sale
+      #display_dropdown
+        %p.float_left.form_text Display:
+        %select.display_select
+          %option{:value => 20 , selected: params[:display] == '10' } 20
+          %option{:value => 40 , selected: params[:display] == '20' } 40
+          %option{:value => 80 , selected: params[:display] == '40' } 80
+          %option{:value => 100 , selected: params[:display] == '60' } 100
+    / pagination start
+    .pagination
+      = will_paginate @all , :previous_label => '« previous', :next_label => 'next »' , :renderer => PaginationListLinkRenderer
+    #sort_dropdown
+      %p.float_left.form_text Sort:
+      %select.sort_select
+        %option{:value => "created_at-ASC" , selected: params[:sort] == "created_at-ASC"} New to Old
+        %option{:value => "created_at-DESC" , selected: params[:sort] ==  "created_at-DESC" } Old to New
+        %option{:value => "price-ASC" , selected: params[:sort] == "price-ASC" } Price: Low to High
+        %option{:value => "price-DESC" , selected: params[:sort] == "price-DESC" } Price: High to Low
+        %option{:value => "year-ASC" , selected: params[:sort] == "year-ASC" } Year: New to Old
+        %option{:value => "year-DESC" , selected: params[:sort] == "year-DESC" } Year: Old to New
+        %option{:value => "mileage-ASC" , selected: params[:sort] == "mileage-ASC" } Mileage: Low to High
+        %option{:value => "mileage-DESC" , selected: params[:sort] == "mileage-DESC"  } Mileage: High to Low
+    / sort by drop down ends
+    / inventory item start
+    - @all.each do |bus|
+      .listing_item_panel
+        .listing_item_price_panel
+          %p.listing_price
+            = bus.price.blank? ? "NA" : number_to_currency(bus.price_on_site, :precision => 0)
+            %span.currency= bus.location == "USA" ? "USD" : "CDN"
+          .detail_btn
+            %a{:href => "/listings/#{bus.stock_id}"} Details
+          = link_to "View compare list" , compare_path , :class => "compare_btn"
+          -#%a.compare_btn{:href => "#"} View compare list
+        .listing_item_detail
+          .inventory_thumbnail
+            %a{:href => "/listings/#{bus.stock_id}"}
+              = image_tag bus.images.first.image_url(:thumb), :width => "125px", :height => "87px" if bus.images.first
+          .listing_item_info
+            .listing_item_title
+              %a{:href => "/listings/#{bus.stock_id}"}
+                = bus.year
+                = bus.body_make.name
+                = bus.body_model
+            .listing_description
+              %p Mileage:
+              %p Capacity:
+              %p Stock Number:
+            .listing_description2
+              %p= ( (number_with_delimiter bus.mileage.to_i)).to_s + (bus.location == "USA" ? " mi" : " kms")
+              %p
+                =bus.passengers
+                Passangers
+              %p=bus.stock_id
+        .listing_compare
+          %form{:action => ""}
+            - a = session[:buses].find_index(bus.stock_id) unless session[:buses].blank?
+            %input{:onclick => "submit_add_to_compare('#{bus.stock_id}',this)", :type => "checkbox", :checked => a.blank? ? false: true, :id => "chk_#{bus.stock_id}" }/
+          %p.comparebox_text
+            Add to compare list
+    .pagination
+      = will_paginate @all , :previous_label => '« previous', :next_label => 'next »' , :renderer => PaginationListLinkRenderer
+
+    / inventory item ends
+
+  = render :partial => "listings/ads_panel"
+
+  .clearfix
+
+  = render :partial => "shared/compare_toolbar"

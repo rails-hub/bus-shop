@@ -1,0 +1,39 @@
+<% if @leads.blank? %>
+	<tr><td><h2>Currently there are no items in Leads bin</h2></td></tr>
+<% else %>
+<thead>
+  <%= render 'shared/recyclinbin/tableHeader_recyclinbin', binMenu: @binMenu[2] %>
+	<tr>
+		<th class="unsortable" style="border-left:1px solid #cdcdcd; width: 1%;"></th>
+		<th class="actions_col unsortable" width="140px"><a href="#">Actions</a></th>
+    <th><%= sortable "first_name" %></th>
+    <th><%= sortable "last_name" %></th>
+    <th><%= sortable "email" %></th>
+    <th><%= sortable "company" %></th>
+    <th><%= sortable "country" %></th>
+    <th><%= sortable "province" %></th>
+    <th><%= sortable "city" %></th>
+    <th><%= sortable "created_at" %></th>
+		<th><%= sortable 'deleted_at',"Date Deleted" %></th>
+	</tr>
+</thead>
+<!-- Table row classes : gray, nothing, selected   -->
+<tbody>
+	<% @leads.each do |lead| %>  
+  	<tr class="bus_row">
+      <td><input class="recycle_check_box" name="select" type="checkbox" value="<%= lead.id %>" /></td>
+      <td class="actions"><%= permanent_delete(lead, 'leads') %></td>
+      <td><%= lead.first_name %></td>
+      <td><%= lead.last_name %></td>
+      <td><%= lead.email %></td>
+      <td><%= lead.company %></td>
+      <td><%= lead.country %></td>
+      <td><%= lead.province %></td>
+      <td><%= lead.city %></td>
+      <td><%= lead.created_at.to_app_date %></td>
+			<td><%= print_date(lead.deleted_at) %></td>
+
+		</tr>
+	<% end %>
+</tbody>
+<% end %>

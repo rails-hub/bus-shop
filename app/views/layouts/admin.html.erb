@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Systems v2 Buses | <%=h yield(:title) %></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+  <style type="text/css">
+    .odd {
+      background: #EEE;
+    }
+    
+  </style>
+	<!--  Application CSS Files    -->
+    <%= stylesheet_link_tag "admin/admin", :media => "all" %>
+    <!--[if lte IE 7]><link rel="stylesheet" href="assets/admin/style_ie.css" type="text/css" media="screen, projection" /><![endif]-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/base/jquery-ui.css" id="theme">
+	<%= stylesheet_link_tag 'admin/jquery.fileupload-ui.css' %>
+	<%= stylesheet_link_tag 'admin/facebox' %>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+	<%= javascript_include_tag "jquery_ujs"%>
+	<%= javascript_include_tag 'admin/jquery.iframe-transport' %>
+    <%= javascript_include_tag 'admin/fileuploader.js' %>
+	<%= javascript_include_tag 'admin/jquery.fileupload' %>
+	<%= javascript_include_tag 'admin/jquery.fileupload-ui' %>
+	<%= javascript_include_tag 'admin/facebox' %>
+	<!--  Application JavaScript Files   -->
+    <%= javascript_include_tag "admin/application" %>
+    <%= javascript_include_tag "admin/jquery.qtip-1.0.0-rc3.min.js"%>
+    
+
+	<%= csrf_meta_tags %>
+	<%= javascript_include_tag 'admin/jquery.tablesorter.js' %>
+	<%= javascript_include_tag 'admin/jquery.metadata.js' %>
+	
+
+	<!--[if lte IE 7]><link rel="stylesheet" href="css/style_ie.css" type="text/css" media="screen, projection" /><![endif]-->
+</head>
+
+<body>
+<div id="wrapper">
+	<%= render :partial => 'shared/admin_header' %>
+ 
+	<% unless notice.nil? %>
+   		<p class="success"><%= notice %></p>
+   	<% end %>
+   	<% unless alert.nil? %>
+   		<p class="alert"><%= alert %></p>
+   	<% end %>
+   	<%= yield %>
+   	<%= javascript_include_tag 'admin/jquery.admin.table' %>
+                <script type="text/javascript">
+                  jQuery(document).ready(function($) {
+  $('a[rel*=facebox]').facebox()
+}) 
+                </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+/* ========================================================================== */
+/*  Cycle                                                   */
+/* ========================================================================== */
+#sliderOne {
+	display:block;
+	width: 632px;
+	height: 422px;
+	overflow: hidden;
+	margin-top:0px;
+}
+#sliderOne .slideModule {
+	width: 625px;
+	height: 415px;
+	overflow: hidden;
+	display:block;
+	padding:3px;
+	background-color: #999999;
+}
+#sliderOne .slideModule .slideContent{
+	display:block;
+	width:960px;
+	height:400px;
+	margin-left:auto;
+	margin-right:auto;
+	overflow:hidden;
+	position:relative;
+}
+#sliderNav {
+	z-index:9999;
+	display:block;
+	width:640px;
+	overflow:hidden;
+	margin-bottom: 3px;
+	position: relative;
+}
+#sliderNav ul {
+	overflow:hidden;
+	display:block;
+	position:relative;
+	padding-left:1px;
+	width:640px;
+	padding-top:10px;
+	overflow:hidden;
+	list-style-type: none;
+}
+#sliderNavList li {
+	float: left;
+	margin-bottom:8px;
+	margin-right: 6px;
+}
+#sliderNavList li:hover a img {
+	background-color: #FF8604;
+}
+#sliderNavList li a img {
+	display:block;
+	border:none;
+	width:96px;
+	height:67px;
+	padding:2px;
+	background-color: #999999;
+}
+#sliderNavList a {
+	display: block;
+	width: 100px;
+	height: 71px;
+	overflow:hidden;
+}
+#sliderNavList a.activeSlide img {
+	background-color: #FF8604;
+}
+#sliderNavList li.activeSlide a img {
+	background:#eeeeee;
+}

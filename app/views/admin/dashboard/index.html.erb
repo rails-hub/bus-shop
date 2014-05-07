@@ -1,0 +1,24 @@
+<% content_for :title, "Dashboard" %>
+<div id="content">
+  <%= render :partial => 'shared/menu_icons_dashboard'   %>
+  <div class="count_bar">
+		Dashboard
+  </div>
+  <div class="contentBox">
+    <%= render :partial => 'shared/module_chart'   %>
+  </div>
+  <div class="contentBox">
+    <%= render :partial => 'shared/module_contacts'   %>
+  </div>
+  <div class="contentBox">
+    <%= render :partial => 'shared/module_users'   %>
+  </div>
+  <div class="contentBox">
+    <%= render :partial => 'shared/module_sold'   %>
+  </div>
+  <div class="contentBox">
+    <%= render :partial => 'shared/pending'   %>
+  </div>
+
+
+</div>

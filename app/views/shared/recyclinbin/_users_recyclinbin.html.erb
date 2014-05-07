@@ -1,0 +1,39 @@
+<% if @users.blank? %>
+	<tr><td><h2>Currently there are no items in Users bin</h2></td></tr>
+<% else %>
+<thead>
+  <%= render 'shared/recyclinbin/tableHeader_recyclinbin', binMenu: @binMenu[4] %>
+	<tr>
+		<th class="unsortable" style="border-left:1px solid #cdcdcd; width: 1%;"></th>
+		<th class="actions_col unsortable" width="140px"><a href="#">Actions</a></th>
+		<th><%= sortable "first_name" %></th>
+		<th><%= sortable "last_name" %></th>
+		<th><%= sortable "email" %></th>
+		<th><%= sortable "created_at" %></th>
+		<th><%= sortable "updated_at" %></th>
+		<th><%= sortable "sign_in_count" %></th>
+		<th><%= sortable "confirmed_at","confirmed" %></th>
+		<th><%= sortable "last_sign_in_at" %></th>
+		<th><%= sortable 'deleted_at',"Date Deleted" %></th>
+	</tr>
+</thead>
+<!-- Table row classes : gray, nothing, selected   -->
+<tbody>
+	<% @users.each do |user| %>  
+		<tr class="bus_row">
+			<td><input class="recycle_check_box" name="select" type="checkbox" value="<%= user.id %>" data-stock-id="<%= user.id %>"/></td>
+			<td class="actions"><%= permanent_delete(user,'users') %></td>
+			<td><%= user.first_name %></td>
+			<td><%= user.last_name %></td>
+			<td><%= user.email %></td>
+			<td><%= user.created_at.to_app_date %></td>
+			<td><%= user.updated_at.to_app_date %></td>
+			<td><%= user.sign_in_count %></td>
+			<td><%= user.confirmed_at ? "Yes" : "No" %></td>
+			<td><%= user.last_sign_in_at.to_app_date if user.last_sign_in_at.present? %></td>
+			<td><%= print_date(user.deleted_at) %></td>
+
+		</tr>
+	<% end %>
+</tbody>
+<% end %>

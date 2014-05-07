@@ -1,0 +1,23 @@
+<script>
+	function submit_delete(){
+		var data = $('input:checkbox:checked.bus_check_box').map(function () {
+	   		return "'"+this.value+"'";
+		}).get();
+		if(confirm("Are you sure you want to delete these users?")){
+			
+			location.href = '<%= delete_users_path %>?ids=['+data+']';
+		}
+	}
+</script>
+
+<div class="contentMenu">
+            <div class="clear"></div>
+            <div class="contentCaption">Users Management</div>
+            <div class="menuIcons">
+                <div class="menuIcon"><%= link_to image_tag("/assets/admin/icons/addVehicle.png", :alt => "Add User"), new_admin_user_path %><br/>Add<br/>User</div>
+                <a href="#"><div class="menuIcon" onclick="submit_delete()"><img src="/assets/admin/icons/delete.png" alt="Delete"/><br/>Delete</div></a>
+                <div class="clear"></div>
+
+            </div>
+            <div class="clear"></div>
+</div>

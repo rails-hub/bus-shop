@@ -1,0 +1,333 @@
+<% if params[:controller] == "admin/search" %>
+    <% content_for :title, "Search " + params[:query] if params[:query] %>
+<% else %>
+    <% content_for :title, "Inventory" %>
+<% end %>
+
+<div id="content">
+
+<%= render :partial => 'shared/menu_icons' %>
+<div class="count_bar">
+  <div style="text-align:left">
+    Inventory Results - <%= @live %> Live Vehicles | <%= @inventory.count %> Total Vehicles
+    <%= render :partial => "shared/filters_applied" %>
+    <%= render :partial => "shared/legend" %>
+
+  </div>
+
+
+</div>
+<div class="contentBox">
+<div class="contentTable">
+<table width="100%">
+<thead>
+<tr class="tableTop">
+  <td colspan="<%= @show.get_active_columns+5 %>">
+    <div class="tableTopHeader">
+      <%= render :partial => "shared/backend_filter" %>
+      <span style="float: right;"><a href="#"><img src="/assets/admin/icons/upDown.png" alt="Sort"/></a></span>
+
+      <div class="clear"></div>
+    </div>
+    <div class="headerDivider"></div>
+  </td>
+
+</tr>
+<% if @inventory.count == 0 %>
+    <tr>
+
+      <% if params[:controller] == "admin/search" %>
+          <td><h2>No records found..please try a different search query</h2></td>
+      <% else %>
+          <td>
+            <h2>No records here... Add some by going to: <%= link_to "Add new Vehicle", new_admin_inventory_path %></h2>
+          </td>
+      <% end %>
+    </tr>
+<% else %>
+    <tr>
+      <td style="position: absolute;"><input id="select1" name="select" type="checkbox"/></td>
+    </tr>
+    <tr>
+      <th class="unsortable" style="border-left:1px solid #cdcdcd; width: 1%;">
+
+      </th>
+      <th class="actions_col unsortable" width="230px"><a href="#">Actions</a></th>
+      <% if @show.stock_id %>
+          <th width=80px><%= sortable "stock_id", "Stock ID" %></th>
+      <% end %>
+      <% if @show.status %>
+          <th width=80px class="unsortable"><%= sortable "status" %></th>
+      <% end %>
+      <% if @show.bus_type %>
+          <th width=70px><%= sortable "bus_types.name", "Bus Type" %></th>
+      <% end %>
+      <% if @show.year %>
+          <th width=40px><%= sortable "year" %></th>
+      <% end %>
+      <% if @show.chasis_make %>
+          <th width=80px><%= sortable "chasis_makes.name", "Chasis Make" %></th>
+      <% end %>
+      <% if @show.chasis_model %>
+          <th width=150px><%= sortable "chasis_model" %></th>
+      <% end %>
+      <% if @show.body_make %>
+          <th width=120px><%= sortable "body_makes.name", "Body Make" %></th>
+      <% end %>
+      <% if @show.fuel_type %>
+          <th width=70px><%= sortable "fuel_type" %></th>
+      <% end %>
+      <% if @show.mileage %>
+          <th width=70px><%= sortable "mileage", "KMS" %></th>
+      <% end %>
+      <% if @show.passengers %>
+          <th width=40px><%= sortable "passengers", "Seats" %></th>
+      <% end %>
+      <th width=40px><%= sortable "state_id", "Prov/State" %></th>
+      <% if @show.created_at %>
+          <th><%= sortable "created_at", "Added" unless params[:action] == "create_blast" %></th>
+      <% end %>
+      <% if @show.price %>
+          <th width=80px><%= sortable "price" %></th>
+      <% end %>
+      <% if @show.sold_price || params[:controller] == "admin/sold_inventory" %>
+          <th><%= sortable "sold_price" %></th>
+      <% end %>
+      <% if @show.sold_date || params[:controller] == "admin/sold_inventory" %>
+          <th width="80px"><%= sortable "sold_date" %></th>
+      <% end %>
+      <th><%= sortable "body_model" %></th>
+      <% if @show.engine %>
+          <th><%= sortable "engine" %></th>
+      <% end %>
+      <% if @show.vin %>
+          <th><%= sortable "vin" %></th>
+      <% end %>
+      <% if @show.vehicle_length %>
+          <th><%= sortable "vehicle_length" %></th>
+      <% end %>
+      <% if @show.exterior_color %>
+          <th><%= sortable "exterior_color" %></th>
+      <% end %>
+      <% if @show.interior_color %>
+          <th><%= sortable "interior_color" %></th>
+      <% end %>
+      <% if @show.luggage %>
+          <th><%= sortable "luggage" %></th>
+      <% end %>
+      <% if @show.wheelchair_lifts %>
+          <th><%= sortable "wheelchair_lifts" %></th>
+      <% end %>
+      <% if @show.warranty %>
+          <th><%= sortable "warranty" %></th>
+      <% end %>
+      <% if @show.transmission %>
+          <th><%= sortable "transmission" %></th>
+      <% end %>
+      <% if @show.location %>
+          <th><%= sortable "transmissions" %></th>
+      <% end %>
+      <% if @show.live %>
+          <th><%= sortable "live" %></th>
+      <% end %>
+      <% if @show.featured %>
+          <th><%= sortable "featured" %></th>
+      <% end %>
+      <% if @show.sold %>
+          <th width=80px><%= sortable "sold" %></th>
+      <% end %>
+      <% if @show.wholesale_price %>
+          <th><%= sortable "wholesale_price" %></th>
+      <% end %>
+      <% if @show.cost %>
+          <th><%= sortable "cost" %></th>
+      <% end %>
+      <% if @show.sale_price %>
+          <th><%= sortable "sale_price" %></th>
+      <% end %>
+      <% if @show.raised_roof %>
+          <th><%= sortable "raised_price" %></th>
+      <% end %>
+      <% if @show.brakes %>
+          <th><%= sortable "brakes" %></th>
+      <% end %>
+      <th width=40px>
+        <%= sortable "page_hits.count", "Hits" %>
+      </th>
+
+      <!-- <th style="border-right:1px solid #cdcdcd;"><a href="#">Price</a></th>   -->
+    </tr>
+    </thead>
+    <!-- Table row classes : gray, nothing, selected   -->
+
+    <% @inventory.each do |bus| %>
+        <tr class="bus_row">
+          <td>
+            <input class="bus_check_box" name="stock_ids[]" type="checkbox" value="<%= bus.stock_id %>" data-stock-id="<%= bus.stock_id %>"/>
+          </td>
+          <td class="actions">
+
+
+            <%= link_to image_tag("/assets/admin/icons/action1.png"), zip_inventory_path+"?ids=['"+bus.stock_id+"']", :alt => "Edit this Vehicle", :id => bus.stock_id, :'data-hover-image' => "<img src=#{bus.images.first.image_url(:thumb)} >", :class => "bus_camera" %>
+
+            <% if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.edit_inventroy))) %>
+                <%= link_to image_tag("/assets/admin/icons/action2.png") + "<span style='margin-left:-25px'>Edit</span>".html_safe, edit_admin_inventory_path(bus.id), :class => "tooltip", :alt => "Edit this Vehicle" %>
+            <% else %>
+                <a href="/assets/admin/denied.jpg" rel="facebox">
+                  <%= image_tag("/assets/admin/icons/action2.png") %>
+                </a>
+            <% end %>
+            <%= link_to image_tag("/assets/admin/icons/action3.png") + "<span>Export PDF</span>".html_safe, listing_path(bus.stock_id, :format => "pdf"), :class => "tooltip", :alt => "Export to PDF" %>
+            <% if current_user.class != User or (current_user.class == User and current_user.permission and ((current_user.permission.permission == "full_permission") or (current_user.permission.permission == "set_permission" and current_user.permission.ability_delete))) %>
+                <%= link_to image_tag("/assets/admin/icons/action4.png") + "<span>Delete</span>".html_safe, admin_inventory_path(bus.id), method: :delete, :class => "tooltip", :alt => "Delete This Listing", :confirm => "Are you sure you want to delete this vehicle?" %>
+            <% else %>
+                <a href="/assets/admin/denied.jpg" rel="facebox">
+                  <%= image_tag("/assets/admin/icons/action4.png") %>
+                </a>
+            <% end %>
+            <%= link_to image_tag("/assets/admin/icons/action5.png") + "<span>Live View</span>".html_safe, listing_path(bus.stock_id), :class => "tooltip", :alt => "View This Listing on Frontend" %>
+            <%= link_to image_tag("/assets/admin/icons/action6.gif") + "<span>Stats</span>".html_safe, admin_stat_path(bus), :class => "tooltip", :alt => "Traffic Charts" %>
+          </td>
+          <% if @show.stock_id %>
+              <td><%= link_to bus.stock_id, edit_admin_inventory_path(bus.id) %></td>
+          <% end %>
+          <% if @show.status %>
+              <td><%= image_tag("admin/icons/"+bus.status_image, :alt => "Inventory") %><!-- <img src="/assets/admin/icons/greenCircle.png" alt="greenCircle"/> --></td>
+          <% end %>
+          <% if @show.bus_type %>
+              <td><%= bus.bus_type.name %></td>
+          <% end %>
+          <% if @show.year %>
+              <td><%= bus.year %></td>
+          <% end %>
+          <% if @show.chasis_make %>
+              <td><%= bus.chasis_make.name %></td>
+          <% end %>
+          <% if @show.chasis_model %>
+              <td><%= bus.chasis_model %></td>
+          <% end %>
+          <% if @show.body_make %>
+              <td><%= bus.body_make.name %></td>
+          <% end %>
+          <% if @show.fuel_type %>
+              <td><%= bus.fuel_type %></td>
+          <% end %>
+          <% if @show.mileage %>
+              <td><%= bus.mileage %></td>
+              <!--# number_to_human(, :units => :distance)-->
+          <% end %>
+          <% if @show.passengers %>
+              <td><%= bus.passengers %></td>
+          <% end %>
+          <td>
+            <% if bus.state %>
+                <%= bus.state.name %>
+            <% end %>
+          </td>
+          <% if @show.created_at %>
+              <td width=80px><%= bus.created_at.to_app_date %></td>
+          <% end %>
+          <% if @show.price %>
+              <td><%= number_to_currency(bus.price) %></td>
+          <% end %>
+          <% if @show.sold_price || params[:controller] == "admin/sold_inventory" %>
+              <% if bus.sold_price.blank? %>
+                  <td>NA</td>
+              <% else %>
+                  <td><%= number_to_currency(bus.sold_price) %></td>
+              <% end %>
+          <% end %>
+          <% if @show.sold_date || params[:controller] == "admin/sold_inventory" %>
+              <% if bus.sold_date.blank? %>
+                  <td>NA</td>
+              <% else %>
+                  <td><%= bus.sold_date.to_app_date %></td>
+              <% end %>
+          <% end %>
+          <td><%= bus.body_model %></td>
+          <% if @show.engine %>
+              <td><%= bus.engine %></td>
+          <% end %>
+          <% if @show.vin %>
+              <td><%= bus.vin %></td>
+          <% end %>
+          <% if @show.vehicle_length %>
+              <td><%= bus.vehicle_length %></td>
+          <% end %>
+          <% if @show.exterior_color %>
+              <td><%= bus.exterior_color %></td>
+          <% end %>
+          <% if @show.interior_color %>
+              <td><%= bus.interior_color %></td>
+          <% end %>
+          <% if @show.luggage %>
+              <td><%= bus.luggage %></td>
+          <% end %>
+          <% if @show.wheelchair_lifts %>
+              <td><%= bus.wheelchair_lifts %></td>
+          <% end %>
+          <% if @show.warranty %>
+              <td><%= bus.warranty %></td>
+          <% end %>
+          <% if @show.wheelchair_lifts %>
+              <td><%= bus.wheelchair_lifts %></td>
+          <% end %>
+          <% if @show.transmission %>
+              <td><%= bus.transmission %></td>
+          <% end %>
+          <% if @show.location %>
+              <td><%= bus.location %></td>
+          <% end %>
+
+          <% if @show.live %>
+              <td><%= bus.live %></td>
+          <% end %>
+          <% if @show.featured %>
+              <td><%= bus.featured %></td>
+          <% end %>
+          <% if @show.sold %>
+              <td><%= bus.sold %></td>
+          <% end %>
+          <% if @show.wholesale_price %>
+              <td><%= bus.wholesale_price %></td>
+          <% end %>
+          <% if @show.cost %>
+              <td><%= bus.cost %></td>
+          <% end %>
+          <% if @show.sale_price %>
+              <td><%= bus.sale_price %></td>
+          <% end %>
+          <% if @show.entertainment %>
+              <td><%= bus.entertainment %></td>
+          <% end %>
+          <% if @show.raised_roof %>
+              <td><%= bus.raised_roof %></td>
+          <% end %>
+          <% if @show.brakes %>
+              <td><%= bus.brakes %></td>
+          <% end %>
+          <td><%= bus.hits %></td>
+        </tr>
+    <% end %>
+<% end %>
+</table>
+</div>
+<div class="pages">
+  <%= will_paginate @inventory %>
+  <br/>
+
+  <form>
+    <label>Per Page</label>
+    <select id="displayPages" name="per_page">
+      <% (10..100).step(10).each do |num| %>
+          <option <%= selected_option?(num) %>><%= num %></option>
+      <% end %>
+    </select>
+    <input type="submit" value="GO"/>
+  </form>
+</div>
+
+<div class="clear"></div>
+
+</div>
+</div>

@@ -1,0 +1,157 @@
+.live_preview
+  = simple_form_for :add , :url => "/admin/adds/update?id=#{@add.id}" do |f|
+    .contentBox.greyBoxWidth
+      #images_input{:style => "display:none;"}
+      .contentHeader
+        - if @add.name
+          %h1
+            Ad Details
+        - else
+          %h1 Ad Details
+        - if flash[:error].present?
+          %span.error
+            = flash[:error]
+        .formSection.paddtoZero
+          .formBlock.gray.float{:style => "float: left;width: 97%;margin-top: 20px"}
+            %div{:style => "float: left; width: 100%"}
+              %div{:style => "float: left; width: 22%"}
+                = hidden_field_tag "images_adds", 0
+                .leftPartImage
+                  - unless @add.image.blank?
+                    %div#image-preview{:style => "float: left; width: 152px; height: 118px;"}
+                      = image_tag @add.image.url
+                  - else
+                    %div#image-preview{:style => "float: left; width: 152px; height: 118px;"}
+              %div{:style => "float: left; width: 78%"}
+                .rightPartImage
+                  = f.input :name
+                  = f.input :priority, :collection =>[ ["296 x 250 - Priorty 1" , 1 , { 'data-height' => 296 ,'data-width' => 250 } ] , ["296 x 250 - Priorty 2" , 2 , { 'data-height' => 296 ,'data-width' => 250 } ] , ["296 x 155 - Priorty 3" , 3 , { 'data-height' => 296 ,'data-width' => 155 }] , ["296 x 100 - Priorty 4" , 4 , { 'data-height' => 296 ,'data-width' => 100 } ] , ["296 x 100 - Priorty 5" , 5 , { 'data-height' => 296 ,'data-width' => 100 } ] ], :selected => @add.priority.to_i
+                  %a{:href => "/assets/admin/help_pr.jpg", :rel => "facebox"}
+                    Help
+                  = f.input :url
+                  = f.input :start
+                  = f.input :end
+                .rightPartImageMost
+                  %label
+                    Status
+                  .rightPartMostInputs
+                    = f.collection_radio_buttons :status, [[true, 'Online (live)'] ,[false, 'Offline (pending)']], :first, :last
+                .upload-image-ad
+                  = link_to "Upload Image" ,"javascript:"
+                  = f.file_field :image
+                  %p
+                    JPG ,GIF ,PNG ,SWF ,JPEG
+    .contentBox.greyBoxWidth
+      #images_input{:style => "display:none;"}
+      .contentHeader
+        - if @client.first_name
+          %h1
+            Client Information
+        - else
+          %h1 Client Information
+        .formSection.paddtoZero
+          .formBlock.gray.float{:style => "float: left;width: 97%;margin-top: 20px"}
+            %div{:style => "float: left"}
+              = f.simple_fields_for :client do |c|
+                = c.label :first_name
+                = c.text_field :first_name, :value => @client.first_name.blank? ? '':@client.first_name
+                %br/
+                = c.label :last_name
+                = c.text_field :last_name, :value => @client.last_name.blank? ? '':@client.last_name
+                %br/
+                %br/
+                = c.label :email
+                = c.text_field :email, :value => @client.email.blank? ? '':@client.email
+                %br/
+                = c.label :phone
+                = c.text_field :phone, :value => @client.phone.blank? ? '':@client.phone
+                %br/
+                = c.label :mobile, "Mobile"
+                = c.text_field :mobile, :value => @client.mobile.blank? ? '':@client.mobile
+                %br/
+                %br/
+                = c.label :company
+                = c.text_field :company, :value => @client.company.blank? ? '':@client.company
+                %br/
+                %br/
+                = c.input :address, :value => @client.address.blank? ? '':@client.address
+                = c.input :address_2, :value => @client.address_2.blank? ? '':@client.address_2
+                = c.input :suite, :value => @client.suite.blank? ? '':@client.suite
+                = c.input :country_id, :collection => Country.order("name ASC")
+                = c.input :state_id, :collection => State.order("name ASC")
+                = c.input :postal, :value => @client.postal.blank? ? '':@client.postal
+                = c.input :comments, :value => @client.comments.blank? ? '':@client.comments
+
+          = f.submit "Update Ad", :class => "button", :style => "height: 22px; margin-top: 20px"
+
+#uploaded_image
+:javascript
+  function add_images_image() {
+      count = $('#images_adds').val();
+      $('#add_image').click();
+    }
+    $('#add_image').change(function(){
+       if ($('#add_image').val() != '') {
+       imageFiles = document.getElementById('add_image').files
+       // get the number of files
+       numFiles = imageFiles.length;
+       readFile();
+       }
+    })
+
+    var reader = new FileReader(),
+        i=0,
+        numFiles = 0,
+        imageFiles;
+
+    // use the FileReader to read image i
+    function readFile() {
+        reader.readAsDataURL(imageFiles[i])
+    }
+
+    // define function to be run when the File
+    // reader has finished reading the file
+      reader.onloadend = function(e) {
+        value = $('#add_image').attr('value');
+        if(value != '') {
+         value = value.split('.');
+         if (value[1] == 'jpg' || value[1] == 'gif' || value[1] =='png' || value[1] == 'swf' || value[1] == 'jpeg') {
+           // make an image and append it to the div
+            var image = $('<img>').attr('src', e.target.result);
+            $('#image-preview').html('');
+            $(image).appendTo('#image-preview');
+            $('#images_adds').val(parseInt(count) + 1)
+         }
+         else {
+           val_e = "#{@add.image}";
+           val_e = val_e.split('.');
+           if (val_e[1] == NaN || val_e[1] == null || val_e[1] == '' || val_e[1] == 'undefined'){
+           $('#add_image').val('');
+           $('#image-preview').html('');
+           }
+           alert('Unknow image format');
+           return false
+         }
+        }
+        else {
+         val_e = "#{@add.image}";
+         val_e = val_e.split('.')
+          if (val_e[1] == NaN || val_e[1] == null || val_e[1] == '' || val_e[1] == 'undefined'){
+          $('#add_image').val('');
+          $('#image-preview').html('');
+         }
+         alert('Unknow image format');
+         return false
+        }
+
+     };
+    $(document).ready(function(){
+     val = $('#add_client_address').val("#{@client.address.blank? ? '':@client.address}");
+     val = $('#add_client_address_2').val("#{@client.address_2.blank? ? '':@client.address_2}");
+     val = $('#add_client_suite').val("#{@client.suite.blank? ? '':@client.suite}");
+     val = $('#add_client_postal').val("#{@client.postal.blank? ? '':@client.postal}");
+     val = $('#add_client_comments').val("#{@client.comments.blank? ? '':@client.comments}");
+     val = $('#add_client_state_id').val("#{@client.state_id.blank? ? '':@client.state_id}");
+     val = $('#add_client_country_id').val("#{@client.country_id.blank? ? '':@client.country_id}");
+     val = $('#add_priority').val("#{@add.size} - Priorty #{@add.priority}");
+    })

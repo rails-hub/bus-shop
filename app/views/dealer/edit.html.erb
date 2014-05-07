@@ -1,0 +1,68 @@
+<% content_for :title, "Dealer Panel" %>
+<!-- page start -->
+<div id="listing_content">
+<div class="pageContainer" id="contactContainer">
+  <div class="pageContent">
+    <div class="contactWrap"> 
+      
+      <div class="boxLargeTop"></div>
+      <div class="contactBox">
+        <div class="contactFormContainer">
+          <div class="contactTitle">
+            <h2 class="customTitle2">Dealer Panel</h2>
+            <h3 class="customTitle3">Edit your dealer profile</h3>
+          </div>
+          	<% unless notice.nil? %>
+		   		<p class="success"><%= notice %></p>
+		   	<% end %>
+		   	<% unless alert.nil? %>
+		   		<p class="alert"><%= alert %></p>	
+		   	<% end %>
+          <!-- custom form messages start -->
+          
+          <!-- custom form messages end -->
+          <!-- contact form start -->
+          <div class="contactForm" id="contactForm">
+              <fieldset>
+              	<%= form_for(@dealer, :url => {:controller => "dealer", :action => "update"}) do |f| %>
+				 <%= f.label :first_name, "First Name" %><%= f.text_field :first_name, :class=> "text-input", :placeholder => "First Name"%><br/>
+						<%= f.label :last_name, "Last Name" %><%= f.text_field :last_name, :class => "text-input", :placeholder => "Last Name"%><br/>
+                        <%= f.label :email, "Email:" %><%= f.text_field :email, :class => "text-input", :placeholder => "Email" %><br/>
+						<%= f.label "Logo:" %><%= f.file_field :logo, :class => "text-input", :style => 'height:22px' %>
+						<% if @dealer.logo? %>
+							<%= image_tag @dealer.logo, :height => '80', :style => 'margin-left: 110px' %>
+						<% end %><br />  <%= f.label :phone, "Phone" %><%= f.text_field :phone, :class => "itext-input", :id => "inquireName" %><br/><br/>
+  		        <%= f.label :mobile, "Mobile" %><%= f.text_field :mobile, :class => "itext-input", :id => "inquireName" %><br/><br/>
+  		        <%= f.label :company, "Company Name" %><%= f.text_field :company, :class => "itext-input", :id => "inquireName" %><br/><br/>
+              <%= f.label :street_address, "Address" %><%= f.text_field :street_address, :class => "itext-input", :id => "inquireName" %><br/><br/>
+              <%= f.label :address2, "Address Line2" %><%= f.text_field :address2, :class => "itext-input", :id => "inquireName" %>  <br/><br/>   
+              <%= f.label :unit, "Suite/Unit" %><%= f.text_field :unit, :class => "itext-input", :id => "inquireName" %><br/><br/>
+              <%= f.label :city, "City" %><%= f.text_field :city, :class => "itext-input", :id => "inquireName" %><br/><br/>
+						
+                <%= f.label :state, "Prov/State" %>
+                <%= f.grouped_collection_select :province, Country.order(:name), :states, :name, :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %><br /><br />
+                
+            <%= f.label :country, "Country" %><%= f.collection_select :country, Country.order(:name), :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %><br/>
+						<%= f.hidden_field :logo_cache %>
+						<%= f.hidden_field :id %><br/>
+				  <p><%= f.submit "", :class => "contactButton", :id => "contactSubmitBtn" %></p>
+				<% end %>
+              </fieldset>
+          </div>
+          <!-- contact form end -->
+        </div>
+      </div>
+      <div class="boxLargeBottom"></div>
+    </div>
+    <!-- wrap end -->
+  </div>
+</div>
+</div>
+<!-- page end -->
+
+
+
+
+
+
+

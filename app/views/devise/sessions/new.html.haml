@@ -1,0 +1,13 @@
+%span.login_title
+  System Login
+#login_form
+  =render :partial => "shared/devise_errors"
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    = f.email_field :email, :class => "login_field", :id => "username", :placeholder => "Username"
+    %br/
+    %br/
+    = f.password_field :password, :class => "login_field", :id => "contactName" , :placeholder => "Password"
+    -#= f.submit "Login", :class=> "admin_login_btn", :id => "contactSubmitBtn"
+    %a.admin_login_btn{:onclick => "$(this).closest('form').submit(); return false;"} Login
+    = image_tag "login_shadow.png" , :height => "47" , :width => "380" , :alt => "shadow"
+    -#%img{:height => "47", :src => "login_shadow.png", :width => "380"}/

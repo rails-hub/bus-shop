@@ -1,0 +1,22 @@
+@media print {
+	
+	body {
+		font-family: Verdana;
+	}
+	
+	.page-break { 
+		display:block; 
+		clear:both; 
+		page-break-after:always;
+		page-break-before:always; 
+	}
+	
+	li {
+		list-style: none outside none
+	}
+	
+	.inquireContainer {
+		display: none;
+	}
+
+}

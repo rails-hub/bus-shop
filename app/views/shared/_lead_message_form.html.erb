@@ -1,0 +1,129 @@
+<style>
+	#lead_dialog {
+		display: none;
+	}
+</style>
+
+<script>
+	$(document).ready(function() {
+	    
+	    var post_request_path = "/admin/leads/send_email";
+	    
+	    $("#selectable").selectable();
+	    
+	    $("#selectable li").each(function() {
+	    		$(this).qtip({
+	    			content: $(this).data("text"),
+	    			style: {
+	    				name: "light"
+	    			}
+	    		});
+	    });
+	    
+	    $("#send_message").click(function() {
+	    	var leads = new Array;
+		    $(".lead_check_box").each(function() {
+		        $this = $(this);
+		        if ($this.is(':checked')) {
+		            leads.push($this.attr("value"));
+		        }
+		    });
+		    $.post(post_request_path, { 'leads[]': leads } );
+		    	
+	    		$("#lead_dialog").dialog("open");
+	    		$("#selectable_grid").hide();
+				  $("#message_editor").show();	
+	    		return false;
+	    });
+	    
+	    $(".send_message_inner").click(function() {
+	    		var leads = new Array;
+	    		
+	    		$this = $(this);
+	        leads.push($this.parent().parent().children().first().children(".lead_check_box").attr("value"));
+	    	
+		    
+		    $.post(post_request_path, { 'leads[]': leads } );
+		    
+	    		$("#lead_dialog").dialog("open");
+	    		$("#selectable_grid").hide();
+  				$("#message_editor").show();
+	    		return false;
+	    });
+	    
+	    $("#lead_dialog").dialog({
+			autoOpen: false,
+			height: 500,
+			width: 600,
+			modal: true,
+			buttons: {
+				"Send Email": function() {
+					$.post(post_request_path, 
+										$("#email_form").serialize(),
+											function() {
+												alert("Your Email is on it's way!");
+											}
+										)
+					
+					var buses = new Array;
+					// $("#selectable li").each(function() {
+						// $this = $(this);
+						// if ($this.is(".ui-selected")) {
+							// buses.push($this.data("stock-id"));
+						// }
+					// });
+					$.post(post_request_path, 
+						{'buses[]': buses },
+						function() {
+							$("#lead_dialog").dialog({
+								buttons: {
+									// "Send Email!": function() {
+										// $.post(post_request_path, 
+											// $("#email_form").serialize(),
+											// function() {
+												// alert("Your Email is on it's way!");
+											// }
+										// )
+									// }
+								}
+							});
+						}
+					);
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			},
+			close: function() {
+				allFields.val( "" ).removeClass( "ui-state-error" );
+			}
+		});
+	})
+</script>
+
+<style>
+	#lead_dialog { float:left; display:none;}
+	#message_editor { width:600px; display:none;}
+	#selectable li { margin: 3px; padding: 1px; float: left; width: 127px; height: 115px; font-size: 1em; text-align: center; border: 1px solid black; opacity: 0.3;}
+	#selectable .ui-selected { opacity: 1; }
+</style>
+
+<div id="lead_dialog" title="Send Message to Leads">
+	<div id="selectable_grid">
+		<ol id="selectable">
+			<% @buses.each do |bus| %>
+				<li data-stock-id="<%= bus.stock_id %>" data-text="<strong><%= bus.year%> - <%= bus.chasis_model %> - <%= number_to_human(bus.mileage, :units => :distance, :seperator => ',') %></strong>">
+					<%= image_tag bus.images.first.image_url(:thumb), :height => "95", :width => "127" %><br/>
+					<%= bus.stock_id %>
+				</li>
+			<% end %>
+		</ol>
+	</div>
+	<div id="message_editor">
+		<br/>
+		<form id="email_form">
+			<input type="text" name="email_msg[subject]" style="width: 572px;" placeholder="Subject">
+			<textarea id="email_message" name="email_msg[message]" style="width: 575px; height: 300px;" placeholder="Email Message"></textarea>
+		</form>
+	</div>
+</div>

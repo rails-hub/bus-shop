@@ -1,0 +1,114 @@
+.footerContainer
+  .footer
+    #footer_info
+      #footer_logo
+        %a{:href => "listings.html"}
+        = link_to (image_tag "busfooter_logo.png",:alt => "Shop Buses Logo", :height => "91", :width => "241"),listings_path
+        %br/
+      #footer_menu
+        %ul.footer_list1
+          %li
+            = link_to "Shuttle Buses" , "/listings/shuttle"
+          %li
+            = link_to "Limo Buses" , "/listings/limo"
+          %li
+            = link_to "Paratransit Buses" , "/listings/paratransit"
+          %li
+            = link_to "School Buses" , "/listings/school"
+          %li
+            = link_to "City Transit Buses" , "/listings/city"
+          %li
+            = link_to "Trolley Buses" , "/listings/trolley"
+          %li
+            = link_to "Buy A Bus" , listings_path
+          %li
+            = link_to "Sell A Bus" , listings_path
+          %li
+            = link_to "Bus Listings" , listings_path
+        %ul.footer_list1
+          %li
+            = link_to "New Flyer" , listings_path
+          %li
+            = link_to "Optima" , listings_path
+          %li
+            = link_to "Orion" , listings_path
+          %li
+            = link_to "Prevost" , "/listings/?utf8=✓&q[chasis_make_id_eq]=#{ChasisMake.find_by_name('Prevost').blank? ? '':ChasisMake.find_by_name('Prevost').id}"
+          %li
+            = link_to "Setra" , listings_path
+          %li
+            = link_to "Spartan" , listings_path
+          %li
+            = link_to "Stallion" , listings_path
+          %li
+            = link_to "Starcraft" , listings_path
+          %li
+            = link_to "Startrans" , listings_path
+        %ul.footer_list1
+          %li
+            = link_to "Startrans" , listings_path
+            %a{:href => "index.html"}
+              Falcon
+              %br/
+          %li
+            %a{:href => "index.html"} Federal Coach
+          %li
+            = link_to "Ford Vans", "/listings/van?utf8=✓&q[chasis_make_id_eq]=#{ChasisMake.find_by_name('Ford').blank? ? '':ChasisMake.find_by_name('Ford').id}"
+          %li
+            %a{:href => "index.html"} Girardin
+          %li
+            %a{:href => "index.html"} Glaval
+          %li
+            %a{:href => "index.html"} Goshen Coach
+          %li
+            %a{:href => "index.html"} IC Bus
+          %li
+            %a{:href => "index.html"} Krystal Enterprises
+          %li
+            %a{:href => "index.html"} NABI
+        %ul.footer_list1
+          %li
+            %a{:href => "index.html"} Ameritrans
+          %li
+            %a{:href => "index.html"} Arboc
+          %li
+            %a{:href => "index.html"} Blue Bird
+          %li
+            %a{:href => "index.html"} Braun Vans
+          %li
+            %a{:href => "index.html"} Chevrolet Vans
+          %li
+            %a{:href => "index.html"} Chrysler Vans
+          %li
+            %a{:href => "index.html"} COBUS
+          %li
+            %a{:href => "index.html"} Collins
+          %li
+            %a{:href => "index.html"} Eldorado
+      #footer_features
+        %span.footer_titles Contact and Support:
+        %br/
+        %span.footer_contact
+          1-800-456-8899
+          %br/
+          %a.footer_email{:href => "mailto:support@shopbuses.com"} support@shopbuses.com
+          %br/
+          %br/
+        %hr/
+        %br/
+        %span.footer_titles Sales and Support:
+        %br/
+        %span.footer_contact
+          1-800-456-8899
+          %br/
+          %a.footer_email{:href => "mailto:sales@shopbuses.com"} sales@shopbuses.com
+          %br/
+          %br/
+          %u
+            %a.footer_email{:href => "/submit_vehicle"} Submit A Vehicle
+      #footer_created
+        %span.copyright Copyright © 2012. SHOP BUSES.COM. All Rights Reserved
+        %span.credit_text
+          %a{:href => "http://www.liquidchrome.net", :target => "_blank"}
+            = image_tag "liquidchrome-design-logo.png",:alt => "Created by Liquidchrome Design Inc.", :height => "24", :width => "23"
+            Created By Liquidchrome Design Inc.

@@ -1,0 +1,56 @@
+<% content_for :title, "Add New Dealer" %>
+
+<div id="contentNarrow">
+	<%= render :partial => 'shared/menu_icons_dealers'   %>
+	<%= form_for(@dealer, :url => {:controller => "dealers", :action => "update"}) do |f| %>
+	
+	<%= render :partial => 'shared/errors', :locals => { :resource => @dealer } %>
+	<%= f.submit "Submit", :class => "button" %>
+	
+	<div class="contentBox">
+		<div id="images_input" style="display:none;">
+        	
+       </div>
+            <div class="contentHeader">            
+                <h1>Editing Dealer <%= @dealer.full_name %></h1> <!-- - Added On: 2/18/2011   |   Live for 18 Days
+                <span style="margin-left: 550px; color:#7a7a7a;">Hits to date:18</span> -->
+            </div>
+            <div class="formSection">
+                <div class="formBlock gray float" style="width: 97%;" >
+                  
+                   <div style="float: left; margin-left:40px;">
+						<!-- Year -->
+						<%= f.label :first_name, "First Name" %><%= f.text_field :first_name, :class=> "big", :placeholder => "First Name"%><br/>
+						<%= f.label :last_name, "Last Name" %><%= f.text_field :last_name, :class => "big", :placeholder => "Last Name"%><br/>
+                        <%= f.label :email, "Email:" %><%= f.text_field :email, :class => "big", :placeholder => "Email" %><br/>
+						<%= f.label :password, "Password:" %><%= f.password_field :password, :class => "big", :placeholder => "Password" %><br/>
+						<%= f.label :password_confirmation, "Confirmation:" %><%= f.password_field :password_confirmation, :class => "big", :placeholder => "Password Confirmation" %><br/>
+						
+						<%= f.label "Logo:" %><%= f.file_field :logo, :class => "big", :style => 'height:22px' %>
+						<% if @dealer.logo? %>
+							<%= image_tag @dealer.logo, :height => '80' %>
+						<% end %><br/>
+						<%= f.label :phone, "Phone" %><%= f.text_field :phone, :class => "itext-input", :id => "inquireName" %><br/>
+		        <%= f.label :mobile, "Mobile" %><%= f.text_field :mobile, :class => "itext-input", :id => "inquireName" %><br/>
+		        <%= f.label :company, "Company Name" %><%= f.text_field :company, :class => "itext-input", :id => "inquireName" %><br/>
+            <%= f.label :street_address, "Address" %><%= f.text_field :street_address, :class => "itext-input", :id => "inquireName" %><br/>
+            <%= f.label :address2, "Address Line2" %><%= f.text_field :address2, :class => "itext-input", :id => "inquireName" %>  <br/>            
+            <%= f.label :unit, "Suite/Unit" %><%= f.text_field :unit, :class => "itext-input", :id => "inquireName" %><br/>
+            <%= f.label :city, "City" %><%= f.text_field :city, :class => "itext-input", :id => "inquireName" %><br/>
+             <div>
+                <%= f.label :state, "Prov/State" %>
+            
+                <%= f.grouped_collection_select :province, Country.order(:name), :states, :name, :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %>
+                </div>
+            <%= f.label :country, "Country" %><%= f.collection_select :country, Country.order(:name), :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %>
+						<%= f.hidden_field :logo_cache %><br/>
+						<br/>
+                   </div>
+                </div>
+                <div class="clear"></div>
+                <div class="formDivider"></div>
+
+			<% end %>            
+            <div class="clear"></div>
+        </div>
+</div>

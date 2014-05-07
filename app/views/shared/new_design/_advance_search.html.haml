@@ -1,0 +1,67 @@
+#advanced_search
+  #advanced_search_header
+    %h1 Advanced Bus Search
+  #advanced_search_form
+    = search_form_for @q , :url => "/listings/#{params[:slug]}", :html=>{:method=>:get}    do |f|
+      %table{:border => "0", :height => "137", :width => "759"}
+        %tbody
+          %tr
+            %td{:height => "31", :width => "160"}
+              = f.select :location_eq , [["Country (any)",""], ["USA", "USA"], ["Canada", "Canada"]], { :include_blank => false } , :id => "country" , :tabindex => "1"
+            %td{:width => "257"}
+              - unless params[:slug].blank?
+                = f.select :body_model_eq , ( Bus.where(" bus_type_id =  ? " , BusType.find_by_slug(params[:slug])) ).map(&:body_model).uniq , { :include_blank => "Body Model (any)" } , :id => "bodymodel" , :tabindex => "3"
+              - else
+                = f.select :body_model_eq , Bus.select(:body_model).map(&:body_model).uniq , { :include_blank => "Body Model (any)" } , :id => "bodymodel" , :tabindex => "3"
+            %td{:width => "171"}
+              = f.select :fuel_type_eq , [["Gas", "Gas"], ["Diesel", "Diesel"]], { :include_blank => "Fuel Type (any)" } , :id => "fueltype" , :tabindex => "10"
+            %td{:width => "153"}
+              - unless ["paratransit" , "school", "city-transit"].include? params[:slug]
+                = f.select :rear_luggage_eq , [["Yes", "Yes"], ["No", "No"]], { :include_blank => "Rear Luggage (any)" } , :id => "rearluggage" , :tabindex => "14"
+
+          %input{:name => "sort" , :type => "hidden" , :id => "sort-order" ,  :value => params[:sort] }
+          %input{:name => "display" , :type => "hidden" , :id => "display-number" ,:value => params[:display] }
+          %tr
+            %td{:height => "31"}
+              %select.state#state_empty{:name => "state", :tabindex => "2"}
+              = f.select :state_id_eq , State.where("country_id = ? ",Country.find_by_name("United States").id).collect { |x| [x.name , x.id] } , { :include_blank => "State (any)" } , :id => "state_usa" , :tabindex => "2" , :class => "state" , :style => "display: none"
+              = f.select :state_id_eq , State.where("country_id = ? ",Country.find_by_name("Canada").id).collect { |x| [x.name , x.id] } , { :include_blank => "State (any)" } , :id => "state_canada" , :tabindex => "2"  , :class => "state" , :style => "display: none"
+            %td
+              = f.select :year_gteq , 2013.downto(1980).to_a , { :include_blank => "Min. Year" } , :id => "minyear" , :tabindex => "4"
+              %span.to_text to
+              = f.select :year_lteq , 2013.downto(1980).to_a , { :include_blank => "Max. Year" } , :id => "maxyear" , :tabindex => "5"
+            %td
+              = f.select :passengers_lteq , [["10 and under", 10], ["11-20", 20], ["21-30", 30], ["31-40", 40], ["41-50", 50], ["50+", 1000]], { :include_blank => "Passengers (any)" } , :id => "passengers" , :tabindex => "11"
+            %td
+              - unless ["paratransit" , "school", "city-transit"].include? params[:slug]
+                = f.select :luggage_eq , [["Yes", "Yes"], ["No", "No"]], { :include_blank => "Overhead Luggage (any)" } , :id => "overheadluggage" , :tabindex => "16"
+          %tr
+            %td{:height => "34"}  
+            %td
+              = f.text_field :price_gteq , :id => "minprice" , :placeholder => "Min. Price" , :tabindex => "6"
+              %span.to_text to
+              = f.text_field :price_lteq , :id => "maxprice" , :placeholder => "Max. Price" , :tabindex => "7"
+            %td
+              - unless ["shuttle" , "limo" , "school", "city-transit" , "coach" ].include? params[:slug]
+                = f.select :wheelchair_lifts_eq , [["Yes", "Yes"], ["No", "No"]], { :include_blank => "Wheel Chair (any)" } , :id => "wheelchair" , :tabindex => "12"
+              - if ["limo" , "coach"].include? params[:slug]
+                = f.select :lavatory_eq , [ ["Yes", "Yes"], ["No", "No"]], { :include_blank => "Lavatory (any)" } , :id => "lavatory" , :tabindex => "13"
+              - if params[:slug] == "school"
+                = f.select :brakes_eq , [ ["Air", "Air"], ["Hydraulic", "Hydraulic"]], { :include_blank => "Brakes (any)" } , :id => "brakes" , :tabindex => "13"
+            %td
+              - unless ["paratransit" , "limo" , "school" , "city-transit", "van"].include? params[:slug]
+                = f.select :entertainment_eq , [["Yes", "Yes"], ["No", "No"]], { :include_blank => "Entertainment (any)" } , :id => "tvdvd" , :tabindex => "16"
+              - if params[:slug] == "van"
+                = f.select :raised_roof_eq , [["Yes", "Yes"], ["No", "No"]], { :include_blank => " Raised Roof (any)" } , :id => "tvdvd" , :tabindex => "16"
+          %tr
+            %td{:height => "31"}  
+            %td
+              = f.text_field :mileage_gteq , :id => "minmile" , :placeholder => "Min. Mileage" , :tabindex => "8"
+              %span.to_text to
+              = f.text_field :mileage_lteq , :id => "maxmile" , :placeholder => "Max. Mileage" , :tabindex => "9"
+              %td
+                - unless ["shuttle" , "paratransit" , "limo" , "school" , "city-transit" , "coach" , "van" ].include? params[:slug]
+                  = f.select :lavatory_eq , [ ["Yes", "Yes"], ["No", "No"]], { :include_blank => "Lavatory (any)" } , :id => "lavatory" , :tabindex => "13"
+            %td  
+  #search_btn
+    %a#advance_search_submit{:href => "#" , } Search

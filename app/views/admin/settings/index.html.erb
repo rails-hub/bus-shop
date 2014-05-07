@@ -1,0 +1,52 @@
+<%= content_for :title, "Settings" %>
+
+<div class="contentMenu">
+            <div class="clear"></div>
+            <div class="contentCaption"><img src="/assets/admin/icons/busIcon.png" alt="Inventory Listings"/>Settings</div>
+			<div class="menuIcons">
+
+            </div>
+            <div class="clear"></div>
+            
+</div>
+
+
+<div class="contentBox">	
+	<div class="contentTable" >
+		<table>
+			<tbody>
+				<tr class="tableTop">
+					<td colspan="15">
+						<div class="tableTopHeader">                            
+		           			<span>Systems v2 Buses</span>
+							<div class="clear"></div>
+		        			</div>
+						<div class="headerDivider"></div>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="bus_row">
+					<th width="200px">Setting Type</th>
+					<th width="600pxs">Setting Value</th>
+				</tr>
+				
+				<%= form_for :setting, :url => {:action => 'update_settings'} do -%>
+				<% @settings.each do |setting| %>
+					
+					<%= fields_for "setting[]", setting do |setting_fields| %>
+					<tr>
+						<td><%= setting_fields.label setting.setting_type.to_sym, "#{setting.setting_type.titleize}" %></td>
+						<% if setting.setting_type =~ /password/ %>
+							<td><%= setting_fields.password_field :value, :size => 100%></td>
+						<% else %>
+							<td><%= setting_fields.text_field :value, :size => 100 %></td>
+						<% end %>
+					</tr>
+					<% end %>
+				<% end %>
+				<%= submit_tag "Submit", :class => "button" %>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

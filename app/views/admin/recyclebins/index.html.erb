@@ -1,0 +1,59 @@
+<% content_for :title, "Recyclin Bin" %>
+
+<div id="content">
+	<%= render 'shared/recyclinbin/menu_icons_recyclinbin' %>
+	<div class="count_bar">
+		Deleted Items &nbsp;&nbsp;&nbsp;&nbsp;|
+		<ul class='no0fItemsDeleted'> 
+			<% @binMenu.each do |bin| %>
+				<li><%= bin %></li>
+			<%end%>
+		</ul>
+	</div>
+
+	<div class="contentBox">
+		<div class="contentTable">
+      <table width="100%">
+	    	<% case params[:bin] %>
+	      	<% when 'sold_inventory'%>
+	    			<%= render 'shared/recyclinbin/inventory_recyclinbin', {inventory: @sold_inventory, sold: true}%>
+	      	<% when 'leads'%>
+	    			<%= render 'shared/recyclinbin/leads_recyclinbin'%>
+	      	<% when 'dealers'%>
+	    			<%= render 'shared/recyclinbin/dealers_recyclinbin'%>
+	      	<% when 'users'%>
+	    			<%= render 'shared/recyclinbin/users_recyclinbin'%>
+	    		<% else%>
+	    			<%= render 'shared/recyclinbin/inventory_recyclinbin', {inventory: @inventory, sold: false}%>
+	    	<%end%>
+			</table>
+		</div> <!--class =  contentTable -->
+ 		<div class="pages">
+    	<%= will_paginate instance_variable_get("@#{params[:bin]}") %>
+    </div>
+</div>
+<script>
+	$(document).ready(function() {
+		lokation =  window.location.search.split('?')[1].split('&')[0];
+		$('.no0fItemsDeleted a').each(function(){
+			ahref = this.href.split('?')[1]
+			if (ahref == lokation) {
+				$(this).parent('li').addClass('activeBin')
+			} else if (lokation.search == '') {
+				$('.no0fItemsDeleted li:first').addClass('activeBin')
+			}
+		});
+    
+    $(".recycle_check_box").click(function() {
+		    var bus_row = $(this).parent().parent();
+		    bus_row.toggleClass("selected");
+	  });
+	  
+	  $('.contentTable table tr.bus_row').dblclick(function(){
+	        if (confirm("Are you sure you want to restore this record?")) { 
+	          data = $(this).find('input:checkbox').val()
+	          location.href = '<%= admin_recyclebins_restore_path %>?ids=['+data+']&bin=<%= params[:bin] %>';
+	        }
+	      });
+	});
+</script>

@@ -1,0 +1,66 @@
+	<!--  Shuttle Filter Form!   -->
+   
+    <!-- sidebar right start -->
+    <div class="sidebar" style="float: right;">
+        <div class="sidebarRightTopBg"></div>
+        <div class="sidebarRightContent">
+			<%= form_tag("/listings/search?slug=shuttle") do %>
+				<label for="passengers">Passenger Seats</label> <br/>
+				<select id="passengers" name="search[passengers]" class="selectLong">
+					<option value="">All</option>
+					<option value="0-10">10 and under</option>
+					<option value="11-20">11-20</option>
+					<option value="21-30">21-30</option>
+					<option value="31-40">31-40</option>
+				</select>
+				<label for="price_range">Price Range</label>	<br/>
+				<select id="price_range" name="search[price_range]" class="selectLong">
+					<option value="">View All</option>
+					<option value="0-20000">Under $20,000</option>
+					<option value="20000-40000">$20,000 - $40,000</option>
+					<option value="40000-60000">$40,000 - $60,000</option>
+					<option value="60000-80000">$60,000 - $80,000</option>
+					<option value="80000-1000000000">$80,000+</option>
+				</select>
+				<label for="year">Year Range</label> <br/>
+				<%= select("search", "start_year", (1990..DateTime.now.year).to_a.reverse, {:include_blank => "Start Year"}, :class=> "selectShort" ) %> -
+				<%= select("search", "end_year", (1990..DateTime.now.year).to_a.reverse, {:include_blank => "End Year"},  :class=> "selectShort" )%>
+				
+				<label for="fuel_type">Fuel Type</label><br/>
+				<%= select("search", "fuel_type", ["Gas", "Diesel"], {:include_blank => "All"}, :class => "selectLong") %>
+				
+				<label for="luggage">Luggage</label><br/>
+				<%= select("search", "luggage", ["Yes", "No"], {:include_blank => "All"}, :class => "selectLong") %>
+				
+				<label for="entertainment">Entertainment TV/DVD</label><br/>
+				<%= select("search", "entertainment", ["Yes", "No"], {:include_blank => "All"}, :class => "selectLong") %>
+				
+				<%= hidden_field_tag "bus_type_id", @bus_type.id %>
+
+				<br/>
+				<%= image_submit_tag("/assets/searchBtn.png", :style=>"margin-left: 15px; margin-top: 10px") %>
+				
+			<% end %>
+        <!--     <label for="make">Make</label><br />
+            <select id="make" class="selectLong"><option></option></select><br />
+            <label for="model">Model</label><br />
+            <select id="model" class="selectLong"><option></option></select><br />
+            <label for="yearRange">Year Range</label><br />
+            <select id="yearRange" class="selectShort"><option></option></select> - <select class="selectShort"><option></option></select><br />
+
+            <label for="mileage">Mileage</label><br />
+            <select id="mileage" class="selectLong"><option></option></select><br />
+            <label for="passengerQuantity">Passenger Quantity</label><br />
+            <select id="passengerQuantity" class="selectLong"><option></option></select><br />
+            <div style="float:left;"><label for="within">Within</label><br /><select id="within" class="selectShort"><option></option></select></div>
+            <div style="float:left; margin-left:10px;"><label for="postalCode">Postal Code</label><br /><select id="postalCode" class="selectShort"><option></option></select></div><br />
+            <label for="keyword">Keyword (optional)</label><br />
+
+            <select id="keyword" class="selectLong"><option></option></select><br /><br />-->
+            
+            <!-- <a href="#"><img style="margin-left:15px" src="/assets/searchBtn.png" alt="Search"/></a>  -->
+            
+        </div>
+        <div class="sidebarRightBottomBg"></div>
+    </div>
+    <!-- sidebar right end -->

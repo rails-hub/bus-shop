@@ -1,0 +1,46 @@
+<div id="header">
+		<!--[if lte IE 9]>
+			<script  src="/js/jquery.corner.js"></script>
+			<script>
+		 		$(".topMenu ul li a").corner("cc:#414141 top 10px");
+		 		$(".contentCaption").corner("round 10px");
+		 	</script>
+		<![endif]-->
+	 	
+		<%= link_to "<span class='logo'></span>".html_safe, admin_dashboard_path %>
+        <div class="login">
+            <img src="/assets/admin/icons/user.png" alt="User Picture"/> Hello <strong><%= login_greet %></strong>
+			| <strong><%= link_to "Logout", user_session_destroy_path %></strong>
+        </div>
+        <div class="search">
+            <form action="/admin/search" method="get">
+                <div class="searchIcon"></div>
+                <select name="search_in">
+                    <option value="inventory">Inventory</option>
+                    <option value="leads">Leads</option>
+                </select>
+                <div class="searchLeft"></div>
+                <input type="text" id="search" name="query" placeholder="stock id, first name, last name etc.." value = "<%= params[:query] if params[:query] %>" >
+                <input type="submit" id="searchSubmit" name="searchSubmit" value=""/><br />
+            </form>
+        </div>
+        
+        <div class="topMenu">
+            <ul>
+                <li><%= link_to "Dashboard", admin_dashboard_path, :class => active_link?("/admin/dashboard") %></li>
+                <li><%= link_to "User Manager", admin_users_path, :class => active_link?("/admin/users") if admin_signed_in? %></li>
+                <li><%= link_to "Inventory Manager", admin_inventory_index_path(:per_page => 10), :class => active_link?("/admin/inventory") %></li>
+                <li><%= link_to "Sold Manager", admin_sold_inventory_index_path, :class => active_link?("/admin/sold_inventory") if admin_signed_in? %></li>
+                <li><%= link_to "Lead Manager", admin_leads_path, :class => active_link?("admin/leads") %></li>
+                <li><%= link_to "Dealer Manager", admin_dealers_path, :class => active_link?("/admin/dealers")  %></li>
+                <li><%= link_to "Ad Manager", admin_adds_path, :class => active_link?("/admin/adds") %></li>
+                <li><%= link_to "Settings", admin_settings_path, :class => active_link?("/admin/settings") %></li>
+                <li><%= link_to "Contact Us Forms", admin_contact_index_path, :class => active_link?("/admin/contact") %></li>
+            </ul>
+
+        </div>
+        <div class='recyclinBin'>
+            <%= link_to "Recyclin Bin", admin_recyclebins_path+"?bin=inventory", :class => active_link?("/admin/recyclebins") %>
+        </div>
+	</div><!-- #header-->
+

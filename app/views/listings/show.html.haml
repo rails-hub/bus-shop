@@ -1,0 +1,168 @@
+/ bus name and price starts
+#detail_titlearea
+  .detail_headings
+    .detail_heading_left
+      %h1
+        = @listing.year
+        = @listing.body_make.name
+        = @listing.body_model
+      %h2
+        = number_to_currency(@listing.price_on_site, :precision => 0)
+        %span.currncy-two
+          = @listing.location == "USA" ? "USD" : "CDN"
+    %h3
+      Stock Number: #{@listing.stock_id}
+  .detail_heading_right
+    %a.back_btn{:href => "index.html"} Back to Inventory
+    %a.print_btn{:href => "", :onclick => "window.print();return false;"} Print
+/ bus name and price ends
+#detail_content
+  / inventory details start
+  #detail_specs_area
+    / slider gallery start
+    #Slider_container
+      .gallery
+        %ul#sliderOne
+          - @listing.images.each do |bus|
+            %li.slideModule= image_tag bus.image_url, :height => "415", :width => "625", :id => "img1"
+        / slider navigation start
+        #sliderNav
+          %ul#sliderNavList
+            - @listing.images.each do |bus|
+              %li
+                %a{:href => "#"}= image_tag bus.image_url(:thumb) , :height => "96", :width => "67"
+        / slider navigation end
+    / silder gallery ends
+    / Vehicle specs start
+    .detail_specs_panel
+      %h4.vehicle_specs_title Specifications
+      .vehicleInfo
+        %table.vehicleSpecs{:width => "432"}
+          %tr
+            %td.vehicleSpecsName{:width => "97"} Year:
+            %td{:width => "319"}
+              =@listing.year
+          %tr
+            %td.vehicleSpecsName Bus Type:
+            %td
+              =@listing.bus_type.name
+          %tr
+            %td.vehicleSpecsName Chassis Make:
+            %td
+              =@listing.chasis_make.name
+          %tr
+            %td.vehicleSpecsName Chassis Model:
+            %td
+              = @listing.chasis_model
+          %tr
+            %td.vehicleSpecsName Body Make:
+            %td
+              = @listing.body_make.name
+          %tr
+            %td.vehicleSpecsName Body Model:
+            %td
+              = @listing.body_model
+          %tr
+            %td.vehicleSpecsName Engine:
+            %td
+              = @listing.engine
+          %tr
+            %td.vehicleSpecsName Mileage:
+            %td
+              = (number_with_delimiter @listing.mileage.to_i).to_s + " kms"
+          %tr
+            %td.vehicleSpecsName Transmission:
+            %td
+              = @listing.transmission
+        %table.vehicleSpecs{:width => "200"}
+          %tr
+            %td.vehicleSpecsName{:width => "94"} Location:
+            %td{:width => "94"}
+              = @listing.location
+          %tr
+            %td.vehicleSpecsName State:
+            %td
+              = @listing.state.name unless @listing.state.blank?
+          %tr
+            %td.vehicleSpecsName Fuel Type:
+            %td
+              = @listing.fuel_type
+          %tr
+            %td.vehicleSpecsName Passengers:
+            %td
+              = @listing.passengers
+          %tr
+            %td.vehicleSpecsName Vehicle Length:
+            %td
+              = @listing.vehicle_length
+          %tr
+            %td.vehicleSpecsName Exterior Color:
+            %td
+              = @listing.exterior_color
+          %tr
+            %td.vehicleSpecsName Interior Color:
+            %td
+              = @listing.interior_color
+          %tr
+            %td.vehicleSpecsName Luggage:
+            %td
+              = @listing.luggage
+          %tr
+            %td.vehicleSpecsName Wheelchair Lift:
+            %td
+              = @listing.wheelchair_lifts
+          %tr
+            %td.vehicleSpecsName Warranty:
+            %td
+              = @listing.warranty
+    / vehicle specs end
+    .detail_specs_panel
+      %h4.vehicle_specs_title Description
+      %p.vehicle_description_text
+        = @listing.vehicle_description
+  / inventory details ends
+  / right ads start
+  #detail_right_panel
+    #inquire_container
+      %span.inquire_title
+        Inquire Now or
+        %span.bold_text Call Us at 1-888-679-0088
+      #inquire_form
+        = form_for :user , :url => send_inquiry_received_email_listings_path, :method => :post , :html => { :id => 'inquire' }  do |f|
+          %p#error-form-inquire
+          = hidden_field_tag "back_to", @listing.stock_id
+          %p Your Name:
+          %input#inquirename{:name => "inquirename", :tabindex => "1", :type => "text"}/
+          %br/
+          %br/
+          %p Your Email:
+          %input#inquiremail{:name => "inquiremail", :tabindex => "2", :type => "text"}/
+          %br/
+          %br/
+          %p Comments:
+          %textarea#comments{:cols => "45", :name => "comments", :rows => "5", :tabindex => "3"}
+      #inquire_form_btns
+        %a.send_inquiry_btn{:href => "javascript:", :id => "inquire_submit"} Send Inquiry
+        %a.send_friend_btn{:href => "#" , :id => "create-user"} Send to a Friend
+    / more buses starts
+    #more_buses_panel
+      %span.more_bus_title More Buses
+      -@related_buses.each do |bus|
+        -unless bus.id == @listing.id
+          .more_bus_item
+            %a.more_bus_thumb_btn{:href => "/listings/#{bus.stock_id}"}
+              =image_tag bus.images.first.image_url(:thumb) , :height => "75", :width => "100"
+            %h3
+              %a.more_bus_btn{:href => "/listings/#{bus.stock_id}"}
+                = bus.year
+                = bus.body_model
+            %span.more_bus_price
+              = number_to_currency(bus.price_on_site, :precision => 0)
+              %span.currency CDN
+        / more bus item ends
+    / more buses ends
+  / right ads end
+/ listing content ends
+.clearfooter
+
+= render :partial => "send_friend"

@@ -1,0 +1,51 @@
+<% content_for :title, "Contact Us" %>
+<!-- page start -->
+<script type="text/javascript" src="/assets/contact.js"></script>
+<div class="pageContainer" id="contactContainer">
+  <div class="pageContent">
+    <div class="contactWrap"> <img src="assets/contactIcon.png" alt="" class="contactIcon"/>
+      <div class="contactDetails">
+        <h4 class="contactDetailPhone">1-800-456-8899</h4>
+        
+        <h6 class="contactDetailEmail"><a href="mailto:inquire@system2buses.com">inquire@system2buses.com </a> </h6>
+       </div>
+      <div class="boxLargeTop"></div>
+      <div class="contactBox">
+        <div class="contactFormContainer">
+          <div class="contactTitle">
+            <h2 class="customTitle2">Contact Us</h2>
+            <h3 class="customTitle3">For All Your Bus Needs</h3>
+          </div>
+          <!-- custom form messages start -->
+          <span class="error" id="nameError">Please enter your name !</span> <span class="error" id="emailError">Please enter your email address !</span> <span class="error" id="emailError2">Please enter a valid email address !</span><span class="error" id="phoneError">Please enter your phone number !</span> <span class="error" id="messageError">Please enter your message !</span>
+          <div class="contactSuccessMessage"> <img src="assets/ok.png" alt=""/>
+            <h4>Thank you for contacting us.</h4>
+          </div>
+          <!-- custom form messages end -->
+          <!-- contact form start -->
+          <div class="contactForm" id="contactForm">
+            <form id="contact" action="POST">
+              <fieldset>
+                <label for="contactName" id="name_label">Name (required):</label>
+                <input type="text" name="contactName" id="contactName" size="30" value="" class="text-input" />
+                <label for="contactEmail" id="email_label">Email (required):</label>
+                <input type="text" name="contactEmail" id="contactEmail" size="30" value="" class="text-input" />
+                <label for="contactPhone" id="phone_label">Phone (required):</label>
+                <input type="text" name="contactPhone" id="contactPhone" size="30" value="" class="text-input" />
+                <label for="contactMessage" id="message_label">Comments:</label>
+                <textarea  name="contactMessage" id="contactMessage" class="text-input" rows="10" cols="10"></textarea>
+                <p>
+                  <input type="submit" name="submitMessage" class="contactButton" id="contactSubmitBtn" value=""/>
+                </p>
+              </fieldset>
+            </form>
+          </div>
+          <!-- contact form end -->
+        </div>
+      </div>
+      <div class="boxLargeBottom"></div>
+    </div>
+    <!-- wrap end -->
+  </div>
+</div>
+<!-- page end -->

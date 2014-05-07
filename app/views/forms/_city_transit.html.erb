@@ -1,0 +1,20 @@
+    <!-- sidebar right start -->
+    <div class="sidebar" style="float: right;">
+        <div class="sidebarRightTopBg"></div>
+        <div class="sidebarRightContent">
+			<%= form_tag("/listings/search?slug=city-transit", :method => :get) do %>
+				<label for="length">Length</label> <br/>
+				<%= select("search", "length", (0..60).step(15).select! {|n| n > 0}, {:include_blank => "View All"}, :class => "selectLong") %>
+				<label for="year">Year Range</label> <br/>
+				<%= select("search", "start_year", (1990..DateTime.now.year).to_a.reverse, {:include_blank => "Start Year"}, :class=> "selectShort" ) %> -
+				<%= select("search", "end_year", (1990..DateTime.now.year).to_a.reverse, {:include_blank => "End Year"},  :class=> "selectShort" )%>
+				
+				
+				<%= hidden_field_tag "bus_type_id", @bus_type.id %><br/>
+				<%= image_submit_tag("/assets/searchBtn.png", :style=>"margin-left: 15px; margin-top: 10px") %>
+			<% end %>
+           
+        </div>
+        <div class="sidebarRightBottomBg"></div>
+    </div>
+    <!-- sidebar right end -->

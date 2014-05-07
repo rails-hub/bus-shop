@@ -1,0 +1,86 @@
+- content_for :title, @bus_type.name.titleize+" Buses"
+#listing_content
+  / inventory area start
+  #listing_area
+    #listing_results
+      %h2
+        %span.large_greytext 319 - Buses for Sale
+      #display_dropdown
+        %p.float_left.form_text Display:
+        %select.display_select
+          %option{:value => "10"} 10
+          %option{:value => "20"} 20
+          %option{:value => "40"} 40
+          %option{:value => "60"} 60
+          %option{:value => "80"} 80
+    / pagination start
+    .pagination
+      %ul
+        %li
+          %a.prevnext.disablelink{:href => "#"} « previous
+        %li
+          %a.currentpage{:href => "#"} 1
+        %li
+          %a{:href => "#"} 2
+        %li
+          %a{:href => "#"} 3
+        %li
+          %a{:href => "#"} 4
+        %li
+          %a{:href => "#"} 5
+        %li
+          %a{:href => "#"}> 6
+          \...
+        %li
+          %a{:href => "#"} 15
+        %li
+          %a{:href => "#"} 16
+        %li
+          %a.prevnext{:href => "#"} next »
+    / pagination ends
+    / sort by drop down starts
+    #sort_dropdown
+      %p.float_left.form_text Sort:
+      %select.sort_select
+        %option{:value => "NewOld"} New to Old
+        %option{:value => "OldNew"} Old to New
+        %option{:value => "PriceLowHigh"} Price: Low to High
+        %option{:value => "PriceHighLow"} Price: High to Low
+        %option{:value => "YearNewOld"} Year: New to Old
+        %option{:value => "YearOldNew"} Year: Old to New
+        %option{:value => "MileageLowHigh"} Mileage: Low to High
+        %option{:value => "MileageHighLow"} Mileage: High to Low
+    / sort by drop down ends
+    / inventory item start
+    - @all.each do |bus|
+      .listing_item_panel
+        .listing_item_price_panel
+          %p.listing_price
+            = bus.price.blank? ? "NA" : number_to_currency(bus.price_on_site, :precision => 0)
+            %span.currency CDN
+          .detail_btn
+            %a{:href => "bus-details.html"} Details
+          %a.compare_btn{:href => "#"} View compare list
+        .listing_item_detail
+          .inventory_thumbnail
+            %a{:href => "bus-details.html"}
+              = image_tag bus.images.first.image_url(:thumb), :width => "125px", :height => "87px" if bus.images.first
+          .listing_item_info
+            .listing_item_title
+              %a{:href => "bus-details.html"} 2007 Prevost Marathon 1046 XLVII
+            .listing_description
+              %p Mileage:
+              %p Capacity:
+              %p Stock Number:
+            .listing_description2
+              %p=number_to_human(bus.mileage, :units => :distance)
+              %p=bus.passengers
+              %p=bus.stock_id
+        .listing_compare
+          %form{:action => ""}
+            %input{:name => "vehicle2", :type => "checkbox", :value => "Bike"}/
+          %p.comparebox_text
+            Add to compare list
+    / inventory item ends
+
+  = render :partial => "listings/ads_panel"

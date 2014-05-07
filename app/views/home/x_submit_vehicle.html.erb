@@ -1,0 +1,278 @@
+<%= content_for :title, "Submit A Vehicle" %>
+
+<div class="pageContent">
+	<div class="box">
+		<div class="aboutBoxLargeTop"></div>
+			<div class="servicesBox">
+				<div class="submitVehicleContent">
+				<% if flash[:notice].present? %>
+					<span class="success"><%= flash[:notice]  %></span>
+				<% end %>
+				
+				<% if flash[:alert].present? %>
+					<span class="error"><%= flash[:alert] %></span>
+				<% end %>
+				
+				<h3 class="customTitle1">Submit A Vehicle</h1>
+				<%= form_for @bus, :url => add_new_vehicle_path, :html => {:multipart => true} do |f| %>
+					<% @bus.errors.full_messages.each do |msg| %>
+						<span class="error"><%= msg %></span>
+					<% end %>
+					<!-- Bus Type Id  -->
+					<div class="submitVehicle">
+                   		<%= f.label :bus_type_id, "Bus Type:" %>
+                    </div>
+                    
+                    <div class="selectSubmit">
+                   		<%= f.collection_select :bus_type_id, BusType.find(:all), :id, :name %>
+                    </div>
+                    
+                    <br/>
+                	
+					<!-- Chasis Make Id  -->
+					<div class="submitVehicle">
+						<%= f.label :chasis_make_id, "Chasis Make:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.collection_select :chasis_make_id, ChasisMake.find(:all), :id, :name %>
+					</div>
+                    
+                    <br/>
+                    
+                    <!-- Year -->
+					<div class="submitVehicle">
+						<%= f.label :year, "Year:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.select :year, (DateTime.now.year - 30)..(DateTime.now.year), {:include_blank => "Select Year"} %>
+					</div>
+					
+					<br/>
+                    
+                    <!-- Chasis Model -->
+					<div class="submitVehicle">
+						<%= f.label :chasis_model, "Chasis Model:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :chasis_model %>
+					</div>
+                     
+                    <br/>
+					
+                    <!-- Body Make ID    -->
+                    	<div class="submitVehicle">
+						<%= f.label :body_make_id, "Body Make:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.collection_select :body_make_id, BodyMake.find(:all), :id, :name %>
+					</div>
+                     
+                    <br/>
+                    
+                    <!--  Body Model  -->
+                    <div class="submitVehicle">
+						<%= f.label :body_model, "Body Model:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :body_model %>
+					</div>
+                     
+                    <br/>
+                    
+                    <!--  Mileage -->
+					<div class="submitVehicle">
+						<%= f.label :mileage, "Mileage:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :mileage %> (in kms)
+					</div>
+                     
+                    <br/>
+	
+					<!--  Passengers -->
+					<div class="submitVehicle">
+						<%= f.label :passengers, "Passengers:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :passengers %>
+					</div>
+											
+                    <br/>
+                    
+                    	<!--  Color -->
+					<div class="submitVehicle">
+						<%= f.label :exterior_color, "Exterior Color:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :exterior_color %>
+					</div>
+											
+                    <br/>
+                    
+                    <!--  Color -->
+					<div class="submitVehicle">
+						<%= f.label :interior_color, "Interior Color:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :interior_color %>
+					</div>
+                    
+                    <br/>
+                    
+                    
+                    <!-- Wheelchair Capacity -->
+					<div class="submitVehicle">
+						<%= f.label :wheelchair_capacity, "Wheelchair Capacity:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :wheelchair_capacity %>
+					</div>
+                    
+                    <br/>
+                    
+                    <!-- Sale Price-->
+					<div class="submitVehicle">
+						<%= f.label :sale_price, "Sale Price:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :sale_price %>
+					</div>
+											
+                    <br/>
+                    
+                    <!-- Sale Price-->
+					<div class="submitVehicle">
+						<%= f.label :vehicle_length, "Vehicle Length:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :vehicle_length %> (in ft.)
+					</div>
+											
+                    <br/>
+                    
+					<!-- Location -->
+					<div class="submitVehicle">
+						<%= f.label :location, "Location:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.select :location, ["USA", "Canada"] %>
+					</div>
+											
+                    <br/>
+                    
+                    <!-- Location -->
+					<div class="submitVehicle">
+						<%= f.label :engine, "Engine:" %>
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_field :engine %>
+					</div>
+											
+                    <br/>
+                    
+                    	<!-- Description -->
+					<div class="submitVehicle">
+						Description:
+					</div>
+					
+					<div class="selectSubmit">
+						<%= f.text_area :vehicle_description, :rows => 10, :cols => 40 %>
+					</div>
+											
+                    <br/>
+                    <br/>
+                		<%= f.fields_for :images do |builder| %>
+                			<div class="submitVehicle">
+                				<%= builder.label :image, "Add Photo"%>
+                			</div>
+                			<div class="selectSubmit">
+							<%= builder.file_field :image %>
+						</div>
+						<br/>
+					<% end %>
+					
+					
+					
+				</div>
+				
+				<div class="submitVehicleContent">
+	              	<h3 class="customTitle1">Add Contact Information</h3>
+	              		<%= f.fields_for :seller do |sf| %>
+	              		<!-- Contact Name-->
+						<div class="submitVehicle">
+	                   		<%= sf.label :name, "Name:" %>
+	                    </div>
+	                    
+	                    <div class="selectSubmit">
+	                   		<%= sf.text_field :name %>
+	                    </div>
+	                    
+	                    <br/>
+	                    
+	                    <!-- Contact Phone-->
+						<div class="submitVehicle">
+	                   		<%= sf.label :phone, "Phone:" %>
+	                    </div>
+	                    
+	                    <div class="selectSubmit">
+	                   		<%= sf.text_field :phone %>
+	                    </div>
+	                    
+	                    <br/>
+	                    
+	                    	<!-- Contact Email-->
+						<div class="submitVehicle">
+	                   		<%= sf.label :email, "Email:" %>
+	                    </div>
+	                    
+	                    <div class="selectSubmit">
+	                   		<%= sf.text_field :email %>
+	                    </div>
+	                    
+	                    <br/>
+	                    
+	                    <!-- Contact Postal Code-->
+						<div class="submitVehicle">
+	                   		<%= sf.label :postal_code, "Postal Code:" %>
+	                    </div>
+	                    
+	                    <div class="selectSubmit">
+	                   		<%= sf.text_field :postal_code %>
+	                    </div>
+	                    
+	                    <br/>
+	                    
+	                    
+	                    <!-- Contact Comments-->
+						<div class="submitVehicle">
+	                   		<%= sf.label :comments, "Comments:" %>
+	                    </div>
+	                    
+	                    <div class="selectSubmit">
+	                   		<%= sf.text_area :comments, :rows => 10, :cols => 40 %>
+	                    </div>
+	                    
+	                    <br/>
+	              		<% end %>
+	              		<%= f.submit "", :id => "contactSubmitBtn" %>
+              	</div>
+              		
+				<% end %>
+			</div>
+		<div class="aboutBoxLargeBottom"></div>
+	</div>
+</div>

@@ -1,0 +1,21 @@
+<% if @compare_list.count > 0 %>
+    <div class="compare_toolbar" id="compare_toolbar">
+      <div style="float:right;">
+        <img onclick="slideDown();" src="/assets/close_icon.png" alt="close_icon" id="close_icon"/></div>
+      <p>Buses Added to Compare List:</p>
+      <a href="<%= compare_path %>" style="float: left; width: 100%">Compare List</a>
+
+      <table class="add_to_compare toolbar_compare" style="float: left;">
+        <tr>
+          <% @compare_list.each do |bus| %>
+              <td>
+                <div style="text-align:left">
+                  <span><%= bus.year %> <%= bus.chasis_make.name %>(<%= bus.stock_id %>)</span> |
+                  <span style="text-align: right;color:white"><a href="javascript:" style="color:white" onclick="submit_remove_from_compare('<%= bus.stock_id %>',this)">REMOVE</a></span></span>
+                  <br/><%= image_tag bus.images.first.image_url(:thumb) if bus.images.first %></div>
+              </td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+<% end %>

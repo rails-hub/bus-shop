@@ -1,0 +1,54 @@
+<% content_for :title, "Edit Lead" %>
+<div id="contentNarrow">
+    <%= render :partial => 'shared/menu_icons_leads' %>
+    <%= form_for @lead, :url => {:controller=> "leads", :action => %w(edit update).include?(params[:action]) ? ("update") : ("create") } do |f| %>	
+    <%= f.submit "Save", :class => "button" %>
+    <div class="contentBox">
+      <div style="display:none;" id="images_input"></div>
+      <div class="contentHeader">
+        <% if @lead.first_name or @lead.last_name %>
+        <h1>Editing Lead <%= @lead.first_name+" "+@lead.last_name  %></h1> 
+        <% else %>
+        <h1>Add New Lead</h1> 
+        <% end %>
+    </div>
+    
+    <div class="formSection">
+        <div style="width: 97%;" class="formBlock gray float">
+            <div style="float: left; margin-left:40px;">
+                <%= f.label :first_name %><%= f.text_field :first_name %><br />
+                <%= f.label :last_name %><%= f.text_field :last_name %><br /><br />
+
+                <%= f.label :email %><%= f.text_field :email %><br />
+                <%= f.label :phone %><%= f.text_field :phone %><br />
+                <%= f.label :mobile, "Mobile" %><%= f.text_field :mobile%><br /><br />
+
+                <%= f.label :company %><%= f.text_field :company %><br /><br />
+
+                <%= f.label :address, "Address" %><%= f.text_field :address%><br />
+                <%= f.label :address2, "Address Line2" %><%= f.text_field :address2%>   <br />           
+                <%= f.label :unit, "Suite/Unit" %><%= f.text_field :unit%><br />
+                <%= f.label :city, "City" %><%= f.text_field :city%><br /><br />
+                
+                <div>
+                    <%= f.label :province, "Prov/State" %>
+                    <%= f.grouped_collection_select :province, Country.order(:name), :states, :name, :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %>
+                </div>
+                <div>
+                    <%= f.label :country, "Country" %><%= f.collection_select :country, Country.order(:name), :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %><br />
+                    <%= f.label :postal, "Postal/Zip" %><%= f.text_field :postal %><br />
+                    <br>
+                </div>
+                <%= f.label :comments %><%= f.text_area :comments, :style => "color:#757575", :cols => "30", :rows => "5" %><br />	      
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="formDivider"></div>
+    <div class="clear"></div>
+</div>
+</div>
+
+
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Bus for Sale, Buses for Sale, Sell a Bus, Bus Dealer, Bus Listings | <%=h yield(:title) %></title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <meta content="Buses for sale, Bus for sale, used buses, sell a bus, bus listings, shuttle buses, school buses for sale, vans for sale, paratransit buses sale, limo buses for sale, city transit buses, preowned buses, custom coaches, bus conversions, eagle coaches, bus sales, bus broker, bus parts, MCI, entertainer buses, MCI buses, GM buses, coach sales, bus broker, DINA, EAGLE bus, GMC, MCI, Neoplan, Setra, LAG, Van Hool, School Buses" name="keywords">
+  <meta content="Largest listing of Buses for sale, List a Bus for Sale, Shuttle Buses for Sale, Transit Buses for Sale, Paratransit Buses For Sale, Prevost Buses, Limo Buses, School Buses, Vans, Mini Buses, Tour buses, GMC, ABC, Setra, VanHool, School Buses, Bluebird, Midsize, Shuttle, and Transits for Sale. Tour bus sales, mini bus sales, used buses" name="description">
+  <%#= render :partial => "shared/google_analytics" %>
+</head>
+<body class="old-desgin" >
+
+<%= render :partial => 'shared/header' %>
+
+<% render :partial  => 'shared/devise_errors' %>
+	<!--<% unless notice.nil? %>
+   		<p class="success"><%= notice %></p>
+   	<% end %>
+   	<% unless alert.nil? %>
+   		<p class="alert"><%= alert %></p>
+   	<% end %>-->
+<%= yield %>
+
+<%= render :partial => 'shared/footer' %>
+
+</body>
+</html>

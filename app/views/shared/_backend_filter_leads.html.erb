@@ -1,0 +1,10 @@
+
+	<%= form_tag('/admin/leads/search_leads', :method => :get, :style => "float: left;") do %>
+		<%= select("search", "country", Lead.where("country != ?", "").collect {|b| [ b.country, b.country ] if b.country }.uniq, { :include_blank => "Country" }) %>
+		<%= select("search", "province", Lead.where("province != ?", "").collect {|b| [ b.province, b.province ] if b.province }.uniq, { :include_blank => "Province" }) %>
+		<%= select("search", "city", Lead.where("city != ?", "").collect {|b| [ b.city, b.city ] if b.city }.uniq, { :include_blank => "City" }) %>
+		<%= select("search", "company", Lead.where("company != ?", "").collect {|b| [ b.company, b.company ] }.uniq, { :include_blank => "Company Name" }) %>
+		<%= datepicker_input "search","from", :maxDate => "+1D", :minDate => Lead.first.created_at.to_date - Date.today %> 
+		To > <%= datepicker_input "search","to", :maxDate => "+1D", :minDate => Lead.first.created_at.to_date - Date.today  %>
+		<%= submit_tag "Filter" %>
+	<% end %>

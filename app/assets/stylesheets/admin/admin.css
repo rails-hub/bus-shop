@@ -1,0 +1,1427 @@
+/*
+ * ...
+ *= require jquery.facebox
+ * ...
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+a.tooltip .span-tooltip {
+
+    margin-right: 0;
+
+}
+
+a.tooltip span {
+    display: none;
+    margin-left: -35px;
+    margin-top: -25px;
+    padding: 2px 3px;
+}
+
+a.tooltip:hover span {
+    display: inline;
+    position: absolute;
+    background: #f77e1e;
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+.hasDatepicker {
+    width: 70px;
+}
+
+#email_blast_form td {
+    border: 0px;
+}
+
+.bus_selector {
+    padding: 5px;
+}
+
+.bus_image {
+    border: 4px solid #fa8500;
+    width: 160px;
+    height: 115px;
+    float: left;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.bus_text {
+    width: 160px;
+    height: 135px;
+    float: left;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.bus_selector_hidden {
+    display: none;
+}
+
+div.menuIcon {
+    color: #000;
+}
+
+.field_with_errors {
+    color: red;
+}
+
+#facebox .popup {
+    margin-top: 50%;
+}
+
+.count_bar {
+    padding: 0px 10px;
+}
+
+.topMenu ul li a.active, .recyclinBin a.active {
+    background: url("../admin/menuBackgroundHover.jpg") repeat-x scroll center top #FC8D02;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.asc:after {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid black;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+:focus {
+    outline: 0;
+}
+
+ins {
+    text-decoration: none;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font: 12px/18px Arial, Tahoma, Verdana, sans-serif;
+    height: 100%;
+}
+
+a {
+    color: blue;
+    outline: none;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+p {
+    margin: 0 0 18px
+}
+
+img {
+    border: none;
+}
+
+input {
+    vertical-align: middle;
+}
+
+#wrapper {
+    width: 100%;
+    min-width: 960px;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    background: #f7f7f7;
+}
+
+.info, .success, .warning, .error, .validation, .alert {
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+
+.alert {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('../admin/error.png');
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('../admin/error.png');
+}
+
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image: url('../admin/success.png');
+}
+
+/* Header
+-----------------------------------------------------------------------------*/
+#header {
+    height: 134px;
+    background: url("../admin/topBackground.jpg") repeat-x center top;
+    border-bottom: 2px solid #fff;
+}
+
+.logo {
+    background: url("../admin/logo.png") no-repeat left top;
+    width: 217px;
+    height: 95px;
+    position: absolute;
+    margin-left: 0px;
+    cursor: pointer;
+}
+
+.login {
+    margin-left: 250px;
+    margin-top: 40px;
+    position: absolute;
+    color: #fff;
+}
+
+.login img {
+    vertical-align: middle;
+}
+
+.login a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.login a:hover {
+    text-decoration: underline;
+}
+
+.search {
+    float: right;
+    margin-top: 30px;
+    margin-right: 50px;
+    text-align: right;
+}
+
+.search a {
+    color: #ff8503;
+}
+
+.searchIcon {
+    background: url("../admin/icons/searchIcon.png") no-repeat left top;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    margin-left: -25px;
+    margin-top: 8px;
+}
+
+.searchLeft {
+    background: url("../admin/searchLeft.png") no-repeat right;
+    width: 12px;
+    height: 29px;
+    margin-top: 1px;
+    position: absolute;
+}
+
+.search input[type="text"] {
+    background: url("../admin/searchBar.png") repeat-x left;
+    padding-right: 10px;
+    width: 208px;
+    height: 29px;
+    border: 0px none;
+}
+
+.search input[type="submit"] {
+    background: url("../admin/searchButton.png") no-repeat left;
+    border: 0px none;
+    width: 36px;
+    height: 27px;
+    margin-left: -5px;
+    cursor: pointer;
+}
+
+.topMenu {
+    position: absolute;
+    margin-top: 107px;
+    min-width: 960px;
+}
+
+.topMenu ul li {
+    list-style-type: none;
+    display: inline;
+    cursor: pointer;
+}
+
+ul.errors {
+    color: red;
+}
+
+.topMenu ul li a {
+
+    position: relative;
+    background: url("../admin/menuBackground.jpg") repeat-x top center #f1f0f0;
+    color: #676767;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 15px 15px 10px 15px;
+    border-radius: 10px 10px 0px 0px;
+    behavior: url(PIE.htc);
+}
+
+.topMenu ul li a:hover {
+    background: url("../admin/menuBackgroundHover.jpg") repeat-x top center #fc8d02;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#content {
+    padding: 0px 0px 100px 0px;
+    background: url("../admin/contentBackground.jpg") repeat-x top center #f7f7f7;
+    float: left;
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+
+#contentNarrow {
+    background: url("../admin/contentBackground.jpg") repeat-x scroll center top #F7F7F7;
+    float: left;
+    padding: 0 0 100px;
+    width: 1072px;
+}
+
+.contentMenu {
+    position: relative;
+    padding: 10px;
+    margin: 15px 10px 10px 10px;
+    border: 1px solid #cdcdcd;
+    background: #fff;
+    border-radius: 10px;
+    behavior: url(PIE.htc);
+}
+
+.contentCaption {
+    position: relative;
+    padding: 10px;
+    float: left;
+    color: #ff8503;
+    font-size: 14px;
+    width: 250px;
+    background: #404040;
+    border-radius: 10px;
+    behavior: url(PIE.htc);
+}
+
+.contentCaption img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.menuIcons {
+    margin-left: 300px;
+}
+
+.menuIcon {
+    margin-right: 20px;
+    font-size: 11px;
+    text-align: center;
+    float: left;
+    line-height: 11px;
+}
+
+.menuIcon img {
+    margin-bottom: 5px;
+}
+
+.menuIcon a {
+    color: #404040;
+    text-decoration: none;
+}
+
+.menuIcon a:hover {
+    color: #989898;
+}
+
+.contentBox {
+    background: #fff;
+    margin: 10px;
+    border: 1px solid #cdcdcd;
+    margin-bottom: 30px;
+}
+
+.contentHeader {
+    background: url("../admin/contentHeadeBackground.jpg") repeat-x top;
+    padding: 10px 10px 6px 10px;
+    border-bottom: 1px solid #cdcdcd;
+    border-top: 1px solid #cdcdcd;
+    margin-top: -1px;
+}
+
+.upDown {
+    position: absolute;
+    margin-top: -58px;
+    margin-left: 30px;
+}
+
+.contentTable {
+    font-size: 11px;
+    margin-bottom: 30px;
+    padding: 4px 5px 5px 5px;
+}
+
+.contentTable table tr th {
+    background: #eeeeee;
+    padding: 7px;
+    border: 0px none !important;
+}
+
+.contentTable table tr th a {
+    color: #415169;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.contentTable table tr th a:hover {
+    color: #667a99;
+}
+
+.contentTable table tr td {
+    padding: 7px;
+    color: #565656;
+    border: 1px solid #cdcdcd;
+    text-align: center;
+}
+
+.contentTable table tr td img {
+    vertical-align: middle;
+}
+
+.actions img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.selected td {
+    background: #ffe7ca;
+}
+
+.gray td {
+    background: #eeeeee;
+}
+
+.pages {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pages a, .next_page, em.current, .previous_page {
+    font-size: 10px;
+    padding: 4px 5px 3px 5px;
+    background: url("../admin/pageNumberBackground.jpg") repeat-x center top #ececec;
+    border: 1px solid #aaa9a9;
+    color: #333333;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.pages a:active {
+    background: #9d9c9d;
+}
+
+.pages a:hover {
+    background: #9d9c9d;
+}
+
+/* Add/Edit Vehicle
+-----------------------------------------------------------------------------*/
+.button {
+    margin-left: 10px;
+    background: url("../admin/buttonBackground.jpg") repeat-x;
+    border: 1px solid #cb6304;
+    color: #404040;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    behavior: url(PIE.htc);
+}
+
+.button:hover {
+    background: #ffbb58;
+}
+
+h1 {
+    font-size: 16px;
+    color: #030000;
+    display: inline;
+}
+
+h3 {
+    color: #ff8503;
+    font-weight: bold;
+    display: inline
+}
+
+h4 {
+    color: #ff8503;
+    display: inline;
+    font-weight: normal;
+}
+
+.formSection {
+    padding: 5px;
+}
+
+.formDivider {
+    border-bottom: 1px solid #cdcdcd;
+    margin: 5px 0px 5px 0px;
+}
+
+.formBlock {
+    margin-right: 5px;
+}
+
+.formBlock_1 {
+    margin-right: 5px;
+}
+
+.formBlock label {
+    width: 100px;
+    text-align: right;
+    float: left;
+    margin-right: 10px;
+    margin-top: 4px;
+    clear: left;
+}
+
+.formBlock_1 label {
+    text-align: right;
+    margin-right: 10px;
+    margin-top: 4px;
+    clear: left;
+}
+
+.formBlock_1 .checkbox {
+    float: left;
+}
+
+.formBlock input {
+    height: 15px;
+    margin-bottom: 5px;
+}
+
+.formBlock select {
+    width: 250px;
+    margin-right: 10px;
+    color: #757575;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.formBlock textarea {
+    max-width: 990px;
+}
+
+.formBlock input[type="text"] {
+    width: 160px;
+    color: #757575;
+}
+
+.formBlock input[type="text"].big {
+    width: 245px;
+}
+
+.formBlock input[type="password"].big {
+    width: 245px;
+}
+
+.formBlock.gray.float {
+    background: #eeeeee;
+    float: left;
+    padding: 10px;
+    padding-right: 20px;
+}
+
+.formBlock.gray.noFloat {
+    background: #eeeeee;
+    padding: 10px 10px 0px 10px;
+}
+
+.formBlock.white.float {
+    float: left;
+    padding: 10px;
+    padding-right: 10px;
+}
+
+.formBlock.white.float a, .formBlock.gray.float a {
+    color: #ff8503;
+}
+
+.formBlock.white.float.borderRight {
+    border-right: 1px solid #cdcdcd;
+    padding-bottom: 5px;
+}
+
+.formBlock.white.float.borderRight.noBorder {
+    border: 0px none;
+}
+
+.formBlock.white.float label {
+    width: 80px;
+}
+
+.formBlock.white.float.borderRight label {
+    width: 135px;
+}
+
+.formBlock.black.float {
+    background: #404040;
+    float: left;
+    padding: 10px;
+    padding-right: 15px;
+    color: #fff;
+}
+
+.formBlock.black.float label {
+    margin-top: 10px;
+}
+
+.formBlock.black.float input[type="text"] {
+    margin-top: 10px;
+}
+
+.formBlock.gray.float img {
+    vertical-align: middle;
+}
+
+.formBlock.yellow.noFloat {
+    background: #ffe7ca;
+    margin-top: 4px;
+    padding: 10px;
+}
+
+.formBlock.yellow.noFloat label {
+    clear: none;
+    width: 130px;
+}
+
+.formBlock.yellow.noFloat .divider {
+    position: absolute;
+    height: 50px;
+    width: 5px;
+    background: #fff;
+    margin-top: -35px;
+    margin-left: 240px;
+}
+
+.uploadedImage {
+    float: left;
+    margin: 10px;
+    text-align: right;
+}
+
+.uploadedImage img {
+    margin-bottom: 5px;
+}
+
+/* Footer
+-----------------------------------------------------------------------------*/
+#footer {
+    margin: -100px auto 0;
+    min-width: 960px;
+    height: 100px;
+    position: relative;
+    background: url("../admin/footerBackground.jpg") repeat-x top center;
+}
+
+/* Utility
+-----------------------------------------------------------------------------*/
+.clear {
+    clear: both;
+    height: 1px;
+}
+
+.clearLeft {
+    clear: left;
+    height: 1px;
+}
+
+/* OLD
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+:focus {
+	outline: 0;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+html {
+	height: 100%;
+}
+body {
+	font: 12px/18px Arial, Tahoma, Verdana, sans-serif;
+	height: 100%;
+}
+a {
+	color: blue;
+	outline: none;
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+p {
+	margin: 0 0 18px
+}
+img {
+	border: none;
+}
+input {
+	vertical-align: middle;
+}
+#wrapper {
+	width: 100%;
+	min-width: 960px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+    background:#f7f7f7;
+}
+
+
+th .actions_col {
+	width: 140px;
+}
+
+/* Header
+-----------------------------------------------------------------------------*/
+#header {
+    height: 134px;
+    background: url("../admin/topBackground.jpg") repeat-x center top;
+    border-bottom: 2px solid #fff;
+}
+
+.logo {
+    background: url("../admin/logo.png") no-repeat left top;
+    width: 217px;
+    height: 95px;
+    position: absolute;
+    margin-left: 0px;
+    cursor: pointer;
+}
+
+.login {
+    margin-left: 250px;
+    margin-top: 40px;
+    position: absolute;
+    color: #fff;
+}
+
+.login img {
+    vertical-align: middle;
+}
+
+.login a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.login a:hover {
+    text-decoration: underline;
+}
+
+.search {
+    float: right;
+    margin-top: 30px;
+    margin-right: 50px;
+    text-align: right;
+}
+
+.search a {
+    color: #ff8503;
+}
+
+.searchIcon {
+    background: url("../admin/icons/searchIcon.png") no-repeat left top;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    margin-left: -25px;
+    margin-top: 8px;
+}
+
+.searchLeft {
+    background: url("../admin/searchLeft.png") no-repeat right;
+    width: 12px;
+    height: 29px;
+    margin-left: 83px;
+    margin-top: -30px;
+    position: absolute;
+}
+
+.search input[type="text"] {
+    background: url("../admin/searchBar.png") repeat-x left;
+    padding-right: 10px;
+    width: 208px;
+    height: 29px;
+    border: 0px none;
+}
+
+.search input[type="submit"] {
+    background: url("../admin/searchButton.png") no-repeat left;
+    border: 0px none;
+    width: 36px;
+    height: 27px;
+    margin-left: -5px;
+    cursor: pointer;
+}
+
+.topMenu {
+    position: absolute;
+    margin-top: 107px;
+    min-width: 960px;
+    z-index: 100
+}
+
+.topMenu ul li {
+    list-style-type: none;
+    display: inline;
+    cursor: pointer;
+}
+
+.topMenu ul li a {
+    position: relative;
+    background: url("../admin/menuBackground.jpg") repeat-x top center #f1f0f0;
+    color: #676767;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 15px 15px 10px 15px;
+    border-radius: 10px 10px 0px 0px;
+    behavior: url(PIE.htc);
+}
+
+.topMenu ul li a:hover {
+    background: url("../admin/menuBackgroundHover.jpg") repeat-x top center #fc8d02;
+    color: #fff;
+    text-decoration: none;
+}
+
+.recyclinBin {
+    position: absolute !important;
+    right: 12px;
+    top: 107px;
+    z-index: 75;
+}
+
+.recyclinBin a {
+    background: url("../admin/menuBackground.jpg") repeat-x scroll center top #F1F0F0;
+    border-radius: 10px 10px 0 0;
+    color: #676767;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 15px 15px 10px;
+    text-decoration: none;
+}
+
+.recyclinBin a:hover {
+    background: url("../admin/menuBackgroundHover.jpg") repeat-x scroll center top #FC8D02;
+    color: #FFFFFF;
+}
+
+.recyclebin .menuIcon img {
+    margin-bottom: -5px;
+}
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#content {
+    padding: 0 0 100px;
+    background: url("../admin/contentBackground.jpg") repeat-x top center #f7f7f7;
+    float: left;
+    width: 100%;
+}
+
+.contentMenu {
+    position: relative;
+    padding: 10px;
+    margin: 15px 10px 10px 10px;
+    border: 1px solid #cdcdcd;
+    background: #fff;
+    border-radius: 10px;
+    behavior: url(PIE.htc);
+}
+
+.contentCaption {
+    position: relative;
+    padding: 10px;
+    float: left;
+    color: #ff8503;
+    font-size: 14px;
+    width: 250px;
+    background: #404040;
+    border-radius: 10px;
+    behavior: url(PIE.htc);
+}
+
+.contentCaption img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.menuIcons {
+    margin-left: 300px;
+}
+
+.menuIcon {
+    margin-right: 20px;
+    font-size: 11px;
+    text-align: center;
+    float: left;
+    line-height: 11px;
+}
+
+.menuIcon img {
+    margin-bottom: 5px;
+}
+
+.menuIcon a {
+    color: #404040;
+    text-decoration: none;
+}
+
+.menuIcon a:hover {
+    color: #989898;
+}
+
+.contentBox {
+    background: #fff;
+    margin: 10px;
+    border: 1px solid #cdcdcd;
+    margin-bottom: 30px;
+}
+
+.upDown {
+    float: right;
+}
+
+.contentTable {
+    font-size: 11px;
+    margin-bottom: 30px;
+    padding: 0px 5px 5px 5px;
+}
+
+.tableTop td {
+    text-align: left !important;
+    padding: 0px !important;
+    border: 0px none !important;
+}
+
+.tableTopHeader {
+    background: url("../admin/contentHeadeBackground.jpg") repeat-x top;
+    height: 20px;
+    padding: 10px;
+    margin-right: -5px;
+    margin-left: -5px;
+    position: relative;
+}
+
+.headerDivider {
+    background: #fff;
+    border-top: 1px solid #cdcdcd;
+    height: 5px;
+    margin-right: -5px;
+    margin-left: -5px;
+    position: relative;
+}
+
+.contentTable table tr th {
+    background: #eeeeee;
+    padding: 7px;
+    border: 0px none !important;
+}
+
+.contentTable table tr th a {
+    color: #415169;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.contentTable table tr th a:hover {
+    color: #667a99;
+}
+
+.contentTable table tr td {
+    padding: 7px;
+    color: #565656;
+    border: 1px solid #cdcdcd;
+    text-align: center;
+}
+
+.contentTable table tr td img {
+    vertical-align: middle;
+}
+
+.actions img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.selected td {
+    background: #ffe7ca;
+}
+
+.gray td {
+    background: #eeeeee;
+}
+
+.pages {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pages a {
+    font-size: 10px;
+    padding: 4px 5px 3px 5px;
+    background: url("../admin/pageNumberBackground.jpg") repeat-x center top #ececec;
+    border: 1px solid #aaa9a9;
+    color: #333333;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.pages a:active {
+    background: #9d9c9d;
+}
+
+.pages a:hover {
+    background: #9d9c9d;
+}
+
+/* Footer
+-----------------------------------------------------------------------------*/
+#footer {
+    margin: -100px auto 0;
+    min-width: 960px;
+    height: 100px;
+    position: relative;
+    background: url("../admin/footerBackground.jpg") repeat-x top center;
+}
+
+/* Utility
+-----------------------------------------------------------------------------*/
+.clear {
+    clear: both;
+    height: 1px;
+}
+
+*:first-child+html .searchLeft {
+    margin-top: 1px;
+}
+
+*:first-child+html .search input[type="text"] {
+    padding-top: 7px;
+    height: 20px;
+}
+
+*:first-child+html .search input[type="submit"] {
+    margin-top: 0px;
+}
+
+*:first-child+html .topMenu {
+    margin-top: 95px;
+}
+
+*:first-child+html .topMenu ul li a {
+    padding: 10px 15px 10px 15px;
+}
+
+*:first-child+html .contentMenu {
+    padding-bottom: 0px;
+}
+
+*:first-child+html .upDown {
+    margin-top: -20px;
+}
+
+/*
+ Table Sorter
+*/
+
+.contentTable table thead tr .header {
+    background-image: url("../bg.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+div.contentTable thead tr .headerSortDown {
+    background-image: url("../desc.gif");
+}
+
+div.contentTable thead tr .headerSortUp {
+    background-image: url("../asc.gif");
+}
+
+div.contentTable thead tr .unsortable {
+    background-image: none;
+}
+
+div.contentTable thead tr .headerSortDown, div.contentTable thead tr .headerSortUp {
+    background-color: #CCC;
+}
+
+div.contentTable thead tr .headerSortDown a, div.contentTable thead tr .headerSortUp a {
+    color: #FFF;
+}
+
+/*Recyclin Bin*/
+.no0fItemsDeleted {
+    display: inline-block;
+}
+
+.no0fItemsDeleted li {
+    display: inline-block;
+    width: 150px;
+    background-color: #E2DFE1;
+    border-radius: 5px;
+    margin-left: 6px;
+    padding: 7.5px 10px;
+}
+
+.no0fItemsDeleted li a, .theadNoOfItems {
+    color: #F88A00;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.no0fItemsDeleted li a:hover, .theadNoOfItems:hover {
+    color: #483D45;
+}
+
+/*Selected Bin*/
+.activeBin {
+    background: url("../admin/menuBackgroundHover.jpg") repeat-x scroll center top #FC8D02;
+    color: #484540;
+}
+
+.activeBin a {
+    color: #484540 !important;
+    cursor: text;
+}
+
+.restoreButtons {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+
+.restoreButtons a, .noOfDaysForm input[type="submit"] {
+    background: url("../admin/contentHeadeBackground.jpg") repeat-x scroll center top transparent;
+    border: 1px solid #000700;
+    border-radius: 3px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.698);
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 15px;
+    padding: 1px 0;
+    text-align: center;
+    width: 100px;
+    color: #000700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.restoreButtons a:hover, .noOfDaysForm input[type="submit"]:hover {
+    background: url("../admin/menuBackgroundHover.jpg") repeat-x scroll center top #FC8D02;
+
+}
+
+.noOfDaysForm {
+    font-size: 11px;
+    position: absolute;
+    right: 15px;
+    top: 27px;
+    width: 350px;
+}
+
+.noOfDaysForm span {
+    float: left;
+}
+
+.noOfDaysForm form {
+    margin-left: 10px;
+    float: left;
+}
+
+/*Inventory Bin*/
+.recyclinBinInventoryStatus {
+    position: relative;
+}
+
+.recyclinBinInventoryStatus span {
+    background-color: #F77E1E;
+    border: 1px solid #000000;
+    color: #000000;
+    display: none;
+    left: -4px;
+    padding: 2px 3px;
+    position: absolute;
+    top: -25px;
+}
+
+.recyclinBinInventoryStatus:hover span {
+    display: inline
+}
+
+.restricted {
+    color: white;
+    display: none;
+    height: 50px;
+    margin-left: 39%;
+    padding-top: 8px;
+    position: absolute;
+    text-align: center;
+    vertical-align: super;
+    width: 200px;
+    z-index: 999999;
+}
+
+.overlay {
+    background-color: #000000;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    min-height: 100%;
+    opacity: 0.6;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+#image-preview img {
+    width: 200px;
+    height: 200px;
+}
+
+.greyBoxWidth {
+    width: 80%;
+    float: left;
+}
+
+.contentContainerDiv {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #CDCDCD;
+    float: left;
+}
+
+.paddtoZero {
+    padding: 0;
+}
+
+.leftPartImage {
+    float: left;
+    width: 200px;
+    height: 200px;
+    background: #ffffff;
+    border: 1px solid #cdcdcd;
+    margin-right: 10px;
+}
+
+.rightPartImage {
+    float: left;
+    width: 81%;
+}
+
+.rightPartImage input {
+    width: 250px !important;
+}
+
+.rightPartImage select {
+    width: 250px !important;
+}
+
+div.add_start {
+    width: 48%;
+    float: left;
+}
+
+div.add_start input {
+    float: left;
+    width: 150px !important;
+}
+
+div.add_start label {
+    float: left;
+}
+
+div.add_end {
+    width: 48%;
+    float: left;
+}
+
+div.add_end input {
+    float: left;
+    width: 150px !important;
+}
+
+div.add_end label {
+    float: left;
+    margin-left: 0 !important;
+    width: 50px;
+}
+
+div.upload-image-ad {
+    background: none repeat scroll 0 0 #404040;
+    color: #FFFFFF;
+    float: left;
+    margin-top: 8px;
+    padding: 10px 0 10px 0;
+    width: 78%;
+    float: left;
+    height: 50px;
+}
+
+.upload-image-ad input {
+    float: left;
+    height: auto !important;
+    margin-top: 10px;
+}
+
+.upload-image-ad a {
+    float: left;
+    margin-left: 40px;
+    margin-top: 10px;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.upload-image-ad p {
+    float: left;
+    margin-left: 155px;
+    color: #ffffff;
+    width: 100%;
+    font-size: 11px;
+}
+
+.rightPartImageMost {
+    background: none repeat scroll 0 0 #FFE7CA;
+    float: right;
+    width: 19%;
+    height: 120px;
+}
+
+.rightPartImageMost label {
+    float: left;
+    font-weight: bold;
+}
+
+.rightPartMostInputs {
+    float: left;
+    font-weight: normal;
+    width: 100%;
+}
+
+.rightPartMostInputs span {
+    float: left;
+    width: 100%;
+}
+
+.rightPartMostInputs span label {
+    float: right;
+
+}
+
+.button {
+    background: url("../admin/buttonBackground.jpg") repeat-x scroll 0 0 transparent;
+    border: 1px solid #CB6304;
+    border-radius: 5px 5px 5px 5px;
+    color: #404040;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.add_priority {
+    width: 65% !important;
+    float: left;
+}
+
+.rightPartImage a {
+    float: left;
+
+}

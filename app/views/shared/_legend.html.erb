@@ -1,0 +1,7 @@
+<div style="text-align:right">
+    Legend: <a href="#" class="tooltip"><span class="span-tooltip">Standard inventory</span><%= image_tag "/assets/admin/icons/blackCircle.png" %> </a>= <%= @inventory.where(:status => "standard").count %>
+    <a href="#" class="tooltip"><span class="span-tooltip">New inventory</span><%= image_tag "/assets/admin/icons/blueCircle.png" %></a> = <%= @inventory.where(:status => "attention").count %>
+    <a href="#" class="tooltip"><span class="span-tooltip">Attention inventory</span><%= image_tag "/assets/admin/icons/greenCircle.png" %></a> = <%= @inventory.where(:status => "new").count %>
+    <a href="#" class="tooltip"><span class="span-tooltip">Sale inventory</span><%= image_tag "/assets/admin/icons/grayCircle.png" %></a> = <%= @inventory.where(:status => "pending").count %>
+    <a href="#" class="tooltip"><span class="span-tooltip" style="width:100px;margin-left: -60px;">Pending inventory</span><%= image_tag "/assets/admin/icons/redCircle.png" %></a> = <%= @inventory.where(:status => "sale").count %>
+</div>

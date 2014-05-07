@@ -1,0 +1,37 @@
+<% if @dealers.blank? %>
+	<tr><td><h2>Currently there are no items in Dealers bin</h2></td></tr>
+<% else %>
+<thead>
+  <%= render 'shared/recyclinbin/tableHeader_recyclinbin', binMenu: @binMenu[3] %>
+	<tr>
+		<th class="unsortable" style="border-left:1px solid #cdcdcd; width: 1%;"></th>
+		<th class="actions_col unsortable" width="140px"><a href="#">Actions</a></th>
+    <th><%= sortable "first_name" %></th>
+    <th><%= sortable "last_name" %></th>
+    <th><%= sortable "email" %></th>
+    <th><%= sortable "created_at" %></th>
+    <th><%= sortable "updated_at" %></th>
+    <th><%= sortable "sign_in_count" %></th>
+    <th><%= sortable "last_sign_in_at" %></th>
+		<th><%= sortable 'deleted_at',"Date Deleted" %></th>
+	</tr>
+</thead>
+<!-- Table row classes : gray, nothing, selected   -->
+<tbody>
+	<% @dealers.each do |dealer| %>  
+		<tr class="bus_row">
+			<td><input class="recycle_check_box" name="select" type="checkbox" value="<%= dealer.id %>" data-stock-id="<%= dealer.id %>"/></td>
+      <td class="actions"><%= permanent_delete(dealer,'dealers') %></td>
+      <td><%= dealer.first_name %></td>
+      <td><%= dealer.last_name %></td>
+      <td><%= dealer.email %></td>
+      <td><%= dealer.created_at.to_app_date %></td>
+      <td><%= dealer.updated_at.to_app_date %></td>
+      <td><%= dealer.sign_in_count %></td>
+      <td><%= dealer.last_sign_in_at.to_app_date if dealer.last_sign_in_at %></td>
+			<td><%= print_date(dealer.deleted_at) %></td>
+
+		</tr>
+	<% end %>
+</tbody>
+<% end %>

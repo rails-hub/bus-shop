@@ -1,0 +1,125 @@
+<% content_for :title, "Add New User" %>
+
+<div id="contentNarrow">
+  <%= render :partial => 'shared/menu_icons_users'   %>
+  <%= form_for(@user, :url => {:controller => "users", :action => "update"}) do |f| %>
+
+    <%= render :partial => 'shared/errors', :locals => { :resource => @user } %>
+    <%= f.submit "Submit", :class => "button" %>
+
+    <div class="contentBox">
+      <div id="images_input" style="display:none;">
+
+      </div>
+
+      <div class="contentHeader">
+        <h1>Add New User</h1> <!-- - Added On: 2/18/2011   |   Live for 18 Days
+        <span style="margin-left: 550px; color:#7a7a7a;">Hits to date:18</span> -->
+      </div>
+      <div class="formSection">
+        <div class="formBlock gray float" style="width: 97%;" >
+
+          <div style="float: left; margin-left:40px;width: 40%;">
+            <!-- Year -->
+            <%= f.label :first_name, "First Name" %><%= f.text_field :first_name, :class=> "big", :placeholder => "First Name"%><br/>
+            <%= f.label :last_name, "Last Name" %><%= f.text_field :last_name, :class => "big", :placeholder => "Last Name"%><br/>
+            <%= f.label :email, "Email:" %><%= f.text_field :email, :class => "big", :placeholder => "Email" %><br/>
+            <%= f.label :password, "Password:" %><%= f.password_field :password, :class => "big", :placeholder => "Password" %><br/>
+            <%= f.label :password_confirmation, "Confirmation:" %><%= f.password_field :password_confirmation, :class => "big", :placeholder => "Password Confirmation" %><br/>
+            <br/>
+          </div>
+          <div style="float: left; margin-left:40px;width: 50%">
+            <!-- Year -->
+            <%=fields_for :permission do |p|%>
+              <%= p.label :permission, "Set this user as normal user or admin?", :style => "width:250px;" %><br /><%= p.select :permission, options_for_select([["user - <b>set permissions</b>".html_safe, "set_permission"], ["user - <b>view only</b>".html_safe, "view_only"],["user - <b>full permissions</b>".html_safe, "full_permission"]] , :selected =>(@permission.permission if @permission)), :style => "height:40px;"  %><br/>
+              <br/>
+            </div>
+          </div>
+          <%= hidden_field_tag "permission[user_id]", @user.id %>
+          <div class="clear"></div>
+          <div class="formDivider"></div>
+
+          <div class="clear"></div>
+
+        </div>
+        <div class="contentHeader">
+          <h1>user Permissions</h1> <!-- - Added On: 2/18/2011   |   Live for 18 Days
+          <span style="margin-left: 550px; color:#7a7a7a;">Hits to date:18</span> -->
+        </div>
+        <div class="formSection">
+          <div class="formBlock_1 gray float" style="width: 97%;" >
+
+            <div style="float: left; margin-left:40px;width: 60%;">
+              <!-- Year -->
+              <div style="width: 49%;float: left;">
+                <h3>Inventory Settings</h3>
+                <br />
+                <%= p.check_box :add_inventory, :class => "checkbox"%>
+                <%= p.label :add_inventory, "Add new vehical (pending inventory only)" %>
+                <br/><br/>
+                <%= p.check_box :edit_inventroy%>
+                <%= p.label :edit_inventroy, "Add/Edit inventory (Full inventory access)" %>
+                <br/><br/>
+              </div>
+              <div style="width: 49%;float: left;">
+                <h3>Dealer Settings</h3>
+                <br />
+                <%= p.check_box :dealor_add, :class => "checkbox"%>
+                <%= p.label :dealor_add, "Add new Dealers" %>
+                <br/><br/>
+                <%= p.check_box :dealor_edit%>
+                <%= p.label :dealor_edit, "Add/Edit Dealers (Full dealer access)" %>
+                <br/><br/>
+              </div>
+              <div style="width: 49%;float: left;">
+                <h3>Lead Settings</h3>
+                <br />
+                <%= p.check_box :lead_add, :class => "checkbox"%>
+                <%= p.label :lead_add, "Add new Leads" %>
+                <br/><br/>
+                <%= p.check_box :lead_edit%>
+                <%= p.label :lead_edit, "Add/Edit Leads (Full Leads access)" %>
+                <br/><br/>
+              </div>
+              <div style="width: 49%;float: left;">
+                <h3>Ads Settings</h3>
+                <br />
+                <%= p.check_box :ad_add, :class => "checkbox"%>
+                <%= p.label :ad_add, "Add new ads" %>
+                <br/><br/>
+                <%= p.check_box :ad_edit%>
+                <%= p.label :ad_edit, "Add/Edit ads (Full ads access)" %>
+                <br/><br/>
+              </div>
+              <br/>
+            </div>
+            <div style="float: left; margin-left:40px;width: 30%;background: black; text-align: center; min-height: 200px;">
+              <br />
+              <br />
+              <br />
+              <h3>Universal Setting</h3>
+              <br />
+              <%= p.check_box :ability_delete%>
+              <%= p.label :ability_delete, "Ability to delete items", :style => "color: white;" %>
+              <br/>
+            </div>
+
+          </div>
+
+
+
+          <div class="clear"></div>
+          <div class="formDivider"></div>
+
+          <div class="clear"></div>
+
+        </div>
+
+
+
+      <% end %>
+    <% end %>
+
+
+  </div>
+</div>

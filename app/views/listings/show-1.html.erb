@@ -1,0 +1,205 @@
+<%= content_for :title, "Vehicle Details - #{@listing.year} #{@listing.body_model}"%>
+<style type="text/css">
+  #lead_country, #lead_state{
+  	    border: 1px solid #999999;
+  	    height: 23px;
+  	    margin-left: 11px;
+  	    width: 231px;
+  	    margin-bottom:12px;
+  }
+</style>
+<div class="pageContainer" id="detailedContainer">
+  <div class="pageContent">
+    <!-- box start -->
+    <div class="box">
+      <div class="detailedBoxLargeTop"></div>
+      <div class="detailedBoxLargeContent"> <%= link_to image_tag("/assets/backToInventoryBtnBg.png"), :back, :class => "backToInventory" %><a href="" class="printPage" onclick="window.print();return false;"><img src="/assets/printBtnBg.png" alt="" /></a>
+
+
+        <div class="detailedHeadings">
+
+        	
+          <h3><%= @listing.year %> <%= @listing.body_model %></h3>
+          <h2><%= number_to_currency(@listing.price_on_site, :precision => 0) %></h2>
+        </div>
+        <p class="stockNumber">Stock Number: <%= @listing.stock_id %> </p>
+        <!-- table and gallery container start -->
+        <div class="gallerySpecsContainer">        	
+          <div class="vehicleInfo">
+            <h4 class="customTitle4">Specifications</h4>
+            <table class="vehicleSpecs">
+              <tr>
+                <td class="vehicleSpecsName">Year:</td>
+                <td><%= @listing.year %></td>
+              </tr>
+
+              <tr>
+                <td class="vehicleSpecsName">Bus Type:</td>
+                <td><%= @listing.bus_type.name %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Chassis Make:</td>
+                <td><%= @listing.chasis_make.name %></td>
+
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Chassis Model:</td>
+                <td><%= @listing.chasis_model %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Body Make:</td>
+                <td><%= @listing.body_make.name %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Body Model:</td>
+                <td><%= @listing.body_model %></td>
+              </tr>
+              <tr>
+
+                <td class="vehicleSpecsName">Engine:</td>
+                <td><%= @listing.engine %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Mileage:</td>
+                <td><%= number_to_human(@listing.mileage, :units => :distance, :seperator => ",") %></td>
+              </tr>
+
+              <tr>
+                <td class="vehicleSpecsName">Transmission:</td>
+                <td><%= @listing.transmission %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Location:</td>
+                <td><%= @listing.location %></td>
+
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Fuel Type:</td>
+                <td><%= @listing.fuel_type %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Passengers:</td>
+                <td><%= @listing.passengers %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Vehicle Length:</td>
+                <td><%= @listing.vehicle_length %> feet</td>
+              </tr>
+              <tr>
+
+                <td class="vehicleSpecsName">Exterior Color:</td>
+                <td><%= @listing.exterior_color %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Interior Color:</td>
+                <td><%= @listing.interior_color %></td>
+              </tr>
+
+              <tr>
+                <td class="vehicleSpecsName">Luggage:</td>
+                <td><%= @listing.luggage %></td>
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Wheelchair Lifts:</td>
+                <td><%= @listing.wheelchair_lifts %></td>
+
+              </tr>
+              <tr>
+                <td class="vehicleSpecsName">Warranty:</td>
+                <td><%= @listing.warranty %></td>
+              </tr>
+            </table>
+            <h4 class="customTitle4">Description</h4>
+				<p><%= @listing.vehicle_description %></p>
+           </div>
+          <!-- gallery start -->
+          <div class="gallery">
+            <ul id="sliderOne">
+              <% @listing.images.each do |bus| %>
+              	<li class="slideModule"><%= image_tag bus.image_url, :height => "382", :width => "550", :id => "img1" %></li>
+              <% end %>
+              	<li class="slideModule"><img src="/assets/galleryImages/thumb1.jpg"  alt="" /></li>
+            </ul>
+
+            <!-- slider navigation start -->
+            <div id="sliderNav">
+              <ul id="sliderNavList">
+              	<% @listing.images.each do |bus| %>
+              		<li><a href="#"><%= image_tag bus.image_url(:thumb) , :height => "96", :width => "67" %></a></li>
+              	<% end %>
+                <!-- <li><a href="#"><img src="/assets/galleryImages/thumb1.jpg"  alt="" /></a></li>
+                <li><a href="#"><img src="/assets/galleryImages/thumb1.jpg"  alt="" /></a></li>
+                <li><a href="#"><img src="/assets/galleryImages/thumb1.jpg"  alt="" /></a></li> -->
+              </ul>
+            </div>
+            <!-- slider navigation end -->
+            <div class="galleryThumbsBottom"></div>
+          </div>
+          <!-- gallery end -->
+        </div>
+        <!-- table and gallery container end -->
+      </div>
+
+      <div class="detailedBoxLargeBottom"></div>
+    </div>
+    <!-- box end -->
+    <!-- inquire start -->
+    <div class="inquireContainer">
+      <div class="inquireTop">
+        <h4>Inquire About Stock Number: <%= @listing.stock_id %></h4>
+      </div>
+      
+      <div class="inquireContent">
+          <% unless notice.nil? %>
+           		<p class="success"><%= notice %></p>
+           	<% end %>
+           	<% unless alert.nil? %>
+           		<p class="alert"><%= alert %></p>
+           	<% end %>
+           	<% unless flash[:errors].nil? %>
+           		<p class="alert">
+           		   <% flash[:errors].each do |attr,m| %>
+             		    <%= attr.to_s.titleize %>
+             		    <%= m[0] %><br />
+             		  <% end %>
+           		</p>
+           	<% end %>
+          <fieldset> 
+          	<%= form_for @lead, :url => new_lead_path, :method => "POST", :html => {:id => "inquire"} do |f| %>
+            <div class="inquireFields">
+                <%= f.label :first_name %><%= f.text_field :first_name, :class => "itext-input", :id => "inquireFName" %>
+                
+              	<%= f.label :last_name %><%= f.text_field :last_name, :class => "itext-input", :id => "inquireName" %>
+				        <%= f.label :email %><%= f.text_field :email, :class => "itext-input", :id => "inquireName" %>
+				        <%= f.label :phone, "Phone" %><%= f.text_field :phone, :class => "itext-input", :id => "inquireName" %>
+				        <%= f.label :mobile, "Mobile" %><%= f.text_field :mobile, :class => "itext-input", :id => "inquireName" %>
+				        <%= f.label :company, "Company Name" %><%= f.text_field :company, :class => "itext-input", :id => "inquireName" %>
+                <%= f.label :address, "Address" %><%= f.text_field :address, :class => "itext-input", :id => "inquireName" %>
+                <%= f.label :address2, "Address Line2" %><%= f.text_field :address2, :class => "itext-input", :id => "inquireName" %>              
+                <%= f.label :unit, "Suite/Unit" %><%= f.text_field :unit, :class => "itext-input", :id => "inquireName" %>
+                <%= f.label :city, "City" %><%= f.text_field :city, :class => "itext-input", :id => "inquireName" %>
+                 <div>
+                    <%= f.label :state, "Prov/State" %>
+                    <%= f.grouped_collection_select :state, Country.order(:name), :states, :name, :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %>
+                    </div>
+                <%= f.label :country, "Country" %><%= f.collection_select :country, Country.order(:name), :name, :name, :class => "itext-input", :id => "inquireName", include_blank: true %>
+               
+                <%= f.label :postal, "Postal/Zip" %><%= f.text_field :postal, :class => "itext-input", :id => "inquireName" %>      
+            </div>
+            		<%= f.label :comments, "Comments or Questions:" %>
+            		<%= f.text_area :comments, :class => "itext-input", :id => "inquireMessage", :rows => "2", :cols => "1"%>
+            		<%= f.hidden_field :bus_id, :value => @listing.id %>
+            <p>
+            		<%= f.submit "", :class => "inquireButton", :id => "inquireSubmitBtn" %>
+            </p>
+            <% end %>
+          </fieldset>
+      </div>
+      <div class="inquireBottom"></div>
+    </div>
+    <!-- inquire end -->
+
+  </div>
+</div>
+<!-- page end -->
+<%= render :partial => 'shared/compare_toolbar'   %>

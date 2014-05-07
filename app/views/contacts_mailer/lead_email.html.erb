@@ -1,0 +1,16 @@
+<%= image_tag('mainLogo.png')%>
+
+<p>Hello Admin!</p>
+
+<p>The following user just inquired about this vehicle with Stock ID: <%= @stock.stock_id %></p>
+
+<p>Here are the Visitor Details:</p>
+<p>Full Name: <%= @user.first_name %> <%= @user.last_name %></p>
+<p>Email: <%= @user.email %></p>
+<p>Comment: <%= @user.comments %></p>
+
+
+<p>Here are some details regarding the stock:</p>
+<p>Stock ID: <%= @stock.stock_id %></p>
+<p>URL: <%= listing_url(@stock.stock_id) %></p>
+<p>Stock Online Since: <%= time_ago_in_words(@stock.created_at) %></p>

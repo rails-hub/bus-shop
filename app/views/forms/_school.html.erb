@@ -1,0 +1,45 @@
+    <!-- sidebar right start -->
+    <div class="sidebar" style="float: right;">
+        <div class="sidebarRightTopBg"></div>
+        <div class="sidebarRightContent">
+			<%= form_tag("/listings/search?slug=school") do %>
+				<label for="passengers">Passenger Seats</label> <br/>
+				<select id="passengers" name="search[passengers]" class="selectLong">
+					<option value="">All</option>
+					<option value="0-20">20 and under</option>
+					<option value="21-36">21-36</option>
+					<option value="37-54">37-54</option>
+					<option value="55-1000000">55+</option>
+				</select>
+				<label for="price_range">Price Range</label>	<br/>
+				<select id="price_range" name="search[price_range]" class="selectLong">
+					<option value="">View All</option>
+					<option value="0-20000">Under $20,000</option>
+					<option value="20000-40000">$20,000 - $40,000</option>
+					<option value="40000-60000">$40,000 - $60,000</option>
+					<option value="60000-80000">$60,000 - $80,000</option>
+					<option value="80000-1000000000">$80,000+</option>
+				</select>
+				
+				<label for="year">Year Range</label> <br/>
+				<%= select("search", "start_year", 1990..DateTime.now.year, {:include_blank => "Start Year"}, :class=> "selectShort" ) %> -
+				<%= select("search", "end_year", 1990..DateTime.now.year, {:include_blank => "End Year"},  :class=> "selectShort" )%>
+				
+				<label for="fuel_type">Fuel Type</label><br/>
+				<%= select("search", "fuel_type", ["Gas", "Diesel"], {:include_blank => "All"}, :class => "selectLong") %>
+				
+				<label for="brakes">Brakes</label><br/>
+				<select id="brakes" name="search[brakes]" class="selectLong">
+					<option value="">View All</option>
+					<option value="Air">Air</option>
+					<option value="Hydraulic">Hydraulic</option>
+				</select>
+				
+				<%= hidden_field_tag "bus_type_id", @bus_type.id %><br/>
+				<%= image_submit_tag("/assets/searchBtn.png", :style=>"margin-left: 15px; margin-top: 10px") %>
+			<% end %>
+           
+        </div>
+        <div class="sidebarRightBottomBg"></div>
+    </div>
+    <!-- sidebar right end -->

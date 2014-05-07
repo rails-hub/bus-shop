@@ -1,0 +1,21 @@
+	<!-- header start -->
+	<div class="headerContainer">
+	  <div class="header"> <a href="/" class="mainLogo"><%= image_tag('mainLogo.png') %></a>
+	    <ul class="mainMenu">
+	      <li><%= link_to "<span>About Us</span>".html_safe, about_path %></li>
+	      <li><%= link_to "<span>Services</span>".html_safe, services_path %></li>
+	      <li><%= link_to "<span>Bus Listings</span>".html_safe, listings_path %></li>
+	      <li><%= link_to "<span>Submit A Vehicle</span>".html_safe, submit_vehicle_path %></li>
+	      <li><%= link_to "<span>Contact Us</span>".html_safe, contact_path %></li>
+	    </ul>
+	<% if dealer_signed_in? %>
+    		<div style="margin-top:20px;text-align: right;">
+	    		<%= link_to current_dealer.email+", ", edit_dealer_path(current_dealer) %>
+	    		<%= link_to "Logout".html_safe, destroy_dealer_session_path %>
+		</div>
+    	<% else %>
+    		<%= link_to "<img src='/assets/dealerLoginBg.png' alt='' />".html_safe, dealer_session_path, :class => 'dealerLoginBtn' %>
+    	<% end %>
+	    </div>
+	</div>
+	<!-- header end -->

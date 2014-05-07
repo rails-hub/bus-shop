@@ -1,0 +1,298 @@
+<% content_for :title, "Add New Inventory" %>
+
+<div id="contentNarrow">
+<%= render :partial => 'shared/menu_icons' %>
+<%= render :partial => 'shared/admin_add_new_forms' %>
+<%= form_for(:inventory, :url => {:controller => "inventory", :action => "create"}) do |f| %>
+    <%= f.submit "Save", :class => "button" %>
+    <%= render :partial => 'shared/errors', :locals => {:resource => @inventory} %>
+
+
+    <div class="contentBox">
+    <div id="images_input" style="display:none;">
+
+    </div>
+
+    <div class="contentHeader">
+      <h1>Add New Vehicle</h1>
+    </div>
+    <div class="formSection">
+      <div class="formBlock gray float">
+        <img width="118" height="84" style="float: left;" alt="Vehicle" src="/assets/admin/carImage.jpg">
+
+        <div style="float: left; margin-left:40px;">
+          <!-- Year -->
+          <%= f.label :year, "Year:" %><%= f.select :year, ((DateTime.now.year - 30)..(DateTime.now.year)).to_a.reverse, {:include_blank => "Select Year"} %>
+          <br>
+          <!-- Bus Type Id  -->
+          <%= f.label :bus_type_id, "Bus Type:" %><%= f.collection_select :bus_type_id, BusType.find(:all), :id, :name, {:include_blank => "Select Bus Type"}, :onchange => "generate_stock_id(this, 'new')" %>
+          <a rel="facebox" href="#add_new_bus_type">Add new</a><br>
+          <!-- Chasis Make Id  -->
+          <%= f.label :chasis_make_id, "Chasis Make:" %><%= f.collection_select :chasis_make_id, ChasisMake.find(:all), :id, :name %>
+          <a rel="facebox" href="#add_new_chasis_make_type">Add new</a><br>
+          <!-- Chasis Model -->
+          <%= f.label :chasis_model, "Chasis Model:" %><%= f.text_field :chasis_model, :class => "big" %>
+          <br>
+          <!-- Body Make ID    -->
+          <%= f.label :body_make_id, "Body Make:" %><%= f.collection_select :body_make_id, BodyMake.find(:all), :id, :name %>
+          <a rel="facebox" href="#add_new_body_make_type">Add new</a><br>
+          <!--  Body Model  -->
+          <%= f.label :body_model, "Body Model:" %><%= f.text_field :body_model, :class => "big" %>
+          <br>
+          <!--  Engine  -->
+          <%= f.label :engine, "Engine:" %><%= f.text_field :engine, :class => "big" %>
+          <br>
+          <!--  Mileage -->
+          <%= f.label :mileage, "Mileage:" %><%= f.text_field :mileage, :class => "big" %> (in kms)<br>
+          <!--  Transmission -->
+          <%= f.label :transmission, "Transmission:" %><%= f.select :transmission, ["Manual", "Automatic"] %>
+          <br>
+          <!--  Location -->
+          <%= f.label :location, "Country:" %><%= f.select :location, ["USA", "Canada"] %>
+          <br/>
+          <!--   State -->
+          <%= f.label :state, "State:" %>
+          <%= f.hidden_field :state %>
+          <select id="state_usa" class="state_select" onchange="select_state(this)">
+            <option value="">Select State</option>
+            <% State.where("country_id = ?", Country.find_by_name("United States").id).each do |state| %>
+                <option value=<%= state.id %>><%= state.name %></option>
+            <% end %>
+          </select>
+          <select id="state_canada" style="display: none" class="state_select" onchange="select_state(this)">
+            <option value="">Select State</option>
+            <% State.where("country_id = ? ", Country.find_by_name("Canada").id).each do |state| %>
+                <option value=<%= state.id %>><%= state.name %></option>
+            <% end %>
+          </select>
+          <br/>
+          <!--   Lavatory -->
+          <%= f.label :lavatory, "Lavatory" %><%= f.radio_button :lavatory, "Yes" %>
+          Yes <%= f.radio_button :lavatory, "No" %> No<br/>
+          <!--   Entertainment TV/DVD -->
+          <%= f.label :entertainment, "Entertainment TV/DVD" %><%= f.radio_button :entertainment, "Yes" %>
+          Yes <%= f.radio_button :entertainment, "No" %> No<br/>
+          <br/>
+          <br/>
+          <br/>
+        </div>
+      </div>
+
+      <div class="formBlock gray float">
+        <!--  VIN Number  -->
+        <%= f.label :vin, "VIN #" %><%= f.text_field :vin, :disabled => true, :class => "big", :id => 'vin-id-inv' %>
+        <br>
+        <%= hidden_field_tag "inventory[vin]" %>
+        <%= hidden_field_tag "inventory[stock_id]" %>
+        <!--  Stock Id -->
+        <%= f.label :stock_id, "Stock #" %><%= f.text_field :stock_id, :disabled => true, :class => "big", :id => 'stock-id-inv' %>
+        <br>
+        <!--  Fuel Type  -->
+        <%= f.label :fuel_type, "Fuel Type:" %><%= f.select :fuel_type, ["Gas", "Diesel"], :class => "big" %>
+        <br>
+        <!--  Passengers -->
+        <%= f.label :passengers, "Passengers:" %><%= f.text_field :passengers, :class => "big" %>
+        <br>
+        <!--  Vehicle Length   -->
+        <%= f.label :vehicle_length, "Vehicle Length:" %><%= f.text_field :vehicle_length, :class => "big" %> (in
+        ft)<br>
+        <!--  Exterior Color  -->
+        <%= f.label :exterior_color, "Exterior Color:" %><%= f.text_field :exterior_color, :class => "big" %>
+        <br>
+        <!--  Interior Color  -->
+        <%= f.label :interior_color, "Interior Color:" %><%= f.text_field :interior_color, :class => "big" %>
+        <br>
+        <!--  Luggage -->
+        <div style="float:left;"><%= f.label :luggage, "Luggage:" %><%= f.radio_button :luggage, "Yes" %>
+          Yes<%= f.radio_button :luggage, "No" %> No
+        </div>
+        <div class="clearLeft"></div>
+        <!--   Rear Luggage -->
+        <div><%= f.label :rear_luggage, "Rear Luggage:" %><%= f.radio_button :rear_luggage, "Yes" %>
+          Yes<%= f.radio_button :rear_luggage, "No" %> No
+        </div>
+        <!--  Wheelchair Lifts  -->
+        <%= f.label :wheelchair_lifts, "Wheelchair Lifts:" %><%= f.radio_button :wheelchair_lifts, "Yes" %>
+        Yes<%= f.radio_button :wheelchair_lifts, "No" %> No
+        <div class="clearLeft"></div>
+        <!--  Wheelchair Capacity -->
+        <%= f.label :wheelchair_capacity, "Wheelchair Capacity:" %><%= f.text_field :wheelchair_capacity %>
+        <div class="clearLeft"></div>
+        <!--  Warranty   -->
+        <%= f.label :warranty, "Warranty:" %><%= f.radio_button :warranty, "Yes" %>
+        Yes<%= f.radio_button :warranty, "No" %> No
+        <div class="clearLeft"></div>
+        <!--  Raised Roof -->
+        <%= f.label :raised_roof, "Raised Roof:" %><%= f.radio_button :raised_roof, "Yes" %>
+        Yes<%= f.radio_button :raised_roof, "No" %> No
+        <div class="clearLeft"></div>
+        <!--  Brakes -->
+        <%= f.label :brakes, "Brakes:" %><%= f.select :brakes, ["Air", "Hydraulic"], :class => "big" %>
+        <br>
+      </div>
+
+      <div class="clear"></div>
+      <div class="formDivider"></div>
+
+      <div class="formBlock white float">
+        <%= f.label :cost, "Cost" %><%= f.text_field :cost %>
+        <br>
+        <%= f.label :price, "Price" %><%= f.text_field :price %><%= f.radio_button :posted_price, "cost" %>
+        <h4>Posted Price</h4><br>
+      </div>
+      <div class="formBlock white float">
+        <%= f.label :wholesale_price, "Wholesale" %><%= f.text_field :wholesale_price %>
+        <br>
+        <%= f.label :sale_price, "Sale Price" %><%= f.text_field :sale_price %><%= f.radio_button :posted_price, "cost" %>
+        <h4>Posted Price</h4><br>
+      </div>
+      <div class="formBlock black float">
+        <%= f.check_box(:sold) %>
+        <h3>Sold</h3> (Move to Sold Inventory)<br>
+
+        <h3><%= f.label :sold_price, "Sold Price", :style => "width: auto;" %></h3><%= f.text_field :sold_price %>
+        <br>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="contentHeader">
+      <h1>Vehicle Status</h1>
+    </div>
+
+    <div class="formSection">
+      <div style="width:165px;" class="formBlock gray float">
+        <%= f.radio_button :status, Bus::STANDARD[:string] %><%= image_tag("admin/icons/"+Bus::STANDARD[:image], :alt => "Standard Inventory") %>
+        Standard Inventory
+      </div>
+      <div style="width:170px;" class="formBlock gray float">
+        <%= f.radio_button :status, Bus::NEW[:string] %><%= image_tag("admin/icons/"+Bus::NEW[:image], :alt => "New Inventory") %>
+        New Inventory
+      </div>
+      <div style="width:165px;" class="formBlock gray float">
+        <%= f.radio_button :status, Bus::SALE[:string] %><%= image_tag("admin/icons/"+Bus::SALE[:image], :alt => "Price Change Sale Inventory") %>
+        Price Change/Sale
+      </div>
+      <div style="width:170px;" class="formBlock gray float">
+        <%= f.radio_button :status, Bus::ATTENTION[:string] %><%= image_tag("admin/icons/"+Bus::ATTENTION[:image], :alt => "Attention Inventory") %>
+        Attention Inventory
+      </div>
+      <div style="width:165px;" class="formBlock gray float">
+        <%= f.radio_button :status, Bus::PENDING[:string] %><%= image_tag("admin/icons/"+Bus::PENDING[:image], :alt => "PENDING Inventory") %>
+        Pending Inventory
+      </div>
+      <div class="clear"></div>
+
+      <div class="formBlock yellow noFloat">
+        <div style="float:left;">
+          <span style="margin-right:60px;">Make Visible on Web: <%= f.radio_button :live, "yes" %>
+            Yes <%= f.radio_button :live, "no" %> No </span>
+
+          <div class="divider"></div>
+        </div>
+
+        <div>Add Vehicle to Featured Inventory: <%= f.radio_button :featured, "yes" %>
+          Yes <%= f.radio_button :featured, "no" %> No
+        </div>
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="clear"></div>
+
+    </div>
+
+    <div class="contentHeader">
+      <h1>Seller Information</h1>
+    </div>
+
+    <div class="formSection">
+      <div class="formBlock yellow noFloat">
+        <%= f.fields_for :seller do |sf| %>
+            <div style="float:left;">
+              <%= sf.label :name %><%= sf.text_field :name %>
+              <br/>
+              <%= sf.label :phone %><%= sf.text_field :phone %>
+              <br/>
+              <%= sf.label :email %><%= sf.text_field :email %>
+              <br/>
+              <%= sf.label :address %><%= sf.text_field :address %></br/>
+              <%= sf.label :city %><%= sf.text_field :city %></br/>
+              <%= sf.label :province %><%= sf.text_field :province %></br/>
+            </div>
+            <%= sf.label :postal_code %><%= sf.text_field :postal_code %>
+            <br/>
+            <%= sf.label :country %><%= sf.text_field :country %></br/>
+            <%= sf.label :comments %><%= sf.text_area :comments, :rows => 5 %>
+            <br/>
+            <%= #sf.hidden_field :bus_id, :value => @inventory.id
+            %>
+        <% end %>
+        <div class="clear"></div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div class="contentHeader">
+      <h1>Vehicle Description</h1>
+    </div>
+
+    <div class="formSection">
+      <div class="formBlock">
+        <%= f.text_area :vehicle_description, :rows => 10, :cols => 160 %>
+      </div>
+    </div>
+
+    <div class="contentHeader">
+      <h1>Sales Information</h1>
+    </div>
+
+    <div class="formSection">
+      <div class="formBlock yellow noFloat">
+        <div style="float:left;">
+          <label for="customer">Customer:</label><input type="text" name="customer" id="customer"><br>
+          <label for="soldDate">Sold Date:</label><input type="text" name="soldDate" id="soldDate"><br>
+        </div>
+        <div style="float:left;">
+          <label for="salesRep">Sales Rep:</label><input type="text" name="salesRep" id="salesRep"><br>
+        </div>
+        <div style="float:left;">
+          <label for="reconditioningCost">Reconditioning
+            Cost:</label><input type="text" name="reconditioningCost" id="reconditioningCost"><br>
+          <label for="promotions">Promotions:</label><input type="text" name="promotions" id="promotions"><br>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+    </div>
+
+<% end %>
+
+<div class="contentHeader">
+  <h1>Upload Images (only jpeg and png images)</h1>
+</div>
+
+<div class="formSection">
+  <%= render :partial => "shared/file_upload_template" %>
+  <div id="fileupload" style="overflow: hidden;">
+    <%= form_for Image.new, :url => admin_images_path, :html => {:multipart => true} do |f| %>
+        <div class="fileupload-buttonbar">
+          <label class="fileinput-button">
+            <span>Add files...</span>
+            <%= f.file_field :image %>
+          </label>
+          <button type="submit" class="start">Start upload</button>
+          <button type="reset" class="cancel">Cancel upload</button>
+          <button type="button" class="delete">Delete files</button>
+        </div>
+    <% end %>
+    <div class="formBlock gray noFloat fileupload-content" style="background: #EEEEEE;">
+      <table class="files"></table>
+      <div class="fileupload-progressbar"></div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
